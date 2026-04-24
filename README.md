@@ -114,4 +114,4 @@ This template evolves. Each substantial pattern addition bumps the
 minor version. Projects that adopted v1.x can selectively pull in
 v1.y+1 patterns via the migration prompt.
 
-Current: **v2.0** (2026-04)
+Current: **v2.0** — 2026-04
