@@ -32,3 +32,17 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# claude harness local state
+.claude/*.local.json
+.claude/*.lock
+.claude/worktrees/
+
+# Claude-shared screenshots (drop images here for in-session reference)
+.screenshots/
+
+# Raw call transcripts — parsed notes live in docs/calls/ (committed)
+.transcripts/
+
+# Temp working files (env pulls, diagnostic scripts, scratch)
+.tmp/
