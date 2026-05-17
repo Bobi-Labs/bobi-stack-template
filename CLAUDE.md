@@ -10,12 +10,24 @@ The #1 cause of unproductive sessions is skipping the context load. Before touch
 1. **Read `~/.claude/projects/{{PROJECT_DIR_SLUG}}/memory/session_history.md` in full.** It's the briefing. It tells you what's shipped, what went wrong in prior sessions, and where the full chat archive lives.
 2. **Open and read every memory file the session history points to** — `feedback_*.md`, `project_*.md`, `user_*.md`, `reference_*.md`. The `MEMORY.md` index is a table of contents, not a briefing.
 3. **Read `docs/` files relevant to current work** + `TODO.md`. These are live sources of truth for what's in flight.
-4. **Run a health check** before touching anything client-visible: build passes, typecheck status known, deploy healthy.
-5. **Summarize current state back to the user before proposing changes.** If you can't summarize it, you haven't read enough.
-6. **One batch = one chat.** Long chats degrade. When a batch of work commits cleanly, end the session and start fresh.
-7. **Never bundle "while I'm at it" fixes.** One commit per logical change.
+4. **Run `./ops.sh check-integrity`.** Mechanical drift detector for permanent ongoing obligations — unfiled call transcripts, stale `handoff_note.md` / `session_history.md`. Resolve anything it flags before starting work. This catches the gaps that relevance-gated context loading structurally misses.
+5. **Run a health check** before touching anything client-visible: build passes, typecheck status known, deploy healthy.
+6. **Summarize current state back to the user before proposing changes.** If you can't summarize it, you haven't read enough.
+7. **One batch = one chat.** Long chats degrade. When a batch of work commits cleanly, end the session and start fresh.
+8. **Never bundle "while I'm at it" fixes.** One commit per logical change.
 
 If anything in this file conflicts with a memory file, **the memory file wins** — memory files are the record of lessons learned; CLAUDE.md is a summary that can drift.
+
+## ⚠️ Session-END checklist — DO THIS BEFORE THE CHAT CLOSES
+
+The #1 cause of cross-chat knowledge loss is a permanent obligation with no end-of-session trigger. Relevance-gated context loading cannot catch obligations that aren't relevant to today's task — so they get caught here, at the boundary, every time. When a batch of work is committed and the session is wrapping:
+
+1. **File any new call transcripts.** Raw → `.transcripts/YYYY-MM-DD-slug.txt` (gitignored), parse the load-bearing ones → `docs/calls/YYYY-MM-DD-slug.md`, add a row to `docs/calls/INDEX.md`. See `docs/calls/README.md`. `./ops.sh check-integrity` tells you what's unfiled.
+2. **Update `handoff_note.md`** if project state changed — it's the next chat's first read. Bump its `lastWritten`.
+3. **Update `session_history.md`** if a meaningful arc completed (shipped feature, scope change, new lesson).
+4. **Update `TODO.md`** — mark done `[x]`, add anything discovered.
+5. **Capture new lessons into memory** (`feedback_*` / `project_*` / `user_*`) — anything learned the hard way this session that a future chat must not relearn.
+6. **Re-run `./ops.sh check-integrity`** — it should come back clean. If it doesn't, you're not done.
 
 ## Project Overview
 

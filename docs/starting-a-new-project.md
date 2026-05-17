@@ -112,6 +112,8 @@ Based on project needs, enable:
 
 - Drop raw transcripts in `.transcripts/YYYY-MM-DD-slug.txt` (gitignored)
 - Write parsed notes at `docs/calls/YYYY-MM-DD-slug.md` (committed)
+- Add a row to `docs/calls/INDEX.md` for every call — it's standard, not optional, and it's what `./ops.sh check-integrity` diffs against
+- Filing a call is a **Session-END obligation** (see the checklist in `CLAUDE.md`); `./ops.sh check-integrity` flags anything unfiled
 - See `docs/calls/README.md` for the format
 
 ## 7. First Claude Code session

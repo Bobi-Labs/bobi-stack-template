@@ -52,9 +52,15 @@ question.
 When parsing: distrust speaker labels. The auto-transcriber routinely
 flips roles across the same file.
 
-## INDEX.md
+## INDEX.md — standard, not optional
 
-For projects with many calls, maintain an `INDEX.md` in this folder
-listing each call's date + topic hint + raw file path + parsed note
-path. Lets future sessions locate a specific call fast without
-grepping transcripts.
+Maintain `INDEX.md` in this folder from call #1. One row per call:
+date + topic hint + raw file path + parsed note path. It's the
+catalog future sessions hit to locate a call without grepping
+transcripts — and it's what `./ops.sh check-integrity` diffs against
+to flag unfiled raws. A stub `INDEX.md` ships with the template;
+keep it current.
+
+Filing a call is a Session-END obligation (see CLAUDE.md). The
+mechanical check (`./ops.sh check-integrity`) only works if the
+INDEX is the source of truth — don't let it drift.

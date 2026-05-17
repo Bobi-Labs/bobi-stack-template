@@ -176,6 +176,13 @@ elif [[ "$cmd" == "clean" ]]; then
         echo "Removed node_modules/"
     fi
 
+# ─── check-integrity ──────────────────────────────────
+
+elif [[ "$cmd" == "check-integrity" ]]; then
+
+    cd "$PROJECT_DIR"
+    node scripts/check-integrity.mjs "$@"
+
 # ─── docs ─────────────────────────────────────────────
 
 elif [[ "$cmd" == "docs" ]]; then
@@ -218,6 +225,7 @@ Supabase:
   gen-types              Regenerate DB types (lib/supabase/database.types.ts)
 
 Utilities:
+  check-integrity        Drift scan: unfiled transcripts, stale handoff/history
   clean [--all]          Remove .next/ and out/ (--all: also node_modules/)
   docs                   Open docs/ directory
 
