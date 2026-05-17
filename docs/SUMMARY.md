@@ -13,6 +13,9 @@
 # Conventions
 
 - [Call notes format](calls/README.md) — parsed transcripts + raw-vs-committed split
+- [Contributing](../CONTRIBUTING.md) — new-project ritual + template-evolution ritual
+- [Changelog](../CHANGELOG.md) — date-keyed template evolution + deferred-by-design decisions
+- [the prior template lineage](the prior template-lineage.md) — where bobi-stack diverged, what each does better
 
 <!-- Add project-specific docs as the project grows:
 - [Architecture](architecture.md)

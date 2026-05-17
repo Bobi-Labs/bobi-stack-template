@@ -214,6 +214,16 @@ DB types flow end-to-end: schema → generated types → SDK → query fn → re
 - **Numbers:** Financial figures use `font-mono`.
 - **No hardcoded strings** for enums or lookup values — source from DB or config.
 
+### Commits
+
+The git log is documentation. It should read as a narrative, not a pile of squashed mega-commits.
+
+- **Atomic.** One logical change per commit. Reinforces the Session-START rule "never bundle while-I'm-at-it fixes."
+- **Conventional prefix.** `type(scope): imperative summary`. Types: `feat`, `fix`, `docs`, `refactor`, `chore`, `ci`, `test`, `scaffolding`. Scope optional.
+- **Subject says what, body says why.** The body is for the reasoning a future reader needs, not a restatement of the diff.
+- **No em dashes in messages** (the `/prose` skill binds commit text too). Use commas, colons, periods.
+- A reader skimming `git log --oneline` should understand the project's evolution without opening a single diff.
+
 ## Current Phase
 
 <!-- Running checklist of what's shipped + what's in flight. Keep refreshed. -->
