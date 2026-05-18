@@ -3,7 +3,6 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/Bobi-Labs/bobi-stack/actions/workflows/ci.yml"><img src="https://github.com/Bobi-Labs/bobi-stack/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <a href="LICENSE"><img src="https://img.shields.io/github/license/Bobi-Labs/bobi-stack?color=2dd4bf&label=license" alt="License: MIT"></a>
   <a href="https://github.com/Bobi-Labs/bobi-stack/generate"><img src="https://img.shields.io/badge/use%20this-template-2dd4bf" alt="Use this template"></a>
   <img src="https://img.shields.io/badge/Claude%20Code-ready-2dd4bf" alt="Built for Claude Code">
