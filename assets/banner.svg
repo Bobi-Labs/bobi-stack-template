@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640" font-family="ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0a0c10"/>
+      <stop offset="1" stop-color="#0d1117"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.16" cy="0.30" r="0.9">
+      <stop offset="0" stop-color="#2dd4bf" stop-opacity="0.16"/>
+      <stop offset="0.5" stop-color="#2dd4bf" stop-opacity="0.04"/>
+      <stop offset="1" stop-color="#2dd4bf" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="dots" width="32" height="32" patternUnits="userSpaceOnUse">
+      <circle cx="1.5" cy="1.5" r="1.5" fill="#ffffff" fill-opacity="0.025"/>
+    </pattern>
+  </defs>
+
+  <rect width="1280" height="640" rx="20" fill="url(#bg)"/>
+  <rect width="1280" height="640" rx="20" fill="url(#dots)"/>
+  <rect width="1280" height="640" rx="20" fill="url(#glow)"/>
+  <rect x="1" y="1" width="1278" height="638" rx="19" fill="none" stroke="#1f2937" stroke-width="2"/>
+
+  <text x="96" y="150" fill="#7d8590" font-size="22" letter-spacing="7" font-weight="600">PROJECT SCAFFOLD FOR CLAUDE CODE</text>
+
+  <text x="93" y="300" font-size="132" font-weight="700" letter-spacing="-3">
+    <tspan fill="#e6edf3">bobi</tspan><tspan fill="#2dd4bf">-stack</tspan>
+  </text>
+  <rect x="775" y="208" width="26" height="104" fill="#2dd4bf"/>
+
+  <text x="96" y="372" fill="#c9d1d9" font-size="34" font-weight="500">Next.js + Supabase + TanStack Query, wired and ready.</text>
+  <text x="96" y="420" fill="#7d8590" font-size="28">Battle-tested through production client work.</text>
+
+  <g transform="translate(96 470)">
+    <rect width="430" height="62" rx="10" fill="#161b22" stroke="#30363d" stroke-width="1.5"/>
+    <text x="26" y="40" font-size="26"><tspan fill="#2dd4bf">$</tspan><tspan fill="#c9d1d9" xml:space="preserve">  ./ops.sh dev</tspan></text>
+  </g>
+
+  <g font-size="22" fill="#9aa4b2">
+    <g transform="translate(96 568)">
+      <rect width="118" height="44" rx="22" fill="#10151c" stroke="#30363d"/>
+      <text x="59" y="29" text-anchor="middle">Next.js</text>
+    </g>
+    <g transform="translate(226 568)">
+      <rect width="132" height="44" rx="22" fill="#10151c" stroke="#30363d"/>
+      <text x="66" y="29" text-anchor="middle">Supabase</text>
+    </g>
+    <g transform="translate(370 568)">
+      <rect width="196" height="44" rx="22" fill="#10151c" stroke="#30363d"/>
+      <text x="98" y="29" text-anchor="middle">TanStack Query</text>
+    </g>
+    <g transform="translate(578 568)">
+      <rect width="120" height="44" rx="22" fill="#10151c" stroke="#30363d"/>
+      <text x="60" y="29" text-anchor="middle">Tailwind</text>
+    </g>
+    <g transform="translate(710 568)">
+      <rect width="140" height="44" rx="22" fill="#10151c" stroke="#30363d"/>
+      <text x="70" y="29" text-anchor="middle">TypeScript</text>
+    </g>
+    <g transform="translate(862 568)">
+      <rect width="104" height="44" rx="22" fill="#10151c" stroke="#30363d"/>
+      <text x="52" y="29" text-anchor="middle">Vercel</text>
+    </g>
+  </g>
+
+  <g transform="translate(1010 150)" fill="none" stroke="#2dd4bf" stroke-opacity="0.55" stroke-width="2">
+    <rect x="0" y="0" width="184" height="120" rx="10"/>
+    <line x1="0" y1="34" x2="184" y2="34"/>
+    <circle cx="20" cy="17" r="5" fill="#2dd4bf" stroke="none"/>
+    <circle cx="40" cy="17" r="5" fill="#30363d" stroke="none"/>
+    <circle cx="60" cy="17" r="5" fill="#30363d" stroke="none"/>
+    <line x1="22" y1="62" x2="120" y2="62" stroke="#7d8590"/>
+    <line x1="22" y1="86" x2="92" y2="86" stroke="#7d8590"/>
+  </g>
+</svg>
