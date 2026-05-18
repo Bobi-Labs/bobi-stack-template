@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>bobi-stack — Next.js + Supabase + Claude Code scaffold</title>
+<meta name="description" content="Clone-and-fill starter kit: Next.js, Supabase, TanStack Query, Tailwind, shadcn/ui, Vercel, with a Claude Code workflow baked in. Battle-tested through production client work.">
+<link rel="canonical" href="https://bobistack.bobilabs.dev/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://bobistack.bobilabs.dev/">
+<meta property="og:title" content="bobi-stack">
+<meta property="og:description" content="Next.js + Supabase + TanStack Query starter kit with a Claude Code workflow baked in.">
+<meta property="og:image" content="https://bobistack.bobilabs.dev/social-preview.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="bobi-stack">
+<meta name="twitter:description" content="Next.js + Supabase + TanStack Query starter kit with a Claude Code workflow baked in.">
+<meta name="twitter:image" content="https://bobistack.bobilabs.dev/social-preview.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230a0c10'/%3E%3Crect x='9' y='7' width='5' height='18' fill='%232dd4bf'/%3E%3C/svg%3E">
+<style>
+  :root{
+    --bg:#0a0c10; --panel:#10151c; --panel2:#0d1117; --border:#30363d;
+    --text:#e6edf3; --muted:#8b949e; --accent:#2dd4bf;
+    --mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--text); font-family:var(--sans);
+    line-height:1.6; -webkit-font-smoothing:antialiased; overflow-x:hidden;
+  }
+  a{color:var(--accent); text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:980px; margin:0 auto; padding:0 24px}
+  code,pre,.mono{font-family:var(--mono)}
+
+  header{border-bottom:1px solid var(--border); background:rgba(13,17,23,.7); position:sticky; top:0; backdrop-filter:blur(8px); z-index:5}
+  nav{display:flex; align-items:center; justify-content:space-between; height:60px}
+  nav .brand{font-family:var(--mono); font-weight:700; font-size:18px}
+  nav .brand b{color:var(--accent)}
+  nav .links a{color:var(--muted); margin-left:22px; font-size:14px}
+  nav .links a:hover{color:var(--text); text-decoration:none}
+
+  .hero{position:relative; overflow:hidden; border-bottom:1px solid var(--border)}
+  .hero::before{content:""; position:absolute; inset:0;
+    background:radial-gradient(60% 70% at 16% 28%, rgba(45,212,191,.14), rgba(45,212,191,0) 70%);
+    pointer-events:none}
+  .hero .wrap{padding:84px 24px 76px}
+  .eyebrow{font-family:var(--mono); letter-spacing:6px; font-size:12px; color:var(--muted); margin:0 0 22px}
+  h1{font-family:var(--mono); font-weight:700; font-size:clamp(44px,9vw,104px); margin:0; letter-spacing:-2px; line-height:1}
+  h1 .a{color:var(--accent)}
+  h1 .cursor{display:inline-block; width:.5ch; height:.92em; background:var(--accent); margin-left:6px; transform:translateY(.06em); animation:blink 1.15s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+  @media (prefers-reduced-motion:reduce){.hero h1 .cursor{animation:none}}
+  .tagline{font-size:clamp(18px,2.4vw,24px); color:var(--text); margin:26px 0 8px; max-width:720px}
+  .subtag{color:var(--muted); margin:0 0 34px}
+  .cta{display:flex; gap:14px; flex-wrap:wrap}
+  .btn{display:inline-flex; align-items:center; gap:8px; padding:12px 20px; border-radius:8px;
+    font-family:var(--mono); font-size:14px; font-weight:600; border:1px solid var(--border); cursor:pointer}
+  .btn:hover{text-decoration:none}
+  .btn.primary{background:var(--accent); color:#04201c; border-color:var(--accent)}
+  .btn.primary:hover{filter:brightness(1.08)}
+  .btn.ghost{background:var(--panel); color:var(--text)}
+  .btn.ghost:hover{border-color:var(--accent); color:var(--accent)}
+
+  section{padding:68px 0; border-bottom:1px solid var(--border)}
+  section h2{font-family:var(--mono); font-size:13px; letter-spacing:5px; text-transform:uppercase; color:var(--muted); margin:0 0 26px}
+  .lead{font-size:18px; max-width:760px; margin:0 0 8px}
+  .lead .muted{color:var(--muted)}
+
+  .chips{display:flex; flex-wrap:wrap; gap:10px; margin-top:24px}
+  .chip{font-family:var(--mono); font-size:13px; color:#c9d1d9; background:var(--panel);
+    border:1px solid var(--border); border-radius:999px; padding:7px 16px}
+
+  .grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:16px; margin-top:6px}
+  .card{background:var(--panel); border:1px solid var(--border); border-radius:12px; padding:22px}
+  .card h3{font-family:var(--mono); font-size:15px; margin:0 0 8px}
+  .card p{margin:0; color:var(--muted); font-size:14.5px}
+
+  .flow{display:flex; flex-direction:column; gap:14px}
+  .flow .row{display:flex; align-items:center; flex-wrap:nowrap; gap:10px; overflow-x:auto;
+    background:var(--panel); border:1px solid var(--border); border-radius:12px; padding:18px 20px;
+    -webkit-overflow-scrolling:touch}
+  .flow .row::-webkit-scrollbar{height:6px}
+  .flow .row::-webkit-scrollbar-thumb{background:var(--border); border-radius:3px}
+  .flow .tag{flex:none; font-family:var(--mono); font-size:11px; letter-spacing:2px; color:var(--accent);
+    border:1px solid var(--border); border-radius:6px; padding:4px 9px; margin-right:6px}
+  .flow .node{flex:none; font-family:var(--mono); font-size:13.5px; color:#c9d1d9; white-space:nowrap}
+  .flow .arrow{flex:none; color:var(--muted); font-family:var(--mono)}
+
+  pre.term{background:var(--panel2); border:1px solid var(--border); border-radius:12px;
+    padding:22px 24px; overflow:auto; max-width:100%; font-size:14px; line-height:1.7; color:#c9d1d9}
+  pre.term .p{color:var(--accent)}
+  pre.term .c{color:var(--muted)}
+
+  footer{padding:42px 0 60px; color:var(--muted); font-size:14px}
+  footer .wrap{display:flex; justify-content:space-between; flex-wrap:wrap; gap:14px}
+  footer a{color:var(--muted)} footer a:hover{color:var(--text)}
+
+  @media (max-width:620px){
+    nav .links a:not(.gh){display:none}
+    .hero .wrap{padding:60px 24px 54px}
+    section{padding:52px 0}
+    .eyebrow{letter-spacing:3px; font-size:11px}
+    h1{font-size:clamp(40px,13vw,64px)}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <span class="brand">bobi<b>-stack</b></span>
+      <span class="links">
+        <a href="#what">What</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#start">Quick start</a>
+        <a class="gh" href="https://github.com/Bobi-Labs/bobi-stack">GitHub</a>
+      </span>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <p class="eyebrow">PROJECT SCAFFOLD FOR CLAUDE CODE</p>
+    <h1>bobi<span class="a">-stack</span><span class="cursor" aria-hidden="true"></span></h1>
+    <p class="tagline">Next.js + Supabase + TanStack Query, wired and ready, with a Claude Code workflow baked in.</p>
+    <p class="subtag">Battle-tested through production client work.</p>
+    <div class="cta">
+      <a class="btn primary" href="https://github.com/Bobi-Labs/bobi-stack/generate">Use this template</a>
+      <a class="btn ghost" href="https://github.com/Bobi-Labs/bobi-stack">View on GitHub</a>
+      <a class="btn ghost" href="#start">Quick start</a>
+    </div>
+  </div>
+</div>
+
+<section id="what">
+  <div class="wrap">
+    <h2>What it is</h2>
+    <p class="lead">bobi-stack is a clone-and-fill scaffold. You copy it, strip its git history, fill in the placeholders, and grow a project from it. <span class="muted">The stack comes pre-wired, and the Claude Code workflow conventions ship with it so AI-assisted sessions stay consistent across chats.</span></p>
+    <div class="chips">
+      <span class="chip">Next.js 14</span>
+      <span class="chip">Supabase</span>
+      <span class="chip">TanStack Query</span>
+      <span class="chip">Tailwind</span>
+      <span class="chip">shadcn/ui</span>
+      <span class="chip">TypeScript</span>
+      <span class="chip">Vercel</span>
+      <span class="chip">pnpm</span>
+    </div>
+  </div>
+</section>
+
+<section id="architecture">
+  <div class="wrap">
+    <h2>Architecture</h2>
+    <p class="lead" style="margin-bottom:24px">Reads and writes flow through typed registries paired with hooks. Database types flow end to end, so there are no hand-written types for DB data.</p>
+    <div class="flow">
+      <div class="row">
+        <span class="tag">READ</span>
+        <span class="node">Component</span><span class="arrow">&rarr;</span>
+        <span class="node">useClientQuery</span><span class="arrow">&rarr;</span>
+        <span class="node">Query registry</span><span class="arrow">&rarr;</span>
+        <span class="node">Supabase + RLS</span><span class="arrow">&rarr;</span>
+        <span class="node">TanStack cache</span><span class="arrow">&rarr;</span>
+        <span class="node">render</span>
+      </div>
+      <div class="row">
+        <span class="tag">WRITE</span>
+        <span class="node">Form (RHF + Zod)</span><span class="arrow">&rarr;</span>
+        <span class="node">useClientMutation</span><span class="arrow">&rarr;</span>
+        <span class="node">Mutation registry</span><span class="arrow">&rarr;</span>
+        <span class="node">Supabase + RLS</span><span class="arrow">&rarr;</span>
+        <span class="node">auto-invalidate</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="start">
+  <div class="wrap">
+    <h2>Quick start</h2>
+    <pre class="term"><span class="c"># Clone, then drop the template's history</span>
+git clone https://github.com/Bobi-Labs/bobi-stack.git my-project
+cd my-project &amp;&amp; rm -rf .git &amp;&amp; git init -b main
+
+<span class="c"># Environment</span>
+cp .env.example .env.local    <span class="c"># fill in Supabase credentials</span>
+./ops.sh install              <span class="c"># pnpm install</span>
+./ops.sh dev                  <span class="c"># localhost:3000</span>
+
+<span class="c"># First Claude Code session</span>
+<span class="p">/bobi-stack</span>                    <span class="c"># auto-fill CLAUDE.md from the real codebase</span></pre>
+    <p class="lead muted" style="margin-top:18px; font-size:15px">Or skip the history step: use the green <b style="color:var(--text)">Use this template</b> button on GitHub.</p>
+  </div>
+</section>
+
+<section id="conventions">
+  <div class="wrap">
+    <h2>Why it holds up</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Session lifecycle</h3>
+        <p>CLAUDE.md carries a session-start checklist and a session-end checklist, so cross-chat knowledge does not leak.</p>
+      </div>
+      <div class="card">
+        <h3>Memory templates</h3>
+        <p>Feedback, project, user, and reference categories with a MEMORY.md index. Lessons learned persist across sessions.</p>
+      </div>
+      <div class="card">
+        <h3>Typed data layer</h3>
+        <p>Query and mutation registries paired with hooks. Schema types reach the component with nothing hand-written.</p>
+      </div>
+      <div class="card">
+        <h3>Fail loudly</h3>
+        <p>Every client-facing action that can fail surfaces a plain-English reason and a path forward. Silent failures erode trust fastest.</p>
+      </div>
+      <div class="card">
+        <h3>Atomic commits</h3>
+        <p>One logical change per commit. The git log reads as a narrative, not a pile of squashed mega-commits.</p>
+      </div>
+      <div class="card">
+        <h3>CLI-first ops</h3>
+        <p>Everything runs through ops.sh, so CI and local never disagree on how the project builds and tests.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>bobi-stack &middot; MIT licensed &middot; built by <a href="https://bobilabs.dev">Bobi Labs</a></span>
+    <span><a href="https://github.com/Bobi-Labs/bobi-stack">GitHub</a> &nbsp;&middot;&nbsp; <a href="https://github.com/Bobi-Labs/bobi-stack/generate">Use this template</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
