@@ -2,8 +2,6 @@
 
 This repo is a **clone-and-fill scaffold**, not a published package. Nobody installs it at a version; you copy it, strip its git history, and grow a project from it. Its value is the *process* baked in, so the process is written down here.
 
-Lineage: bobi-stack was seeded from [the prior template](https://github.com/the prior templatemd/prior-template) (root commit `f49bac1`), then diverged toward project scaffolding. See `docs/prior-template-lineage.md` for what differs and why.
-
 ## Two kinds of work
 
 ### 1. Spinning up a new project from the template

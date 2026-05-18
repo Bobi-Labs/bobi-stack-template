@@ -3,7 +3,7 @@
 
 ## Backlog — Setup
 
-- [ ] Run /prior-template to auto-fill CLAUDE.md with real project data
+- [ ] Run /bobi-stack to auto-fill CLAUDE.md with real project data
 - [ ] Create Supabase project and add env vars to .env.local
 - [ ] Run ./ops.sh gen-types to generate database types
 - [ ] Add first query with /new-query

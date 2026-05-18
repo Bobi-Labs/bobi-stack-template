@@ -1,7 +1,7 @@
 # Bobi Stack Template
 
 > Project-agnostic starter kit + workflow conventions for Claude Code sessions.
-> Seeded from The prior template; evolved through production client work.
+> Battle-tested through production client work.
 
 ## Two use cases
 
@@ -54,7 +54,7 @@ full stack, but the workflow conventions are stack-agnostic.
 - `supabase-mutations` — write-path convention (Zod + registry + RHF)
 - `supabase-query-system` — read-path convention (registry + TanStack)
 - `new-query` / `new-mutation` — code generators
-- `docs` / `the prior template` / `todo` — doc + project conventions
+- `docs` / `bobi-stack` / `todo` — doc + project conventions
 - `bosskey` / `lsp` / `squad` — orchestration helpers
 
 ## Quick Start (new project)

@@ -8,7 +8,7 @@ Copy this template folder, then follow these steps to wire up a fully connected 
 
 ```bash
 # Copy the template
-cp -r the prior template my-new-project
+cp -r bobi-stack my-new-project
 cd my-new-project
 
 # Update project name in two files:
@@ -22,7 +22,7 @@ cd my-new-project
 # Initialize local repo
 git init
 git add -A
-git commit -m "Initial scaffold from the prior template template"
+git commit -m "Initial scaffold from bobi-stack template"
 
 # Create GitHub repo (requires gh CLI: https://cli.github.com)
 gh repo create your-org/my-new-project --private --source=. --push
@@ -106,15 +106,15 @@ After creating your first tables in Supabase:
 
 This writes `lib/supabase/database.types.ts` — all your SDK calls are now typed.
 
-## Step 7: Run /prior-template
+## Step 7: Run /bobi-stack
 
 Open Claude Code in the project folder and run:
 
 ```
-/prior-template
+/bobi-stack
 ```
 
-This auto-fills CLAUDE.md with real project data, configures ops.sh, populates TODO.md, and checks for upstream the prior template updates.
+This auto-fills CLAUDE.md with real project data, configures ops.sh, and populates TODO.md.
 
 ## Step 8: Add shadcn/ui Components
 
@@ -145,7 +145,7 @@ pnpm dlx shadcn@latest add table tabs dropdown-menu popover
 Copy-paste this into your first Claude session for a new project:
 
 ```
-I just created this project from the the prior template template. Help me set it up:
+I just created this project from the bobi-stack template. Help me set it up:
 
 1. Update package.json name and ops.sh PROJECT_NAME to "[your-project-name]"
 2. Initialize git and create a GitHub repo at [your-org]/[your-project-name]
@@ -155,7 +155,7 @@ I just created this project from the the prior template template. Help me set it
    Set up .env.local with these.
 4. Link to Vercel and push env vars
 5. Install deps and verify the dev server runs
-6. Run /prior-template to fill in CLAUDE.md
+6. Run /bobi-stack to fill in CLAUDE.md
 ```
 
 ---
@@ -180,7 +180,7 @@ I just created this project from the the prior template template. Help me set it
 - [ ] Vercel linked + env vars pushed
 - [ ] `./ops.sh install` runs clean
 - [ ] `./ops.sh dev` shows starter page
-- [ ] `/prior-template` run to fill CLAUDE.md
+- [ ] `/bobi-stack` run to fill CLAUDE.md
 - [ ] First table created in Supabase
 - [ ] `./ops.sh gen-types` generates types
 - [ ] First query/mutation scaffolded

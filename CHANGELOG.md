@@ -13,9 +13,8 @@ Git-hygiene and cross-chat continuity pass. Root-caused by a real client project
 - **`docs/calls/INDEX.md` is now standard, not optional.** A stub ships with the template. It is the source of truth `check-integrity` diffs against.
 - **CI.** `.github/workflows/ci.yml` runs `./ops.sh check` + `./ops.sh test` + `./ops.sh build` on every PR and push to `main`, so CI and local never disagree.
 - **Commit convention** added to `CLAUDE.md`: atomic, conventional-prefixed, what-in-subject / why-in-body. The log should read as a narrative.
-- **Skills adopted** from the prior template: `/cicd` (generates the CI file above) and `/prose` (strict no-em-dash, no-AI-tell writing, binds all output including commits and docs).
+- **Skills added:** `/cicd` (generates the CI file above) and `/prose` (strict no-em-dash, no-AI-tell writing, binds all output including commits and docs).
 - **`CONTRIBUTING.md`** added: documents both the new-project ritual and the template-evolution ritual. The template's value is its process, so the process is now written down.
-- **`docs/prior-template-lineage.md`** added: records where bobi-stack diverged from its the prior template seed, what each does better, and what was adopted back.
 
 ## 2026-05-14
 
@@ -23,16 +22,15 @@ Git-hygiene and cross-chat continuity pass. Root-caused by a real client project
 
 ## 2026-04-24
 
-Initial scaffold built out from the the prior template seed.
+Initial scaffold built out.
 
 - Workflow foundation: `CLAUDE.md` session-start checklist, `.gitignore`, call-notes convention, README rebrand.
-- Memory-template system: the 4 universal feedback principles plus structural `project_/user_/reference_/session_history` templates. This is bobi-stack's strongest original asset over the upstream seed.
+- Memory-template system: the 4 universal feedback principles plus structural `project_/user_/reference_/session_history` templates. This is bobi-stack's strongest original asset.
 - Onboarding + scripts: genericized Drive CLI, `pull-doc-images`, `extract-docx`, `starting-a-new-project.md`, `migrating-an-existing-project.md`. `docs/SUMMARY` linked to the new guides.
-- Seeded from the prior template (root commit `f49bac1`).
 
 ## Deferred by design
 
 Recorded so a future session does not re-decide these from scratch. Revisit only if the stated condition changes.
 
-- **Semver tags, `make release-*` targets, tag-triggered release CI, build artifacts, marketing site.** the prior template has all of this because it is a published Claude Code plugin people install at a version. bobi-stack is clone-and-fill with no version-pinned consumers, so this machinery would be process for its own sake. **Revisit if** bobi-stack becomes a genuinely published, version-pinned artifact.
+- **Semver tags, `make release-*` targets, tag-triggered release CI, build artifacts, marketing site.** bobi-stack is clone-and-fill with no version-pinned consumers, so this release machinery would be process for its own sake. **Revisit if** bobi-stack becomes a genuinely published, version-pinned artifact.
 - **PR/issue templates, commitlint, branch protection as config, Dependabot.** Useful at team scale. bobi-stack has a single maintainer. The commit convention in `CLAUDE.md` plus CI is the proportionate amount of structure for now. **Revisit if** more than one person regularly commits here.

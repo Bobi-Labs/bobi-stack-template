@@ -32,7 +32,7 @@ When you would have reached for `—`, choose one based on the relationship betw
 | "The plan was simple — execute fast." | Colon for label and value | "The plan was simple: execute fast." |
 | "It's broken — fix it." | Period for two sentences | "It's broken. Fix it." |
 | "She decided — finally — to leave." | Commas or restructure | "She decided, finally, to leave." OR "She finally decided to leave." |
-| "the prior template — Structure for AI-assisted development." | Colon for tagline | "the prior template: Structure for AI-assisted development." |
+| "Bobi-Stack — Structure for AI-assisted development." | Colon for tagline | "Bobi-Stack: Structure for AI-assisted development." |
 
 When you would have reached for `–` (en dash, often used in numeric ranges):
 

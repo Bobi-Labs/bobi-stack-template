@@ -265,7 +265,7 @@ The git log is documentation. It should read as a narrative, not a pile of squas
 **Active reference skills (auto-load in Claude Code):**
 
 - `cli-first` — CLI tools + env files for third-party services
-- `the prior template` — Docs, TODO, ops.sh workflow conventions
+- `bobi-stack` — Docs, TODO, ops.sh workflow conventions
 - `supabase-query-system` — Read path
 - `supabase-mutations` — Write path
 
