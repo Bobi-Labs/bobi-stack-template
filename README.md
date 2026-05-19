@@ -3,33 +3,24 @@
 </p>
 
 <p align="center">
-  <a href="LICENSE"><img src="https://img.shields.io/github/license/Bobi-Labs/bobi-stack?color=2dd4bf&label=license" alt="License: MIT"></a>
-  <a href="https://github.com/Bobi-Labs/bobi-stack/generate"><img src="https://img.shields.io/badge/use%20this-template-2dd4bf" alt="Use this template"></a>
-  <img src="https://img.shields.io/badge/Claude%20Code-ready-2dd4bf" alt="Built for Claude Code">
+  <b>Delivery infrastructure for Bobi Labs.</b><br>
+  The production scaffold and Claude Code workflow discipline behind every engagement.
 </p>
 
 <p align="center">
-  <b>Next.js + Supabase + TanStack Query starter kit with a Claude Code workflow baked in.</b><br>
-  Battle-tested through production client work.
-</p>
-
-<p align="center">
-  <a href="https://bobistack.bobilabs.dev">Website</a> &nbsp;&middot;&nbsp;
-  <a href="docs/starting-a-new-project.md">Start a project</a> &nbsp;&middot;&nbsp;
-  <a href="docs/migrating-an-existing-project.md">Migrate a project</a> &nbsp;&middot;&nbsp;
-  <a href="CONTRIBUTING.md">Contributing</a>
+  <a href="https://bobistack.bobilabs.dev">bobistack.bobilabs.dev</a> &nbsp;&middot;&nbsp;
+  <a href="https://bobilabs.dev/work">bobilabs.dev/work</a>
 </p>
 
 ---
 
+> **Proprietary and confidential.** Internal Bobi Labs infrastructure, not open source. See [LICENSE](LICENSE). May be opened up later once it has proven out further.
+
 ## What it is
 
-bobi-stack is a clone-and-fill scaffold. You copy it, strip its git history, fill in the placeholders, and grow a project from it. The stack (Next.js 14, Supabase, TanStack Query, Tailwind, shadcn/ui, Vercel, pnpm) comes pre-wired, and the Claude Code workflow conventions ship with it so AI-assisted sessions stay consistent across chats.
+bobi-stack is the codebase Bobi Labs starts every build from. Next.js, Supabase, and a typed data layer wired end to end, plus the Claude Code session and memory discipline that keeps AI-assisted delivery consistent across a multi-week engagement. It is a chunk of why a small senior team ships like a larger one.
 
-Two ways in:
-
-- **Start a new project.** See [`docs/starting-a-new-project.md`](docs/starting-a-new-project.md). Clone, rename, fill the `CLAUDE.md` placeholders, set up Supabase + Vercel, ship.
-- **Bring an existing project up to these conventions.** See [`docs/migrating-an-existing-project.md`](docs/migrating-an-existing-project.md). Open it in Claude Code, paste the migration prompt, approve what fits, skip what does not.
+Internally, a new engagement starts from this scaffold: copy it, point it at a fresh Supabase and Vercel project, fill the `CLAUDE.md` placeholders, and the data layer, conventions, and session discipline are already in place.
 
 ## Architecture
 
@@ -43,44 +34,22 @@ flowchart LR
   S --> IV[Auto-invalidate] --> TC
 ```
 
-## Quick start
-
-```bash
-# Clone, then drop the template's history
-git clone https://github.com/Bobi-Labs/bobi-stack.git my-project
-cd my-project && rm -rf .git && git init -b main
-
-# Environment
-cp .env.example .env.local    # fill in Supabase credentials
-./ops.sh install              # pnpm install
-./ops.sh dev                  # localhost:3000
-
-# First session with Claude Code
-#  1. fill in CLAUDE.md placeholders (name, overview, stack, domain notes)
-#  2. copy .claude/memory-templates/ into your Claude memory folder at
-#     ~/.claude/projects/<project-dir>/memory/
-#  3. run /bobi-stack to auto-fill CLAUDE.md from the real codebase
-#  4. read docs/starting-a-new-project.md for the full walkthrough
-```
-
-Prefer the green **Use this template** button at the top of the repo to skip the history-stripping step entirely.
-
 ## What's in here
 
-**Stack scaffolding.** Next.js 14, Supabase, TanStack Query, Tailwind, shadcn/ui, Vercel, pnpm. Opt in as needed. The scaffold assumes the full stack; the workflow conventions are stack-agnostic.
+**Stack scaffolding.** Next.js 14, Supabase, TanStack Query, Tailwind, shadcn/ui, Vercel, pnpm. The scaffold assumes the full stack; the workflow conventions are stack-agnostic.
 
-**Workflow conventions** (stack-agnostic, always useful):
+**Workflow conventions:**
 
 - `CLAUDE.md`: session-start checklist + project instructions pattern
 - `.claude/memory-templates/`: memory file conventions (feedback, project, user, reference categories + a `MEMORY.md` index)
 - `docs/calls/`: parsed call-notes convention (raw transcripts gitignored, parsed notes committed)
 - `.screenshots/`: image-sharing convention for Claude sessions
-- Principle files: fail-loudly, mutual-check-in, invoice-language, client-facing-quality, all generic, all battle-tested
+- Principle files: fail-loudly, mutual-check-in, invoice-language, client-facing-quality
 
-**Tooling** (opt-in, only if the project needs it):
+**Tooling:**
 
 - `scripts/lib/drive.mjs` + `drive-cli.mjs`: Google Drive helpers (service account + env-based config)
-- `scripts/pull-doc-images.mjs`: pull images from a Google Doc into `.screenshots/` so Claude reads them without chat bloat
+- `scripts/pull-doc-images.mjs`: pull images from a Google Doc into `.screenshots/`
 - `scripts/extract-docx-text.mjs`: quick text extraction from `.docx`
 - `lib/tests/` + `/api/tests/run`: daily test-suite harness (synthetic end-to-end tests + health checks + email report)
 
@@ -113,13 +82,16 @@ Everything goes through `ops.sh`:
 - **Push back honestly.** If Claude (or you) sees a better path, say it. A solid product beats being agreeable. See `.claude/memory-templates/feedback_mutual_check_in.md`.
 - **Fail loudly in client-facing steps.** Silent failures erode trust fastest. Every user-triggered action that can fail must surface a plain-English reason and a path forward. See `.claude/memory-templates/feedback_error_handling.md`.
 - **One commit per logical change.** No while-I-am-at-it bundling.
-- **Memory files are lessons learned, not summaries.** The memory folder captures what was hard-won. `CLAUDE.md` captures current project state. Different purposes.
+- **Memory files are lessons learned, not summaries.** The memory folder captures what was hard-won. `CLAUDE.md` captures current project state.
 - **Start fresh chats for new batches of work.** Long chats degrade. Memory carries forward what matters; chat context does not need to.
 
-## Versioning
+## Internal docs
 
-This template evolves. Each substantial pattern addition bumps the minor version. Projects on v1.x can pull later patterns in via the migration prompt. Current: **v2.0** (2026-04).
+- [`docs/starting-a-new-project.md`](docs/starting-a-new-project.md): standing up a new engagement from the scaffold
+- [`docs/migrating-an-existing-project.md`](docs/migrating-an-existing-project.md): bringing an in-flight project onto these conventions
+- [`CONTRIBUTING.md`](CONTRIBUTING.md): how the scaffold itself evolves
+- [`CHANGELOG.md`](CHANGELOG.md): what changed and why
 
 ## License
 
-MIT. See [LICENSE](LICENSE).
+Proprietary. Copyright (c) 2026 Bobi Labs. All rights reserved. See [LICENSE](LICENSE).
