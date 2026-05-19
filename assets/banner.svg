@@ -19,14 +19,14 @@
   <rect width="1280" height="640" rx="20" fill="url(#glow)"/>
   <rect x="1" y="1" width="1278" height="638" rx="19" fill="none" stroke="#1f2937" stroke-width="2"/>
 
-  <text x="96" y="150" fill="#7d8590" font-size="22" letter-spacing="7" font-weight="600">PROJECT SCAFFOLD FOR CLAUDE CODE</text>
+  <text x="96" y="150" fill="#7d8590" font-size="22" letter-spacing="7" font-weight="600">BOBI LABS &#183; DELIVERY INFRASTRUCTURE</text>
 
   <text x="93" y="300" font-size="132" font-weight="700" letter-spacing="-3">
     <tspan fill="#e6edf3">bobi</tspan><tspan fill="#2dd4bf">-stack</tspan>
   </text>
   <rect x="775" y="208" width="26" height="104" fill="#2dd4bf"/>
 
-  <text x="96" y="372" fill="#c9d1d9" font-size="34" font-weight="500">Next.js + Supabase + TanStack Query, wired and ready.</text>
+  <text x="96" y="372" fill="#c9d1d9" font-size="34" font-weight="500">The structure behind senior-speed delivery.</text>
   <text x="96" y="420" fill="#7d8590" font-size="28">Battle-tested through production client work.</text>
 
   <g transform="translate(96 470)">

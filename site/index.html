@@ -3,17 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>bobi-stack — Next.js + Supabase + Claude Code scaffold</title>
-<meta name="description" content="Clone-and-fill starter kit: Next.js, Supabase, TanStack Query, Tailwind, shadcn/ui, Vercel, with a Claude Code workflow baked in. Battle-tested through production client work.">
+<title>bobi-stack — delivery infrastructure by Bobi Labs</title>
+<meta name="description" content="The production scaffold and Claude Code workflow discipline behind every Bobi Labs engagement. Trust through structure, speed through senior craft.">
 <link rel="canonical" href="https://bobistack.bobilabs.dev/">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://bobistack.bobilabs.dev/">
-<meta property="og:title" content="bobi-stack">
-<meta property="og:description" content="Next.js + Supabase + TanStack Query starter kit with a Claude Code workflow baked in.">
+<meta property="og:title" content="bobi-stack — delivery infrastructure by Bobi Labs">
+<meta property="og:description" content="The production scaffold and AI-workflow discipline behind every Bobi Labs engagement.">
 <meta property="og:image" content="https://bobistack.bobilabs.dev/social-preview.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="bobi-stack">
-<meta name="twitter:description" content="Next.js + Supabase + TanStack Query starter kit with a Claude Code workflow baked in.">
+<meta name="twitter:title" content="bobi-stack — delivery infrastructure by Bobi Labs">
+<meta name="twitter:description" content="The production scaffold and AI-workflow discipline behind every Bobi Labs engagement.">
 <meta name="twitter:image" content="https://bobistack.bobilabs.dev/social-preview.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230a0c10'/%3E%3Crect x='9' y='7' width='5' height='18' fill='%232dd4bf'/%3E%3C/svg%3E">
 <style>
@@ -40,6 +40,7 @@
   nav .brand b{color:var(--accent)}
   nav .links a{color:var(--muted); margin-left:22px; font-size:14px}
   nav .links a:hover{color:var(--text); text-decoration:none}
+  nav .links a.cta{color:var(--accent)}
 
   .hero{position:relative; overflow:hidden; border-bottom:1px solid var(--border)}
   .hero::before{content:""; position:absolute; inset:0;
@@ -53,7 +54,7 @@
   @keyframes blink{50%{opacity:0}}
   @media (prefers-reduced-motion:reduce){.hero h1 .cursor{animation:none}}
   .tagline{font-size:clamp(18px,2.4vw,24px); color:var(--text); margin:26px 0 8px; max-width:720px}
-  .subtag{color:var(--muted); margin:0 0 34px}
+  .subtag{color:var(--muted); margin:0 0 34px; font-style:italic}
   .cta{display:flex; gap:14px; flex-wrap:wrap}
   .btn{display:inline-flex; align-items:center; gap:8px; padding:12px 20px; border-radius:8px;
     font-family:var(--mono); font-size:14px; font-weight:600; border:1px solid var(--border); cursor:pointer}
@@ -93,6 +94,13 @@
   pre.term .p{color:var(--accent)}
   pre.term .c{color:var(--muted)}
 
+  .close{text-align:center}
+  .close .wrap{max-width:680px}
+  .close h2{font-family:var(--sans); font-size:clamp(26px,4vw,38px); font-weight:700;
+    letter-spacing:-.5px; text-transform:none; color:var(--text); margin:0 0 16px}
+  .close p{color:var(--muted); font-size:18px; margin:0 0 32px}
+  .close .cta{justify-content:center}
+
   footer{padding:42px 0 60px; color:var(--muted); font-size:14px}
   footer .wrap{display:flex; justify-content:space-between; flex-wrap:wrap; gap:14px}
   footer a{color:var(--muted)} footer a:hover{color:var(--text)}
@@ -113,10 +121,10 @@
     <nav>
       <span class="brand">bobi<b>-stack</b></span>
       <span class="links">
-        <a href="#what">What</a>
+        <a href="#what">What it is</a>
         <a href="#architecture">Architecture</a>
-        <a href="#start">Quick start</a>
-        <a class="gh" href="https://github.com/Bobi-Labs/bobi-stack">GitHub</a>
+        <a href="#discipline">Why it holds up</a>
+        <a class="gh cta" href="https://bobilabs.dev">Bobi Labs &#8599;</a>
       </span>
     </nav>
   </div>
@@ -124,14 +132,13 @@
 
 <div class="hero">
   <div class="wrap">
-    <p class="eyebrow">PROJECT SCAFFOLD FOR CLAUDE CODE</p>
+    <p class="eyebrow">BOBI LABS &middot; DELIVERY INFRASTRUCTURE</p>
     <h1>bobi<span class="a">-stack</span><span class="cursor" aria-hidden="true"></span></h1>
-    <p class="tagline">Next.js + Supabase + TanStack Query, wired and ready, with a Claude Code workflow baked in.</p>
-    <p class="subtag">Battle-tested through production client work.</p>
+    <p class="tagline">The production scaffold and AI-workflow discipline every Bobi Labs engagement ships on.</p>
+    <p class="subtag">Trust through structure. This is the structure.</p>
     <div class="cta">
-      <a class="btn primary" href="https://github.com/Bobi-Labs/bobi-stack/generate">Use this template</a>
-      <a class="btn ghost" href="https://github.com/Bobi-Labs/bobi-stack">View on GitHub</a>
-      <a class="btn ghost" href="#start">Quick start</a>
+      <a class="btn primary" href="https://freelance.bobilabs.dev/work-with-us">Work with us</a>
+      <a class="btn ghost" href="https://bobilabs.dev/work">See what it ships</a>
     </div>
   </div>
 </div>
@@ -139,16 +146,16 @@
 <section id="what">
   <div class="wrap">
     <h2>What it is</h2>
-    <p class="lead">bobi-stack is a clone-and-fill scaffold. You copy it, strip its git history, fill in the placeholders, and grow a project from it. <span class="muted">The stack comes pre-wired, and the Claude Code workflow conventions ship with it so AI-assisted sessions stay consistent across chats.</span></p>
+    <p class="lead">bobi-stack is the codebase Bobi Labs starts every build from. Next.js, Supabase, and a typed data layer wired end to end, plus the Claude Code session and memory discipline that keeps AI-assisted delivery consistent across a multi-week engagement. <span class="muted">It is a chunk of why a small senior team ships like a larger one. Not a product you buy, the infrastructure behind the work.</span></p>
     <div class="chips">
-      <span class="chip">Next.js 14</span>
+      <span class="chip">Next.js</span>
       <span class="chip">Supabase</span>
       <span class="chip">TanStack Query</span>
       <span class="chip">Tailwind</span>
       <span class="chip">shadcn/ui</span>
       <span class="chip">TypeScript</span>
       <span class="chip">Vercel</span>
-      <span class="chip">pnpm</span>
+      <span class="chip">Claude Code</span>
     </div>
   </div>
 </section>
@@ -156,7 +163,7 @@
 <section id="architecture">
   <div class="wrap">
     <h2>Architecture</h2>
-    <p class="lead" style="margin-bottom:24px">Reads and writes flow through typed registries paired with hooks. Database types flow end to end, so there are no hand-written types for DB data.</p>
+    <p class="lead" style="margin-bottom:24px">Reads and writes flow through typed registries paired with hooks. Database types flow end to end, so there are no hand-written types for DB data and the same pattern survives from the first table to the hundredth.</p>
     <div class="flow">
       <div class="row">
         <span class="tag">READ</span>
@@ -179,35 +186,17 @@
   </div>
 </section>
 
-<section id="start">
-  <div class="wrap">
-    <h2>Quick start</h2>
-    <pre class="term"><span class="c"># Clone, then drop the template's history</span>
-git clone https://github.com/Bobi-Labs/bobi-stack.git my-project
-cd my-project &amp;&amp; rm -rf .git &amp;&amp; git init -b main
-
-<span class="c"># Environment</span>
-cp .env.example .env.local    <span class="c"># fill in Supabase credentials</span>
-./ops.sh install              <span class="c"># pnpm install</span>
-./ops.sh dev                  <span class="c"># localhost:3000</span>
-
-<span class="c"># First Claude Code session</span>
-<span class="p">/bobi-stack</span>                    <span class="c"># auto-fill CLAUDE.md from the real codebase</span></pre>
-    <p class="lead muted" style="margin-top:18px; font-size:15px">Or skip the history step: use the green <b style="color:var(--text)">Use this template</b> button on GitHub.</p>
-  </div>
-</section>
-
-<section id="conventions">
+<section id="discipline">
   <div class="wrap">
     <h2>Why it holds up</h2>
     <div class="grid">
       <div class="card">
         <h3>Session lifecycle</h3>
-        <p>CLAUDE.md carries a session-start checklist and a session-end checklist, so cross-chat knowledge does not leak.</p>
+        <p>A session-start and session-end checklist mean cross-chat knowledge does not leak between AI-assisted work sessions.</p>
       </div>
       <div class="card">
         <h3>Memory templates</h3>
-        <p>Feedback, project, user, and reference categories with a MEMORY.md index. Lessons learned persist across sessions.</p>
+        <p>Feedback, project, user, and reference categories with an index. Lessons learned persist across an engagement, not just a chat.</p>
       </div>
       <div class="card">
         <h3>Typed data layer</h3>
@@ -219,20 +208,31 @@ cp .env.example .env.local    <span class="c"># fill in Supabase credentials</sp
       </div>
       <div class="card">
         <h3>Atomic commits</h3>
-        <p>One logical change per commit. The git log reads as a narrative, not a pile of squashed mega-commits.</p>
+        <p>One logical change per commit. The git log reads as a narrative a client can audit, not a pile of mega-commits.</p>
       </div>
       <div class="card">
         <h3>CLI-first ops</h3>
-        <p>Everything runs through ops.sh, so CI and local never disagree on how the project builds and tests.</p>
+        <p>Everything runs through one ops script, so CI and local never disagree on how the project builds and tests.</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<section class="close">
+  <div class="wrap">
+    <h2>Want this behind your build?</h2>
+    <p>bobi-stack is internal Bobi Labs infrastructure, shared privately for now and opening up once it has proven out further. The fastest way to see what it produces is to put a real problem in front of the team that runs on it.</p>
+    <div class="cta">
+      <a class="btn primary" href="https://freelance.bobilabs.dev/work-with-us">Work with us</a>
+      <a class="btn ghost" href="https://bobilabs.dev/work">See the work it ships</a>
     </div>
   </div>
 </section>
 
 <footer>
   <div class="wrap">
-    <span>bobi-stack &middot; MIT licensed &middot; built by <a href="https://bobilabs.dev">Bobi Labs</a></span>
-    <span><a href="https://github.com/Bobi-Labs/bobi-stack">GitHub</a> &nbsp;&middot;&nbsp; <a href="https://github.com/Bobi-Labs/bobi-stack/generate">Use this template</a></span>
+    <span>bobi-stack &middot; A Bobi Labs internal asset &middot; &copy; 2026 Bobi Labs. All rights reserved.</span>
+    <span><a href="https://bobilabs.dev">Bobi Labs</a> &nbsp;&middot;&nbsp; <a href="https://bobilabs.dev/work">Work</a> &nbsp;&middot;&nbsp; <a href="https://freelance.bobilabs.dev/work-with-us">Work with us</a></span>
   </div>
 </footer>
 
