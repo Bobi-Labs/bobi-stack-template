@@ -214,6 +214,12 @@
   .bobi-fig figcaption{ position:absolute; left:0; right:0; bottom:0; padding:36px 20px 13px;
     background:linear-gradient(transparent,rgba(13,9,5,.93)); color:var(--cream); font-family:"Fraunces";
     font-style:italic; font-weight:600; font-size:.96rem; }
+  .special-duo{ display:flex; gap:3px; }
+  .special-duo figure{ flex:1 1 50%; min-width:0; margin:0; position:relative; overflow:hidden; }
+  .special-duo img{ width:100%; height:228px; object-fit:cover; object-position:center 32%; display:block; }
+  .special-duo figure:first-child img{ border-radius:18px 0 0 0; }
+  .special-duo figure:last-child img{ border-radius:0 18px 0 0; }
+  .special-duo figcaption{ position:absolute; inset:auto 0 0 0; padding:26px 8px 9px; background:linear-gradient(transparent,rgba(13,9,5,.92)); font-family:"Fraunces"; font-style:italic; font-weight:600; font-size:.84rem; color:var(--cream); text-align:center; }
   .bobi-body{ padding:18px 22px 24px; }
   .bobi-title{ font-family:"Fraunces"; font-weight:700; font-size:1.7rem; color:var(--cream); line-height:1.05; }
   .bobi-sub{ font-style:italic; color:var(--brass); font-size:.92rem; margin:5px 0; }
@@ -934,19 +940,24 @@ const BOBI={
 };
 const TIMBER={
   img:'img/timber.jpg',
+  imgs:[
+    {src:'img/timber2.jpg',cap:{en:'adventure buddy',pt:'companheiro de aventuras'}},
+    {src:'img/timber.jpg',cap:{en:'couch potato',pt:'preguiçoso profissional'}}
+  ],
   name:{en:'The Timber Special',pt:'O Timber Special'},
   tag:{en:'Passion Fruit Margarita · extra lime',pt:'Margarita de Maracujá · lima a mais'},
   ing:[
     ['50 ml',['tequila','tequila']],
     ['20 ml',['passion fruit liqueur','licor de maracujá']],
     ['30 ml',['fresh lime','sumo de lima']],
-    ['10 ml',['agave','agave']]
+    ['10 ml',['agave','agave']],
+    ['1 pinch',['salt, in the shake','sal, no shaker']]
   ],
   steps:{
-    en:['Shake hard with ice','Strain over fresh ice','Salt rim optional, extra lime wedge'],
-    pt:['Agita bem com gelo','Coa sobre gelo novo','Aro de sal opcional, gomo de lima a mais']
+    en:['Sugar the rim of a chilled glass','Shake everything hard with ice — pinch of salt and all','Strain over fresh ice, extra lime wedge'],
+    pt:['Faz um aro de açúcar num copo gelado','Agita tudo bem com gelo — incluindo a pitada de sal','Coa sobre gelo novo, gomo de lima a mais']
   },
-  note:{en:'A Passion Fruit Margarita with extra lime — bright, tart, and ready for anything, just like Timber.',pt:'Uma Margarita de maracujá com lima a mais — viva, ácida e pronta para tudo, tal como o Timber.'},
+  note:{en:'A Passion Fruit Margarita with extra lime: a sugar rim, plus a pinch of salt in the shake to keep it balanced. Bright, tart, and ready for anything, just like Timber.',pt:'Uma Margarita de maracujá com lima a mais: aro de açúcar e uma pitada de sal no shaker para equilibrar. Viva, ácida e pronta para tudo, tal como o Timber.'},
   quote:{en:'Meet Timber — equal parts adventure buddy and professional couch potato! He’s always up for a stroll or a snuggle session, and honestly? He’s pretty great at both.',pt:'Apresentamos o Timber — meio companheiro de aventuras, meio preguiçoso profissional! Está sempre pronto para um passeio ou uma sessão de miminhos e, sinceramente? É bastante bom nas duas coisas.'},
   tribute:{en:'Timber · adventure buddy & professional couch potato',pt:'Timber · companheiro de aventuras e preguiçoso profissional'},
   by:'TIMBER'
@@ -955,11 +966,11 @@ const SPECIALS={bobi:BOBI,timber:TIMBER};
 function buildSpecialBody(s){
   const ing=s.ing.map(([a,tr])=>`<li><span class="amt">${a}</span><span class="ing">${ingText(tr)}</span></li>`).join('');
   const steps=s.steps[lang].map(x=>`<li>${x}</li>`).join('');
+  const photos = s.imgs
+    ? `<div class="special-duo">${s.imgs.map(p=>`<figure><img src="${p.src}" alt="${L(s.name)}" onerror="this.closest('figure').style.display='none'"><figcaption>${L(p.cap)}</figcaption></figure>`).join('')}</div>`
+    : `<figure class="bobi-fig"><img src="${s.img}" alt="${L(s.name)}" onerror="this.style.display='none'"><figcaption>${L(s.tribute)}</figcaption></figure>`;
   return `
-    <figure class="bobi-fig">
-      <img src="${s.img}" alt="${L(s.name)}" onerror="this.style.display='none'">
-      <figcaption>${L(s.tribute)}</figcaption>
-    </figure>
+    ${photos}
     <div class="bobi-body">
       <h3 class="bobi-title">${L(s.name)}</h3>
       <div class="bobi-sub">${L(s.tag)}</div>
