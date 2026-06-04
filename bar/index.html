@@ -40,7 +40,7 @@
   }
   .wrap{position:relative; z-index:1; max-width:1080px; margin:0 auto; padding:0 20px 80px;}
 
-  header.hero{ position:relative; display:flex; align-items:center; justify-content:space-between; gap:30px; flex-wrap:wrap; text-align:left; padding:44px 8px 26px; }
+  header.hero{ position:relative; display:flex; align-items:center; justify-content:space-between; gap:40px; flex-wrap:wrap; text-align:left; padding:44px 8px 26px; }
   header.hero::before{ content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
     background:linear-gradient(rgba(21,16,11,.82),rgba(21,16,11,.82)), url("img/bobi.jpg") center/cover no-repeat;
     -webkit-mask-image:radial-gradient(115% 130% at 50% 50%, #000 6%, transparent 70%);
@@ -158,6 +158,15 @@
   footer .heart{ color:var(--porto); font-style:normal;}
   .empty{ text-align:center; color:var(--cream-faint); font-style:italic; padding:60px 20px; display:none;}
 
+  /* ===== search ===== */
+  .searchwrap{ position:relative; display:flex; align-items:center; margin:8px 0 2px; }
+  .search-ico{ position:absolute; left:15px; width:19px; height:19px; color:var(--brass); opacity:.85; pointer-events:none; }
+  .search{ width:100%; font-family:"Spectral"; font-size:1.02rem; color:var(--cream); background:var(--ink-2); border:1px solid var(--line); border-radius:13px; padding:14px 46px 14px 44px; min-height:50px; transition:border-color .18s, box-shadow .18s; }
+  .search::placeholder{ color:var(--cream-faint); font-style:italic; }
+  .search:focus{ outline:none; border-color:var(--brass); box-shadow:0 0 0 3px var(--brass-soft); }
+  .search-clear{ position:absolute; right:11px; width:30px; height:30px; border-radius:50%; border:0; background:transparent; color:var(--cream-faint); cursor:pointer; display:none; align-items:center; justify-content:center; font-size:.85rem; transition:color .15s; }
+  .search-clear:hover{ color:var(--cream); }
+
   /* ===== auto-scrolling photo banner ===== */
   .banner{ position:relative; margin:20px -20px 6px; overflow:hidden;
     -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
@@ -238,8 +247,8 @@
       <div class="mark" id="markLine"></div>
       <h1>Bar do <em>Bobi</em></h1>
       <div class="rule"><span>✦</span></div>
-      <div class="counts" id="counts"></div>
       <button class="bobi-link" id="bobiLink" type="button" onclick="openBobi()"></button>
+      <div class="counts" id="counts"></div>
       <div class="hint" id="hint"></div>
     </div>
     <aside class="countdown" id="countdown" aria-label="Countdown to guests arriving"></aside>
@@ -256,6 +265,12 @@
   </nav>
 
   <div class="banner" id="banner" aria-label="Photos from Bar do Bobi"></div>
+
+  <div class="searchwrap">
+    <svg class="search-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><line x1="15.6" y1="15.6" x2="21" y2="21"/></svg>
+    <input type="text" id="search" class="search" placeholder="" oninput="onSearch(this.value)" autocomplete="off" aria-label="Search the menu">
+    <button class="search-clear" id="searchClear" type="button" onclick="clearSearch()" aria-label="Clear search">✕</button>
+  </div>
 
   <main id="menu"></main>
   <div class="empty" id="empty"></div>
@@ -302,7 +317,7 @@ function glass(t){ switch(t){
 /* ============ UI strings ============ */
 const T={
   en:{ mark:'Carvoeiro · Cocktail List',
-    bobiCta:'Try the Bobi Special', bobiTribute:'Bobi · the best boi of the millennium',
+    bobiCta:'Try the Bobi Special', bobiTribute:'Bobi · the best boi of the millennium', searchPh:'Search drinks or ingredients…',
     cdLabel:'Europe Beans', cdSub:'guests arrive · Sat 3pm', cdUnits:['days','hrs','min','sec'], cdArrived:'They’re here! 🍹',
     counts:(r,t)=>`<b>${r}</b> ready now &nbsp;·&nbsp; <b>${t}</b> recipes`,
     hint:'Filter by spirit, by what\u2019s ready, or by what you\u2019ve tried.',
@@ -311,7 +326,7 @@ const T={
     all:'All', ready:'Ready now', triedF:'Tried', untried:'Not yet', howto:'How-to', shop:'Shopping',
     foot1:'Poured with care at Bar do Bobi · Carvoeiro', foot2:'Tap “Tried” on a drink to track your way through the menu — it remembers.' },
   pt:{ mark:'Carvoeiro · Carta de Cocktails',
-    bobiCta:'Prova o Bobi Special', bobiTribute:'Bobi · o melhor menino do milénio',
+    bobiCta:'Prova o Bobi Special', bobiTribute:'Bobi · o melhor menino do milénio', searchPh:'Procurar bebidas ou ingredientes…',
     cdLabel:'Europe Beans', cdSub:'convidados chegam · sáb 15h', cdUnits:['dias','h','min','seg'], cdArrived:'Chegaram! 🍹',
     counts:(r,t)=>`<b>${r}</b> prontos já &nbsp;·&nbsp; <b>${t}</b> receitas`,
     hint:'Filtra por bebida, pelo que está pronto, ou pelo que já provaste.',
@@ -795,6 +810,7 @@ function buildChips(){
 function renderStatic(){
   document.getElementById('markLine').textContent=T[lang].mark;
   document.getElementById('hint').textContent=T[lang].hint;
+  { const _s=document.getElementById('search'); if(_s) _s.placeholder=T[lang].searchPh; }
   const readyN=D.filter(d=>d.ready).length;
   document.getElementById('counts').innerHTML=T[lang].counts(readyN,D.length);
   document.getElementById('howto').innerHTML=howtoNode();
@@ -906,12 +922,25 @@ document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeBobi(); });
 function render(){ renderStatic(); buildChips(); buildMenu(); buildBanner(); buildCountdown(); renderBobi(); applyFilter(active,true); }
 
 const empty=document.getElementById('empty');
+let searchTerm='';
+function cardSearchText(card){ if(!card._st) card._st=card.textContent.toLowerCase(); return card._st; }
+function onSearch(v){
+  searchTerm=(v||'').trim().toLowerCase();
+  document.getElementById('searchClear').style.display=searchTerm?'flex':'none';
+  applyFilter(searchTerm?'all':active,true);
+}
+function clearSearch(){
+  const i=document.getElementById('search'); if(i){ i.value=''; i.focus(); }
+  searchTerm='';
+  document.getElementById('searchClear').style.display='none';
+  applyFilter(active,true);
+}
 function applyFilter(key,silent){
   active=key;
   document.querySelectorAll('.chip').forEach(c=>c.classList.toggle('active',c.dataset.key===key));
   const allSections=document.querySelectorAll('.section');
   const util=['howto','shop'];
-  if(util.includes(key)){
+  if(util.includes(key) && !searchTerm){
     allSections.forEach(s=>s.classList.toggle('hide',s.dataset.cat!==key));
     empty.style.display='none';
     if(!silent) document.getElementById(key).scrollIntoView({behavior:'smooth',block:'start'});
@@ -924,7 +953,8 @@ function applyFilter(key,silent){
     let secVisible=false;
     s.querySelectorAll('.card').forEach(card=>{
       let show=true;
-      if(key==='ready') show=card.dataset.ready==='1';
+      if(searchTerm){ show=cardSearchText(card).includes(searchTerm); }
+      else if(key==='ready') show=card.dataset.ready==='1';
       else if(key==='tried') show=!!tried[card.dataset.id];
       else if(key==='untried') show=!tried[card.dataset.id];
       else if(key!=='all') show=card.dataset.cat===key;
