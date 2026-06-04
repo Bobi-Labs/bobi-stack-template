@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Bar do Bobi · Carta de Cocktails</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#15100b">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,900&family=Spectral:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#15100b; --ink-2:#1d1710; --ink-3:#2a2118;
+    --cream:#f2e7d3; --cream-dim:#c6b596; --cream-faint:#8d7e66;
+    --brass:#cb9c3f; --brass-bright:#e7c462; --brass-soft:rgba(203,156,63,.22);
+    --porto:#9a3438; --porto-soft:rgba(154,52,56,.18);
+    --tile:#3a7d9c; --tile-soft:rgba(58,125,156,.18);
+    --olive:#8a9a4e; --olive-soft:rgba(138,154,78,.18);
+    --line:rgba(203,156,63,.22);
+    --shadow:0 18px 40px -22px rgba(0,0,0,.85);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:
+      radial-gradient(1200px 600px at 80% -10%, rgba(203,156,63,.08), transparent 60%),
+      radial-gradient(900px 500px at -10% 110%, rgba(58,125,156,.07), transparent 55%),
+      var(--ink);
+    color:var(--cream);
+    font-family:"Spectral",Georgia,serif; font-weight:400; line-height:1.5; letter-spacing:.1px;
+    padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    overflow-x:hidden;
+  }
+  body::before{
+    content:""; position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.5;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");
+    mix-blend-mode:overlay;
+  }
+  .wrap{position:relative; z-index:1; max-width:1080px; margin:0 auto; padding:0 20px 80px;}
+
+  header.hero{ position:relative; display:flex; align-items:center; justify-content:space-between; gap:30px; flex-wrap:wrap; text-align:left; padding:44px 8px 26px; }
+  header.hero::before{ content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
+    background:linear-gradient(rgba(21,16,11,.91),rgba(21,16,11,.91)), url("img/bobi.jpg") center/cover no-repeat;
+    -webkit-mask-image:radial-gradient(115% 130% at 50% 50%, #000 6%, transparent 70%);
+            mask-image:radial-gradient(115% 130% at 50% 50%, #000 6%, transparent 70%); }
+  .hero-main{ position:relative; z-index:1; flex:1 1 360px; }
+  .hero .mark{ font-family:"Fraunces"; font-weight:500; font-style:italic; color:var(--brass); letter-spacing:.26em; text-transform:uppercase; font-size:.72rem; }
+  .hero h1{ font-family:"Fraunces"; font-weight:900; font-optical-sizing:144; font-size:clamp(2.9rem,9vw,5.4rem); line-height:.92; letter-spacing:-.01em; margin:.16em 0 .2em; color:var(--cream); text-shadow:0 2px 0 rgba(0,0,0,.25); }
+  .hero h1 em{ font-style:italic; color:var(--brass-bright); font-weight:600; }
+  .rule{ display:flex; align-items:center; justify-content:center; gap:14px; margin:16px 0 6px; max-width:340px; color:var(--brass); }
+  .rule::before,.rule::after{ content:""; height:1px; flex:1; background:linear-gradient(90deg,transparent,var(--brass),transparent); opacity:.6;}
+  .rule span{ font-size:.7rem; }
+  .counts{ margin-top:16px; font-size:.95rem; color:var(--cream-dim); }
+  .counts b{ color:var(--brass-bright); font-weight:600; font-family:"Fraunces"; }
+  .hint{ margin-top:9px; font-size:.86rem; color:var(--cream-faint); font-style:italic; }
+
+  .countdown{ flex:0 0 auto; text-align:center; padding:15px 20px 13px; border:1px solid var(--line); border-radius:14px; background:linear-gradient(180deg,var(--ink-2),var(--ink)); box-shadow:var(--shadow); position:relative; z-index:1; overflow:hidden; }
+  .countdown::after{ content:""; position:absolute; inset:0 0 auto 0; height:3px; background:linear-gradient(90deg,var(--brass),transparent 70%); opacity:.55; }
+  .cd-label{ font-family:"Fraunces"; font-weight:600; font-style:italic; color:var(--brass-bright); font-size:.95rem; letter-spacing:.02em; margin-bottom:11px; white-space:nowrap; }
+  .cd-clock{ display:flex; align-items:flex-start; gap:13px; justify-content:center; }
+  .cd-unit{ display:flex; flex-direction:column; align-items:center; min-width:36px; }
+  .cd-unit b{ font-family:"Fraunces"; font-weight:700; font-size:1.78rem; line-height:1; color:var(--cream); font-variant-numeric:tabular-nums; }
+  .cd-unit span{ font-size:.6rem; letter-spacing:.15em; text-transform:uppercase; color:var(--cream-faint); margin-top:6px; }
+  .cd-sub{ margin-top:12px; font-size:.76rem; font-style:italic; color:var(--cream-dim); }
+  .cd-arrived{ font-family:"Fraunces"; font-weight:700; font-size:1.5rem; color:var(--brass-bright); padding:8px 0 5px; }
+
+  .filters{ position:sticky; top:0; z-index:20; background:linear-gradient(var(--ink) 78%, rgba(21,16,11,0)); padding:12px 0 14px; margin:6px -20px 0; display:flex; align-items:center; gap:4px; }
+  .bar-left{ flex:0 0 auto; padding-left:20px; }
+  .lang{ display:inline-flex; border:1px solid var(--line); border-radius:999px; overflow:hidden; }
+  .lang button{ background:var(--ink-2); color:var(--cream-dim); border:0; padding:9px 14px; font-family:"Spectral"; font-weight:600; font-size:.9rem; cursor:pointer; min-height:42px; transition:all .15s; }
+  .lang button.on{ background:var(--brass); color:#1a130a; }
+  .filters .track{ display:flex; gap:9px; overflow-x:auto; padding:2px 20px 6px; scrollbar-width:none; flex:1; }
+  .filters .track::-webkit-scrollbar{ display:none; }
+  .chip{ flex:0 0 auto; cursor:pointer; user-select:none; font-family:"Spectral"; font-weight:500; font-size:.95rem; color:var(--cream-dim); background:var(--ink-2); border:1px solid var(--line); border-radius:999px; padding:10px 16px; white-space:nowrap; transition:all .18s ease; min-height:42px; display:inline-flex; align-items:center; gap:7px; }
+  .chip:hover{ color:var(--cream); border-color:var(--brass); }
+  .chip.active{ background:var(--brass); color:#1a130a; border-color:var(--brass); font-weight:600; box-shadow:0 6px 18px -8px var(--brass);}
+  .chip.ready,.chip.tried{ border-color:rgba(138,154,78,.5); }
+  .chip.ready.active,.chip.tried.active{ background:var(--olive); color:#15130a; box-shadow:0 6px 18px -8px var(--olive); }
+  .chip .dot{ width:7px; height:7px; border-radius:50%; background:var(--olive); }
+  .chip.active .dot{ background:#15130a; }
+
+  .section{ margin-top:44px; scroll-margin-top:86px; animation:rise .5s ease both; }
+  .section.hide{ display:none; }
+  .section-head{ display:flex; align-items:baseline; gap:14px; flex-wrap:wrap; border-bottom:1px solid var(--line); padding-bottom:12px; margin-bottom:22px; }
+  .section-head h2{ font-family:"Fraunces"; font-weight:700; font-size:clamp(1.7rem,5vw,2.3rem); color:var(--cream); letter-spacing:-.01em; }
+  .section-head .bottle{ font-style:italic; color:var(--brass); font-size:1rem; }
+  .section-head .bottle::before{ content:"— "; color:var(--cream-faint); }
+  .section-head .bottle.low{ color:var(--porto); }
+
+  .grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:16px; }
+  .card{ background:linear-gradient(180deg,var(--ink-2),var(--ink)); border:1px solid var(--line); border-radius:16px; padding:20px 20px 22px; box-shadow:var(--shadow); position:relative; overflow:hidden; transition:transform .22s ease, border-color .22s ease; display:flex; flex-direction:column; }
+  .card::after{ content:""; position:absolute; inset:0 0 auto 0; height:3px; background:linear-gradient(90deg,var(--brass),transparent 70%); opacity:.5;}
+  .card:hover{ transform:translateY(-3px); border-color:var(--brass); }
+  .card.hide{ display:none; }
+  .card.tried .tick{ position:absolute; top:12px; right:13px; width:24px; height:24px; border-radius:50%; background:var(--olive); color:#15130a; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:.82rem; z-index:2; }
+  .tick{ display:none; }
+  .card-top{ display:flex; gap:14px; align-items:flex-start; }
+  .glass{ flex:0 0 52px; width:52px; height:70px; }
+  .glass svg{ width:100%; height:100%; display:block; }
+  .card-head{ flex:1; padding-right:26px; }
+  .card h3{ font-family:"Fraunces"; font-weight:600; font-size:1.4rem; line-height:1.05; color:var(--cream); margin-bottom:7px; }
+  .tags{ display:flex; flex-wrap:wrap; gap:6px; }
+  .tag{ font-size:.72rem; font-weight:500; letter-spacing:.04em; padding:3px 9px; border-radius:999px; white-space:nowrap; }
+  .tag.ready{ background:var(--olive-soft); color:#c4d18a; border:1px solid rgba(138,154,78,.4); }
+  .tag.pantry{ background:var(--tile-soft); color:#9cd0e6; border:1px solid rgba(58,125,156,.4); }
+  .tag.bottle{ background:var(--porto-soft); color:#e6a3a5; border:1px solid rgba(154,52,56,.45); }
+  .tag.style{ background:transparent; color:var(--brass); border:1px solid var(--line); font-style:italic; }
+
+  .ingredients{ list-style:none; margin:16px 0 0; }
+  .ingredients li{ display:flex; gap:10px; align-items:baseline; padding:5px 0; border-bottom:1px dashed rgba(203,156,63,.13); font-size:.99rem; }
+  .ingredients li:last-child{ border-bottom:0; }
+  .ingredients .amt{ flex:0 0 auto; font-family:"Fraunces"; font-weight:600; color:var(--brass-bright); min-width:78px; font-variant-numeric:tabular-nums; font-size:.92rem; }
+  .ingredients .ing{ color:var(--cream-dim); }
+
+  .method{ margin-top:16px; }
+  .method .lbl{ font-size:.72rem; letter-spacing:.18em; text-transform:uppercase; color:var(--cream-faint); margin-bottom:8px; }
+  .steps{ list-style:none; counter-reset:s; display:flex; flex-direction:column; gap:7px; }
+  .steps li{ counter-increment:s; position:relative; padding-left:30px; font-size:.95rem; color:var(--cream); }
+  .steps li::before{ content:counter(s); position:absolute; left:0; top:-1px; width:21px; height:21px; border-radius:50%; background:var(--brass-soft); border:1px solid var(--brass); color:var(--brass-bright); font-family:"Fraunces"; font-weight:600; font-size:.74rem; display:flex; align-items:center; justify-content:center; }
+  .note{ margin-top:15px; padding:11px 13px; background:rgba(58,125,156,.08); border-left:2px solid var(--tile); border-radius:0 8px 8px 0; font-style:italic; font-size:.9rem; color:var(--cream-dim); }
+
+  .tried-btn{ margin-top:15px; align-self:flex-start; background:transparent; border:1px solid var(--line); color:var(--cream-dim); border-radius:999px; padding:8px 16px; font-family:"Spectral"; font-size:.9rem; cursor:pointer; transition:all .18s; min-height:40px; }
+  .tried-btn:hover{ border-color:var(--olive); color:var(--cream); }
+  .tried-btn.done{ background:var(--olive-soft); border-color:var(--olive); color:#cdd99a; font-weight:600; }
+
+  .howto-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:14px; }
+  .howcard{ background:var(--ink-2); border:1px solid var(--line); border-radius:14px; padding:18px 18px 19px; }
+  .howcard h4{ font-family:"Fraunces"; font-weight:600; font-size:1.2rem; color:var(--brass-bright); margin-bottom:8px; }
+  .howcard p{ font-size:.94rem; color:var(--cream-dim); }
+  .howcard .when{ display:block; margin-top:7px; font-size:.82rem; color:var(--cream-faint); font-style:italic;}
+  .sub-h{ font-family:"Fraunces"; color:var(--brass-bright); font-size:1.2rem; margin:26px 0 6px; }
+  .sub-p{ font-size:.92rem; color:var(--cream-dim); }
+  .sub-note{ font-size:.88rem; color:var(--cream-faint); font-style:italic; margin-top:10px; }
+  .jigger-key{ display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:10px; margin-top:14px;}
+  .jigger-key div{ background:var(--ink-3); border:1px solid var(--line); border-radius:10px; padding:11px; text-align:center;}
+  .jigger-key b{ font-family:"Fraunces"; color:var(--brass-bright); font-size:1.15rem; display:block;}
+  .jigger-key span{ font-size:.8rem; color:var(--cream-faint);}
+  .glasskey{ display:grid; grid-template-columns:repeat(auto-fill,minmax(98px,1fr)); gap:12px; margin-top:6px;}
+  .glasskey figure{ text-align:center; background:var(--ink-2); border:1px solid var(--line); border-radius:12px; padding:12px 6px 9px;}
+  .glasskey svg{ width:42px; height:58px;}
+  .glasskey figcaption{ font-size:.78rem; color:var(--cream-dim); margin-top:5px;}
+
+  .shop-tier{ margin-top:22px; }
+  .shop-tier > h4{ font-family:"Fraunces"; font-weight:600; font-size:1.15rem; color:var(--cream); margin-bottom:4px;}
+  .shop-tier > .cap{ font-size:.88rem; color:var(--cream-faint); font-style:italic; margin-bottom:14px;}
+  .shop-list{ display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:12px;}
+  .shop-item{ background:var(--ink-2); border:1px solid var(--line); border-left:3px solid var(--brass); border-radius:10px; padding:13px 15px;}
+  .shop-item.low{ border-left-color:var(--porto);}
+  .shop-item.opt{ border-left-color:var(--tile);}
+  .shop-item b{ font-family:"Spectral"; font-weight:600; color:var(--cream); font-size:1.02rem;}
+  .shop-item .unlocks{ display:block; margin-top:4px; font-size:.88rem; color:var(--cream-dim);}
+  .pillrow{ display:flex; flex-wrap:wrap; gap:8px; margin-top:4px; }
+  .pillrow .p{ background:var(--olive-soft); border:1px solid rgba(138,154,78,.4); color:#cdd99a; border-radius:999px; padding:7px 13px; font-size:.9rem;}
+
+  footer{ text-align:center; margin-top:60px; padding-top:26px; border-top:1px solid var(--line); color:var(--cream-faint); font-style:italic; font-size:.86rem;}
+  footer .heart{ color:var(--porto); font-style:normal;}
+  .empty{ text-align:center; color:var(--cream-faint); font-style:italic; padding:60px 20px; display:none;}
+
+  /* ===== auto-scrolling photo banner ===== */
+  .banner{ position:relative; margin:20px -20px 6px; overflow:hidden;
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
+            mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent); }
+  .banner-track{ display:flex; width:max-content; animation:scroll-x 50s linear infinite; will-change:transform; }
+  .banner:hover .banner-track{ animation-play-state:paused; }
+  .shot{ flex:0 0 auto; width:236px; height:150px; margin-right:12px; border-radius:13px; overflow:hidden;
+    border:1px solid var(--line); box-shadow:var(--shadow); background:var(--ink-2); position:relative; }
+  .shot img{ width:100%; height:100%; object-fit:cover; display:block; transition:transform .5s ease; }
+  .shot:hover img{ transform:scale(1.05); }
+  .shot::after{ content:""; position:absolute; inset:0; border-radius:13px; pointer-events:none;
+    box-shadow:inset 0 1px 0 rgba(242,231,211,.06); background:linear-gradient(180deg,transparent 62%,rgba(21,16,11,.34)); }
+  @keyframes scroll-x{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
+  @media (prefers-reduced-motion:reduce){
+    .banner-track{ animation:none; }
+    .banner{ overflow-x:auto; scrollbar-width:none; }
+    .banner::-webkit-scrollbar{ display:none; }
+  }
+
+  /* ===== Bobi Special link + tribute modal ===== */
+  .bobi-link{ display:inline-flex; align-items:center; gap:8px; margin-top:13px; cursor:pointer;
+    font-family:"Fraunces"; font-style:italic; font-weight:600; font-size:1rem; color:var(--brass-bright);
+    background:linear-gradient(180deg,var(--brass-soft),transparent); border:1px solid var(--brass);
+    border-radius:999px; padding:9px 18px; min-height:42px; transition:all .2s ease; box-shadow:0 6px 18px -10px var(--brass); }
+  .bobi-link:hover{ background:var(--brass); color:#1a130a; transform:translateY(-1px); }
+  .bobi-link .bs-star{ font-style:normal; }
+
+  .modal-overlay{ position:fixed; inset:0; z-index:100; display:flex; align-items:center; justify-content:center;
+    padding:20px; background:rgba(10,7,4,.74); backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px);
+    opacity:0; visibility:hidden; transition:opacity .25s ease, visibility .25s; }
+  .modal-overlay.open{ opacity:1; visibility:visible; }
+  .modal{ position:relative; width:100%; max-width:520px; max-height:90vh; overflow-y:auto; overflow-x:hidden;
+    background:linear-gradient(180deg,var(--ink-2),var(--ink)); border:1px solid var(--brass); border-radius:18px;
+    box-shadow:0 40px 90px -30px rgba(0,0,0,.9); transform:translateY(16px) scale(.98);
+    transition:transform .28s cubic-bezier(.2,.8,.2,1); scrollbar-width:thin; }
+  .modal-overlay.open .modal{ transform:translateY(0) scale(1); }
+  .modal::-webkit-scrollbar{ width:8px; } .modal::-webkit-scrollbar-thumb{ background:var(--line); border-radius:8px; }
+  .modal-x{ position:absolute; top:12px; right:12px; z-index:3; width:38px; height:38px; border-radius:50%;
+    background:rgba(21,16,11,.7); border:1px solid var(--line); color:var(--cream); font-size:1rem; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; transition:all .18s; backdrop-filter:blur(4px); }
+  .modal-x:hover{ background:var(--porto); border-color:var(--porto); color:#fff; }
+  .bobi-fig{ margin:0; position:relative; }
+  .bobi-fig img{ width:100%; height:auto; display:block; border-radius:18px 18px 0 0; }
+  .bobi-fig figcaption{ position:absolute; left:0; right:0; bottom:0; padding:36px 20px 13px;
+    background:linear-gradient(transparent,rgba(13,9,5,.93)); color:var(--cream); font-family:"Fraunces";
+    font-style:italic; font-weight:600; font-size:.96rem; }
+  .bobi-body{ padding:18px 22px 24px; }
+  .bobi-title{ font-family:"Fraunces"; font-weight:700; font-size:1.7rem; color:var(--cream); line-height:1.05; }
+  .bobi-sub{ font-style:italic; color:var(--brass); font-size:.92rem; margin:5px 0; }
+  .bobi-body .ingredients{ margin-top:14px; }
+  .bobi-quote{ margin:20px 0 0; padding:16px 18px; border:1px solid var(--line); border-left:3px solid var(--brass);
+    border-radius:0 12px 12px 0; background:rgba(203,156,63,.06); font-family:"Fraunces"; font-style:italic;
+    font-weight:500; font-size:1.04rem; line-height:1.42; color:var(--cream); }
+  .bobi-quote cite{ display:block; margin-top:10px; font-style:normal; font-weight:600; font-size:.76rem;
+    letter-spacing:.18em; color:var(--brass-bright); }
+
+  @keyframes rise{ from{opacity:0; transform:translateY(14px);} to{opacity:1; transform:translateY(0);} }
+
+  @media (max-width:520px){
+    .wrap{ padding:0 14px 70px;}
+    header.hero{ flex-direction:column; align-items:stretch; text-align:center; gap:20px; padding:36px 8px 22px;}
+    .rule{ margin-left:auto; margin-right:auto;}
+    .countdown{ align-self:center;}
+    .filters{ margin:6px -14px 0;}
+    .bar-left{ padding-left:14px;}
+    .filters .track{ padding:2px 14px 6px;}
+    .grid{ grid-template-columns:1fr;}
+    .banner{ margin:16px -14px 4px; }
+    .shot{ width:188px; height:118px; margin-right:10px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="hero-main">
+      <div class="mark" id="markLine"></div>
+      <h1>Bar do <em>Bobi</em></h1>
+      <div class="rule"><span>✦</span></div>
+      <div class="counts" id="counts"></div>
+      <button class="bobi-link" id="bobiLink" type="button" onclick="openBobi()"></button>
+      <div class="hint" id="hint"></div>
+    </div>
+    <aside class="countdown" id="countdown" aria-label="Countdown to guests arriving"></aside>
+  </header>
+
+  <nav class="filters">
+    <div class="bar-left">
+      <div class="lang">
+        <button id="langEn" class="on" onclick="setLang('en')">EN</button>
+        <button id="langPt" onclick="setLang('pt')">PT</button>
+      </div>
+    </div>
+    <div class="track" id="chipTrack"></div>
+  </nav>
+
+  <div class="banner" id="banner" aria-label="Photos from Bar do Bobi"></div>
+
+  <main id="menu"></main>
+  <div class="empty" id="empty"></div>
+  <section class="section" id="howto" data-cat="howto"></section>
+  <section class="section" id="shop" data-cat="shop"></section>
+  <footer id="footer"></footer>
+
+</div>
+
+<div class="modal-overlay" id="bobiModal" aria-hidden="true" onclick="bobiOuter(event)">
+  <div class="modal" role="dialog" aria-modal="true" aria-label="The Bobi Special">
+    <button class="modal-x" type="button" onclick="closeBobi()" aria-label="Close">✕</button>
+    <div id="bobiBody"></div>
+  </div>
+</div>
+
+<script>
+/* ============ persistence (works self-hosted; safe fallback in restricted previews) ============ */
+const STORE_KEY='bobi_tried_v2'; const _mem={};
+const store={
+  get(k){ try{const v=localStorage.getItem(k); return v?JSON.parse(v):null;}catch(e){return _mem[k]??null;} },
+  set(k,v){ try{localStorage.setItem(k,JSON.stringify(v));}catch(e){_mem[k]=v;} }
+};
+let tried = store.get(STORE_KEY) || {};
+let lang  = 'en';
+let active = 'all';
+
+/* ============ glass art ============ */
+const S='stroke="var(--brass)" stroke-width="1.6" fill="none" stroke-linejoin="round" stroke-linecap="round"';
+const LQ='fill="rgba(203,156,63,.18)"';
+function glass(t){ switch(t){
+  case 'rocks': return `<svg viewBox="0 0 60 80"><path ${S} d="M15 24 H45 L42 64 Q42 68 38 68 H22 Q18 68 18 64 Z"/><path ${LQ} d="M17.4 50 H42.6 L42 64 Q42 68 38 68 H22 Q18 68 18 64 Z"/><rect x="26" y="52" width="11" height="11" rx="2" ${S}/></svg>`;
+  case 'coupe': return `<svg viewBox="0 0 60 80"><path ${S} d="M13 22 Q30 46 47 22"/><path ${LQ} d="M17 26 Q30 40 43 26 Z"/><path ${S} d="M30 35 V62 M20 64 H40"/></svg>`;
+  case 'martini': return `<svg viewBox="0 0 60 80"><path ${S} d="M12 20 L48 20 L30 44 Z"/><path ${LQ} d="M19 26 L41 26 L30 41 Z"/><path ${S} d="M30 44 V62 M20 64 H40"/></svg>`;
+  case 'highball': return `<svg viewBox="0 0 60 80"><path ${S} d="M19 12 H41 L39 68 H21 Z"/><path ${LQ} d="M20.3 40 H39.7 L39 68 H21 Z"/></svg>`;
+  case 'collins': return `<svg viewBox="0 0 60 80"><path ${S} d="M22 8 H38 L37 70 H23 Z"/><path ${LQ} d="M22.6 34 H37.4 L37 70 H23 Z"/></svg>`;
+  case 'flute': return `<svg viewBox="0 0 60 80"><path ${S} d="M24 10 Q24 30 28 40 V60 M36 10 Q36 30 32 40 M21 62 H39"/><path ${LQ} d="M25 24 Q26 34 28 40 Q30 34 35 24 Z"/></svg>`;
+  case 'wine': return `<svg viewBox="0 0 60 80"><path ${S} d="M16 16 Q16 40 30 44 Q44 40 44 16 Z"/><path ${LQ} d="M19 28 Q22 40 30 42 Q38 40 41 28 Z"/><path ${S} d="M30 44 V62 M20 64 H40"/></svg>`;
+  case 'mug': return `<svg viewBox="0 0 60 80"><path ${S} d="M16 20 H40 L38 66 H18 Z"/><path ${S} d="M40 28 Q50 30 50 42 Q50 54 40 54"/><path ${LQ} d="M17.5 38 H38.5 L38 66 H18 Z"/></svg>`;
+  case 'cordial': return `<svg viewBox="0 0 60 80"><path ${S} d="M22 26 Q30 42 38 26 Z"/><path ${LQ} d="M24.5 29 Q30 38 35.5 29 Z"/><path ${S} d="M30 38 V58 M22 60 H38"/></svg>`;
+  case 'julep': return `<svg viewBox="0 0 60 80"><path ${S} d="M18 16 H42 L40 66 H20 Z"/><path ${S} d="M20 30 H40 M21 44 H39"/><path ${LQ} d="M19.5 40 H40.5 L40 66 H20 Z"/></svg>`;
+  default: return glass('rocks'); } }
+
+/* ============ UI strings ============ */
+const T={
+  en:{ mark:'Carvoeiro · Cocktail List',
+    bobiCta:'Try the Bobi Special', bobiTribute:'Bobi · the best boi of the millennium',
+    cdLabel:'Europe Beans', cdSub:'guests arrive · Sat 3pm', cdUnits:['days','hrs','min','sec'], cdArrived:'They’re here! 🍹',
+    counts:(r,t)=>`<b>${r}</b> ready now &nbsp;·&nbsp; <b>${t}</b> recipes`,
+    hint:'Filter by spirit, by what\u2019s ready, or by what you\u2019ve tried.',
+    method:'Method', ask:'○ Tried it?', done:'✓ Tried',
+    empty:'Nothing here — try another filter.',
+    all:'All', ready:'Ready now', triedF:'Tried', untried:'Not yet', howto:'How-to', shop:'Shopping',
+    foot1:'Poured with care at Bar do Bobi · Carvoeiro', foot2:'Tap “Tried” on a drink to track your way through the menu — it remembers.' },
+  pt:{ mark:'Carvoeiro · Carta de Cocktails',
+    bobiCta:'Prova o Bobi Special', bobiTribute:'Bobi · o melhor menino do milénio',
+    cdLabel:'Europe Beans', cdSub:'convidados chegam · sáb 15h', cdUnits:['dias','h','min','seg'], cdArrived:'Chegaram! 🍹',
+    counts:(r,t)=>`<b>${r}</b> prontos já &nbsp;·&nbsp; <b>${t}</b> receitas`,
+    hint:'Filtra por bebida, pelo que está pronto, ou pelo que já provaste.',
+    method:'Preparação', ask:'○ Já provei?', done:'✓ Provado',
+    empty:'Nada aqui — tenta outro filtro.',
+    all:'Todas', ready:'Pronto já', triedF:'Já provei', untried:'Ainda não', howto:'Como fazer', shop:'Compras',
+    foot1:'Servido com carinho no Bar do Bobi · Carvoeiro', foot2:'Toca em “Já provei” numa bebida para marcares o teu percurso pela carta — fica guardado.' }
+};
+
+/* ============ sections ============ */
+const SECTIONS=[
+  {cat:'tequila', t:{en:'Tequila',pt:'Tequila'}, b:{en:'Don Julio Reposado',pt:'Don Julio Reposado'}},
+  {cat:'gin',     t:{en:'Gin',pt:'Gin'}, b:{en:'Lisboa Gin',pt:'Lisboa Gin'}},
+  {cat:'vodka',   t:{en:'Vodka',pt:'Vodka'}, b:{en:'SKYY — running low',pt:'SKYY — a acabar'}, low:true},
+  {cat:'rum',     t:{en:'Rum',pt:'Rum'}, b:{en:'Bacardi · Abuelo · Havana — aged ones low',pt:'Bacardi · Abuelo · Havana — os envelhecidos a acabar'}, low:true},
+  {cat:'irish',   t:{en:'Irish Whiskey',pt:'Whiskey Irlandês'}, b:{en:'Jameson',pt:'Jameson'}},
+  {cat:'scotch',  t:{en:'Scotch',pt:'Whisky Escocês'}, b:{en:'Johnnie Walker Black · Drambuie',pt:'Johnnie Walker Black · Drambuie'}},
+  {cat:'bourbon', t:{en:'Bourbon & Rye',pt:'Bourbon & Rye'}, b:{en:'Bulleit',pt:'Bulleit'}},
+  {cat:'cognac',  t:{en:'Cognac',pt:'Conhaque'}, b:{en:'Courvoisier VS',pt:'Courvoisier VS'}},
+  {cat:'port',    t:{en:'Port',pt:'Vinho do Porto'}, b:{en:"Taylor's 10yr Tawny",pt:"Taylor's Tawny 10 anos"}},
+  {cat:'aperitivo',t:{en:'Aperitivo & Sparkling',pt:'Aperitivo & Espumante'}, b:{en:'Campari · Aperol · Prosecco',pt:'Campari · Aperol · Prosecco'}},
+  {cat:'sake',    t:{en:'Sake',pt:'Saké'}, b:{en:'Junmai — dry & savoury',pt:'Junmai — seco e saboroso'}},
+  {cat:'peach',   t:{en:'From the Peach Tree',pt:'Do Pessegueiro'}, b:{en:'fresh from your garden',pt:'fresco do teu jardim'}},
+  {cat:'liqueur', t:{en:'Liqueurs & Portuguese',pt:'Licores & Portugueses'}, b:{en:'Amarguinha · Ginja de Óbidos · Passion fruit',pt:'Amarguinha · Ginja de Óbidos · Maracujá'}}
+];
+
+/* ============ drinks ============
+   ing: [amount, EN, PT]   steps:{en:[],pt:[]}   style/note: {en,pt}
+============================================== */
+const D=[
+/* TEQUILA */
+{id:'reposado-of',cat:'tequila',glass:'rocks',ready:true,style:{en:'classic',pt:'clássico'},
+ ing:[['60 ml',['reposado tequila','tequila reposado']],['1 bar spoon',['agave','agave']],['2 dashes',['Angostura','Angostura']]],
+ steps:{en:['Stir with ice 20–30s','Strain over one big cube','Express an orange peel on top'],pt:['Mexe com gelo 20–30s','Coa sobre um cubo grande','Espreme uma casca de laranja por cima']}},
+{id:'margarita',cat:'tequila',glass:'rocks',ready:true,style:{en:'classic',pt:'clássico'},
+ ing:[['50 ml',['tequila','tequila']],['25 ml',['Cointreau','Cointreau']],['25 ml',['fresh lime','sumo de lima']],['10 ml',['agave','agave']]],
+ steps:{en:['Salt half the rim','Shake all with ice ~12s','Strain over fresh ice'],pt:['Faz aro de sal em meio copo','Agita tudo com gelo ~12s','Coa sobre gelo novo']}},
+{id:'tommys',cat:'tequila',glass:'rocks',ready:true,style:{en:'agave-forward',pt:'mais agave'},
+ ing:[['50 ml',['tequila','tequila']],['25 ml',['fresh lime','sumo de lima']],['15 ml',['agave','agave']]],
+ steps:{en:['Shake with ice','Strain over fresh ice'],pt:['Agita com gelo','Coa sobre gelo novo']}},
+{id:'paloma',cat:'tequila',glass:'highball',ready:true,
+ ing:[['50 ml',['tequila','tequila']],['15 ml',['fresh lime','sumo de lima']],['1 pinch',['salt','sal']],['top',['grapefruit soda','refrigerante de toranja']]],
+ steps:{en:['Build over ice','Stir gently, lime wedge'],pt:['Monta com gelo','Mexe devagar, rodela de lima']}},
+{id:'sunrise',cat:'tequila',glass:'highball',ready:true,
+ ing:[['50 ml',['tequila','tequila']],['120 ml',['orange juice','sumo de laranja']],['10 ml',['grenadine','groselha']]],
+ steps:{en:['Build tequila + OJ over ice','Drizzle grenadine, let it sink'],pt:['Monta tequila + sumo com gelo','Verte a groselha, deixa assentar']}},
+{id:'tequila-negroni',cat:'tequila',glass:'rocks',ready:true,
+ ing:[['30 ml',['tequila','tequila']],['30 ml',['Campari','Campari']],['30 ml',['sweet red vermouth','vermute tinto doce']]],
+ steps:{en:['Stir with ice','Strain over a big cube','Orange peel'],pt:['Mexe com gelo','Coa sobre um cubo grande','Casca de laranja']}},
+{id:'pf-margarita',cat:'tequila',glass:'rocks',ready:true,style:{en:'tropical',pt:'tropical'},
+ ing:[['50 ml',['tequila','tequila']],['20 ml',['passion fruit liqueur','licor de maracujá']],['20 ml',['fresh lime','sumo de lima']],['10 ml',['agave','agave']]],
+ steps:{en:['Shake hard with ice','Strain over fresh ice','Salt rim optional'],pt:['Agita bem com gelo','Coa sobre gelo novo','Aro de sal opcional']}},
+
+/* GIN */
+{id:'bianco-martini',cat:'gin',glass:'martini',ready:true,style:{en:'house twist',pt:'versão da casa'},
+ ing:[['60 ml',['Lisboa Gin','Lisboa Gin']],['15 ml',['Martini Bianco','Martini Bianco']]],
+ steps:{en:['Stir with ice 20s','Strain into a chilled coupe','Lemon twist'],pt:['Mexe com gelo 20s','Coa para uma taça gelada','Espiral de limão']},
+ note:{en:'Sweeter & more floral than a dry Martini — that\u2019s the Bianco.',pt:'Mais doce e floral que um Martini seco — é o Bianco.'}},
+{id:'gt',cat:'gin',glass:'highball',ready:true,
+ ing:[['50 ml',['Lisboa Gin','Lisboa Gin']],['150 ml',['tonic','água tónica']]],
+ steps:{en:['Build over plenty of ice','Lemon or lime wedge'],pt:['Monta com bastante gelo','Rodela de limão ou lima']}},
+{id:'gimlet',cat:'gin',glass:'coupe',ready:true,
+ ing:[['50 ml',['gin','gin']],['20 ml',['fresh lime','sumo de lima']],['15 ml',['agave','agave']]],
+ steps:{en:['Shake with ice','Strain into a coupe'],pt:['Agita com gelo','Coa para uma taça']}},
+{id:'white-lady',cat:'gin',glass:'coupe',ready:true,style:{en:'classic',pt:'clássico'},
+ ing:[['50 ml',['gin','gin']],['20 ml',['Cointreau','Cointreau']],['20 ml',['fresh lemon','sumo de limão']]],
+ steps:{en:['Shake hard with ice','Strain into a coupe'],pt:['Agita bem com gelo','Coa para uma taça']},
+ note:{en:'Add an egg white (dry-shake first) for a silky top.',pt:'Junta uma clara (agita primeiro sem gelo) para um topo sedoso.'}},
+{id:'tom-collins',cat:'gin',glass:'collins',ready:true,
+ ing:[['50 ml',['gin','gin']],['25 ml',['fresh lemon','sumo de limão']],['15 ml',['agave','agave']],['top',['soda','soda']]],
+ steps:{en:['Shake gin, lemon & agave','Strain over ice','Top with soda'],pt:['Agita gin, limão e agave','Coa sobre gelo','Completa com soda']}},
+{id:'negroni',cat:'gin',glass:'rocks',ready:true,style:{en:'classic',pt:'clássico'},
+ ing:[['30 ml',['gin','gin']],['30 ml',['Campari','Campari']],['30 ml',['sweet red vermouth','vermute tinto doce']]],
+ steps:{en:['Stir with ice','Strain over a big cube','Orange peel'],pt:['Mexe com gelo','Coa sobre um cubo grande','Casca de laranja']},
+ note:{en:'Equal parts — the easiest great cocktail to remember.',pt:'Partes iguais — o grande cocktail mais fácil de decorar.'}},
+{id:'french75',cat:'gin',glass:'flute',ready:true,
+ ing:[['30 ml',['gin','gin']],['15 ml',['fresh lemon','sumo de limão']],['10 ml',['agave','agave']],['top',['prosecco','prosecco']]],
+ steps:{en:['Shake gin, lemon & agave','Strain into a flute','Top with prosecco'],pt:['Agita gin, limão e agave','Coa para uma flute','Completa com prosecco']}},
+
+/* VODKA */
+{id:'vodka-tonic',cat:'vodka',glass:'highball',ready:true,
+ ing:[['50 ml',['SKYY vodka','vodka SKYY']],['150 ml',['tonic','água tónica']]],
+ steps:{en:['Build over ice','Lime wedge'],pt:['Monta com gelo','Rodela de lima']}},
+{id:'espresso-martini',cat:'vodka',glass:'coupe',ready:true,style:{en:'espresso machine ✓',pt:'máquina de café ✓'},
+ ing:[['50 ml',['vodka','vodka']],['25 ml',['Tia Maria','Tia Maria']],['30 ml',['fresh espresso','expresso fresco']],['10 ml',['agave','agave']]],
+ steps:{en:['Pull a fresh, hot espresso','Shake HARD with ice 15s','Double-strain into a coupe','Three coffee beans on top'],pt:['Tira um expresso quente e fresco','Agita COM FORÇA, com gelo, 15s','Coa duas vezes para uma taça','Três grãos de café por cima']}},
+{id:'mule',cat:'vodka',glass:'mug',ready:true,
+ ing:[['50 ml',['vodka','vodka']],['15 ml',['fresh lime','sumo de lima']],['top',['ginger beer','ginger beer']]],
+ steps:{en:['Build over ice','Lime wedge'],pt:['Monta com gelo','Rodela de lima']}},
+{id:'cosmo',cat:'vodka',glass:'coupe',ready:true,
+ ing:[['45 ml',['vodka','vodka']],['15 ml',['Cointreau','Cointreau']],['15 ml',['fresh lime','sumo de lima']],['30 ml',['cranberry','sumo de arando']]],
+ steps:{en:['Shake with ice','Strain into a coupe','Orange twist'],pt:['Agita com gelo','Coa para uma taça','Espiral de laranja']}},
+{id:'cape-codder',cat:'vodka',glass:'highball',ready:true,
+ ing:[['50 ml',['vodka','vodka']],['120 ml',['cranberry','sumo de arando']],['15 ml',['fresh lime','sumo de lima']]],
+ steps:{en:['Build over ice','Stir, lime wedge'],pt:['Monta com gelo','Mexe, rodela de lima']}},
+{id:'screwdriver',cat:'vodka',glass:'highball',ready:true,
+ ing:[['50 ml',['vodka','vodka']],['120 ml',['orange juice','sumo de laranja']]],
+ steps:{en:['Build over ice','Stir'],pt:['Monta com gelo','Mexe']}},
+{id:'white-russian',cat:'vodka',glass:'rocks',ready:true,
+ ing:[['50 ml',['vodka','vodka']],['25 ml',['Tia Maria','Tia Maria']],['25 ml',['cream','natas']]],
+ steps:{en:['Build vodka + Tia Maria over ice','Float cream, stir gently'],pt:['Monta vodka + Tia Maria com gelo','Faz flutuar as natas, mexe devagar']}},
+{id:'pornstar',cat:'vodka',glass:'coupe',ready:true,style:{en:'crowd-pleaser',pt:'êxito garantido'},
+ ing:[['50 ml',['vodka','vodka']],['25 ml',['passion fruit liqueur','licor de maracujá']],['20 ml',['fresh lime','sumo de lima']],['10 ml',['agave','agave']],['side',['prosecco shot','shot de prosecco']]],
+ steps:{en:['Shake vodka, liqueur, lime & agave','Double-strain into a coupe','Serve with a small glass of prosecco on the side'],pt:['Agita vodka, licor, lima e agave','Coa duas vezes para uma taça','Serve com um copinho de prosecco ao lado']},
+ note:{en:'Even better with the pulp of a fresh passion fruit if you can get one.',pt:'Ainda melhor com a polpa de um maracujá fresco, se arranjares.'}},
+
+/* RUM */
+{id:'rum-of',cat:'rum',glass:'rocks',ready:true,style:{en:'aged rum',pt:'rum envelhecido'},
+ ing:[['60 ml',['aged rum','rum envelhecido']],['1 bar spoon',['agave','agave']],['2 dashes',['Angostura','Angostura']]],
+ steps:{en:['Stir with ice','Strain over a big cube','Orange peel'],pt:['Mexe com gelo','Coa sobre um cubo grande','Casca de laranja']}},
+{id:'daiquiri',cat:'rum',glass:'coupe',ready:true,style:{en:'white rum · classic',pt:'rum branco · clássico'},
+ ing:[['50 ml',['white rum','rum branco']],['25 ml',['fresh lime','sumo de lima']],['15 ml',['agave','agave']]],
+ steps:{en:['Shake hard with ice','Strain into a coupe'],pt:['Agita bem com gelo','Coa para uma taça']},
+ note:{en:'Use an aged rum for a richer, rounder version.',pt:'Usa rum envelhecido para uma versão mais rica e redonda.'}},
+{id:'mojito',cat:'rum',glass:'collins',ready:true,style:{en:'white rum',pt:'rum branco'},
+ ing:[['50 ml',['white rum','rum branco']],['25 ml',['fresh lime','sumo de lima']],['15 ml',['agave','agave']],['8 leaves',['mint','hortelã']],['top',['soda','soda']]],
+ steps:{en:['Gently muddle mint + agave','Add rum, lime & ice','Top with soda, mint sprig'],pt:['Macera hortelã + agave com cuidado','Junta rum, lima e gelo','Completa com soda, raminho de hortelã']}},
+{id:'dns',cat:'rum',glass:'highball',ready:true,style:{en:'aged rum',pt:'rum envelhecido'},
+ ing:[['50 ml',['aged rum','rum envelhecido']],['15 ml',['fresh lime','sumo de lima']],['top',['ginger beer','ginger beer']]],
+ steps:{en:['Build ginger beer + lime over ice','Float the rum on top'],pt:['Monta ginger beer + lima com gelo','Faz flutuar o rum por cima']}},
+{id:'cuba-libre',cat:'rum',glass:'highball',ready:true,style:{en:'white rum',pt:'rum branco'},
+ ing:[['50 ml',['white rum','rum branco']],['15 ml',['fresh lime','sumo de lima']],['top',['cola','cola']]],
+ steps:{en:['Build over ice','Lime wedge'],pt:['Monta com gelo','Rodela de lima']}},
+{id:'el-presidente',cat:'rum',glass:'coupe',ready:true,style:{en:'underrated',pt:'subestimado'},
+ ing:[['50 ml',['aged rum','rum envelhecido']],['25 ml',['Martini Bianco','Martini Bianco']],['10 ml',['Cointreau','Cointreau']],['1 bar spoon',['grenadine (optional)','groselha (opcional)']]],
+ steps:{en:['Stir with ice','Strain into a chilled coupe','Orange twist'],pt:['Mexe com gelo','Coa para uma taça gelada','Espiral de laranja']}},
+{id:'pf-daiquiri',cat:'rum',glass:'coupe',ready:true,style:{en:'tropical',pt:'tropical'},
+ ing:[['50 ml',['white rum','rum branco']],['20 ml',['passion fruit liqueur','licor de maracujá']],['20 ml',['fresh lime','sumo de lima']],['10 ml',['agave','agave']]],
+ steps:{en:['Shake hard with ice','Strain into a coupe'],pt:['Agita bem com gelo','Coa para uma taça']}},
+
+/* IRISH */
+{id:'jameson-of',cat:'irish',glass:'rocks',ready:true,
+ ing:[['60 ml',['Jameson','Jameson']],['1 bar spoon',['agave','agave']],['2 dashes',['Angostura','Angostura']]],
+ steps:{en:['Stir with ice','Strain over a big cube','Orange peel'],pt:['Mexe com gelo','Coa sobre um cubo grande','Casca de laranja']}},
+{id:'whiskey-sour',cat:'irish',glass:'rocks',ready:true,style:{en:'classic',pt:'clássico'},
+ ing:[['50 ml',['Jameson','Jameson']],['25 ml',['fresh lemon','sumo de limão']],['15 ml',['agave','agave']],['1',['egg white (optional)','clara de ovo (opcional)']]],
+ steps:{en:['Dry-shake if using egg','Shake with ice','Strain over fresh ice','2 dashes Angostura on the foam'],pt:['Agita sem gelo se usares clara','Agita com gelo','Coa sobre gelo novo','2 gotas de Angostura na espuma']}},
+{id:'irish-coffee',cat:'irish',glass:'mug',ready:true,style:{en:'espresso machine ✓',pt:'máquina de café ✓'},
+ ing:[['50 ml',['Jameson','Jameson']],['1 bar spoon',['brown sugar','açúcar amarelo']],['100 ml',['hot coffee','café quente']],['float',['lightly whipped cream','natas levemente batidas']]],
+ steps:{en:['Warm the glass','Stir whiskey, sugar & coffee','Float cream over a spoon'],pt:['Aquece o copo','Mexe whiskey, açúcar e café','Faz flutuar as natas sobre uma colher']}},
+{id:'irish-highball',cat:'irish',glass:'highball',ready:true,
+ ing:[['50 ml',['Jameson','Jameson']],['top',['soda or ginger ale','soda ou ginger ale']]],
+ steps:{en:['Build over ice','Lemon twist'],pt:['Monta com gelo','Espiral de limão']}},
+
+/* SCOTCH */
+{id:'rob-roy',cat:'scotch',glass:'coupe',ready:true,style:{en:'classic',pt:'clássico'},
+ ing:[['50 ml',['JW Black','JW Black']],['20 ml',['sweet red vermouth','vermute tinto doce']],['2 dashes',['Angostura','Angostura']]],
+ steps:{en:['Stir with ice','Strain into a coupe','Cherry or lemon twist'],pt:['Mexe com gelo','Coa para uma taça','Cereja ou espiral de limão']},
+ note:{en:'The real Rob Roy, now that the red vermouth\u2019s in.',pt:'O verdadeiro Rob Roy, agora que tens o vermute tinto.'}},
+{id:'bianco-rob-roy',cat:'scotch',glass:'coupe',ready:true,style:{en:'house twist',pt:'versão da casa'},
+ ing:[['50 ml',['JW Black','JW Black']],['20 ml',['Martini Bianco','Martini Bianco']],['2 dashes',['Angostura','Angostura']]],
+ steps:{en:['Stir with ice','Strain into a coupe','Lemon twist'],pt:['Mexe com gelo','Coa para uma taça','Espiral de limão']}},
+{id:'godfather',cat:'scotch',glass:'rocks',ready:true,
+ ing:[['50 ml',['JW Black','JW Black']],['20 ml',['Amarguinha','Amarguinha']]],
+ steps:{en:['Build over ice','Stir'],pt:['Monta com gelo','Mexe']},
+ note:{en:'Amarguinha is a lighter almond liqueur — pour a touch more than you would amaretto.',pt:'A Amarguinha é um licor de amêndoa mais leve — põe um pouco mais do que porias de amaretto.'}},
+{id:'rusty-nail',cat:'scotch',glass:'rocks',ready:true,style:{en:'nightcap',pt:'digestivo'},
+ ing:[['50 ml',['JW Black','JW Black']],['20 ml',['Drambuie','Drambuie']]],
+ steps:{en:['Build over ice','Stir, lemon twist'],pt:['Monta com gelo','Mexe, espiral de limão']},
+ note:{en:'You called it after the Godfather — same after-dinner profile, honey-herb instead of almond.',pt:'Adivinhaste-o depois do Godfather — mesmo perfil de fim de jantar, mel e ervas em vez de amêndoa.'}},
+{id:'blood-and-sand',cat:'scotch',glass:'coupe',ready:true,style:{en:'clever sub',pt:'substituição esperta'},
+ ing:[['20 ml',['JW Black','JW Black']],['20 ml',['Ginja de Óbidos','Ginja de Óbidos']],['20 ml',['Martini Bianco','Martini Bianco']],['20 ml',['orange juice','sumo de laranja']]],
+ steps:{en:['Shake all with ice','Strain into a coupe'],pt:['Agita tudo com gelo','Coa para uma taça']},
+ note:{en:'Equal parts. Your Óbidos ginja stands in beautifully for cherry liqueur.',pt:'Partes iguais. A tua ginja de Óbidos substitui lindamente o licor de cereja.'}},
+{id:'scotch-highball',cat:'scotch',glass:'highball',ready:true,
+ ing:[['50 ml',['JW Black','JW Black']],['top',['soda','soda']]],
+ steps:{en:['Build over ice','Lemon twist'],pt:['Monta com gelo','Espiral de limão']}},
+{id:'scotch-boulevardier',cat:'scotch',glass:'rocks',ready:true,
+ ing:[['30 ml',['JW Black','JW Black']],['30 ml',['Campari','Campari']],['30 ml',['sweet red vermouth','vermute tinto doce']]],
+ steps:{en:['Stir with ice','Strain over a big cube','Orange peel'],pt:['Mexe com gelo','Coa sobre um cubo grande','Casca de laranja']}},
+
+/* BOURBON */
+{id:'manhattan',cat:'bourbon',glass:'coupe',ready:true,style:{en:'the one you wanted',pt:'aquele que querias'},
+ ing:[['50 ml',['bourbon or rye','bourbon ou rye']],['20 ml',['sweet red vermouth','vermute tinto doce']],['2 dashes',['Angostura','Angostura']]],
+ steps:{en:['Stir with ice 25s','Strain into a chilled coupe','Cherry or orange twist'],pt:['Mexe com gelo 25s','Coa para uma taça gelada','Cereja ou espiral de laranja']},
+ note:{en:'Fully in reach now — Bulleit + red vermouth, the genuine article.',pt:'Agora dá mesmo — Bulleit + vermute tinto, o verdadeiro.'}},
+{id:'old-fashioned',cat:'bourbon',glass:'rocks',ready:true,style:{en:'classic',pt:'clássico'},
+ ing:[['60 ml',['bourbon','bourbon']],['1 bar spoon',['agave','agave']],['2 dashes',['Angostura','Angostura']]],
+ steps:{en:['Stir with ice','Strain over a big cube','Orange peel'],pt:['Mexe com gelo','Coa sobre um cubo grande','Casca de laranja']}},
+{id:'boulevardier',cat:'bourbon',glass:'rocks',ready:true,
+ ing:[['30 ml',['bourbon','bourbon']],['30 ml',['Campari','Campari']],['30 ml',['sweet red vermouth','vermute tinto doce']]],
+ steps:{en:['Stir with ice','Strain over a big cube','Orange peel'],pt:['Mexe com gelo','Coa sobre um cubo grande','Casca de laranja']},
+ note:{en:'A Negroni in a winter coat — whiskey instead of gin.',pt:'Um Negroni de casaco — whiskey em vez de gin.'}},
+{id:'bourbon-sour',cat:'bourbon',glass:'rocks',ready:true,
+ ing:[['50 ml',['bourbon','bourbon']],['25 ml',['fresh lemon','sumo de limão']],['15 ml',['agave','agave']],['1',['egg white (optional)','clara de ovo (opcional)']]],
+ steps:{en:['Dry-shake if using egg','Shake with ice','Strain over fresh ice'],pt:['Agita sem gelo se usares clara','Agita com gelo','Coa sobre gelo novo']}},
+{id:'julep',cat:'bourbon',glass:'julep',ready:true,
+ ing:[['60 ml',['bourbon','bourbon']],['1 bar spoon',['agave','agave']],['10 leaves',['mint','hortelã']]],
+ steps:{en:['Gently muddle mint + agave','Add bourbon + crushed ice','Churn, big mint bouquet'],pt:['Macera hortelã + agave com cuidado','Junta bourbon + gelo picado','Mexe bem, raminho de hortelã farto']}},
+{id:'whiskey-smash',cat:'bourbon',glass:'rocks',ready:true,style:{en:'lemon tree ✓',pt:'limoeiro ✓'},
+ ing:[['60 ml',['bourbon','bourbon']],['25 ml',['fresh lemon','sumo de limão']],['15 ml',['agave','agave']],['6 leaves',['mint','hortelã']]],
+ steps:{en:['Muddle lemon, mint & agave','Add bourbon + ice, shake','Strain over crushed ice'],pt:['Macera limão, hortelã e agave','Junta bourbon + gelo, agita','Coa sobre gelo picado']}},
+
+/* COGNAC */
+{id:'sidecar',cat:'cognac',glass:'coupe',ready:true,style:{en:'classic',pt:'clássico'},
+ ing:[['50 ml',['cognac','conhaque']],['20 ml',['Cointreau','Cointreau']],['20 ml',['fresh lemon','sumo de limão']]],
+ steps:{en:['Sugar rim (optional)','Shake with ice','Strain into a coupe'],pt:['Aro de açúcar (opcional)','Agita com gelo','Coa para uma taça']}},
+{id:'french-connection',cat:'cognac',glass:'rocks',ready:true,style:{en:'nightcap',pt:'digestivo'},
+ ing:[['40 ml',['cognac','conhaque']],['20 ml',['Amarguinha','Amarguinha']]],
+ steps:{en:['Build over ice','Stir'],pt:['Monta com gelo','Mexe']},
+ note:{en:'Classically amaretto — your Amarguinha does the almond job nicely.',pt:'Normalmente leva amaretto — a tua Amarguinha faz bem o papel da amêndoa.'}},
+
+/* PORT */
+{id:'portonico',cat:'port',glass:'wine',ready:true,style:{en:'PT summer staple',pt:'clássico de verão PT'},
+ ing:[['60 ml',['tawny port','vinho do Porto tawny']],['top',['tonic','água tónica']],['',['orange slice + mint','rodela de laranja + hortelã']]],
+ steps:{en:['Build over plenty of ice in a wine glass','Stir once, garnish'],pt:['Monta com bastante gelo num copo de vinho','Mexe uma vez, decora']}},
+{id:'tawny-rocks',cat:'port',glass:'rocks',ready:true,
+ ing:[['60 ml',['tawny port','vinho do Porto tawny']],['',['over ice','com gelo']]],
+ steps:{en:['Pour over ice','Orange twist — that\u2019s it'],pt:['Verte sobre gelo','Espiral de laranja — é tudo']}},
+{id:'ny-sour',cat:'port',glass:'rocks',ready:true,style:{en:'showpiece',pt:'para impressionar'},
+ ing:[['50 ml',['Jameson or bourbon','Jameson ou bourbon']],['25 ml',['fresh lemon','sumo de limão']],['15 ml',['agave','agave']],['15 ml',['tawny port (float)','tawny (flutuar)']]],
+ steps:{en:['Shake the sour, strain over ice','Float the port over a spoon for the red layer'],pt:['Agita o sour, coa sobre gelo','Faz flutuar o Porto sobre uma colher para a camada vermelha']}},
+
+/* APERITIVO & SPARKLING */
+{id:'aperol-spritz',cat:'aperitivo',glass:'wine',ready:true,style:{en:'terrace classic',pt:'clássico de esplanada'},
+ ing:[['60 ml',['Aperol','Aperol']],['90 ml',['prosecco','prosecco']],['splash',['soda','soda']]],
+ steps:{en:['Build over ice in a wine glass','Orange slice'],pt:['Monta com gelo num copo de vinho','Rodela de laranja']}},
+{id:'campari-spritz',cat:'aperitivo',glass:'wine',ready:true,
+ ing:[['60 ml',['Campari','Campari']],['90 ml',['prosecco','prosecco']],['splash',['soda','soda']]],
+ steps:{en:['Build over ice','Orange slice'],pt:['Monta com gelo','Rodela de laranja']}},
+{id:'americano',cat:'aperitivo',glass:'highball',ready:true,style:{en:'classic',pt:'clássico'},
+ ing:[['30 ml',['Campari','Campari']],['30 ml',['sweet red vermouth','vermute tinto doce']],['top',['soda','soda']]],
+ steps:{en:['Build over ice','Orange slice'],pt:['Monta com gelo','Rodela de laranja']}},
+{id:'sbagliato',cat:'aperitivo',glass:'rocks',ready:true,
+ ing:[['30 ml',['Campari','Campari']],['30 ml',['sweet red vermouth','vermute tinto doce']],['top',['prosecco','prosecco']]],
+ steps:{en:['Build over ice','Orange slice'],pt:['Monta com gelo','Rodela de laranja']},
+ note:{en:'The “mistaken” Negroni — sparkling wine instead of gin.',pt:'O Negroni “enganado” — espumante em vez de gin.'}},
+{id:'mimosa',cat:'aperitivo',glass:'flute',ready:true,
+ ing:[['75 ml',['prosecco','prosecco']],['75 ml',['orange juice','sumo de laranja']]],
+ steps:{en:['Build gently in a flute','Brunch sorted'],pt:['Monta devagar numa flute','Brunch tratado']}},
+
+/* SAKE */
+{id:'saketini',cat:'sake',glass:'martini',ready:true,style:{en:'Junmai',pt:'Junmai'},
+ ing:[['60 ml',['Junmai sake','saké Junmai']],['20 ml',['gin or vodka','gin ou vodka']]],
+ steps:{en:['Stir with ice','Strain into a chilled glass','Lemon twist or cucumber'],pt:['Mexe com gelo','Coa para um copo gelado','Espiral de limão ou pepino']}},
+{id:'sake-sour',cat:'sake',glass:'rocks',ready:true,
+ ing:[['50 ml',['Junmai sake','saké Junmai']],['25 ml',['fresh lemon','sumo de limão']],['15 ml',['agave','agave']]],
+ steps:{en:['Shake with ice','Strain over fresh ice'],pt:['Agita com gelo','Coa sobre gelo novo']}},
+{id:'sake-highball',cat:'sake',glass:'highball',ready:true,
+ ing:[['60 ml',['Junmai sake','saké Junmai']],['top',['soda or tonic','soda ou tónica']],['',['lemon','limão']]],
+ steps:{en:['Build over ice','Lemon wedge'],pt:['Monta com gelo','Rodela de limão']}},
+{id:'sakerita',cat:'sake',glass:'rocks',ready:true,style:{en:'fusion',pt:'fusão'},
+ ing:[['45 ml',['Junmai sake','saké Junmai']],['20 ml',['Cointreau','Cointreau']],['20 ml',['fresh lime','sumo de lima']],['10 ml',['agave','agave']]],
+ steps:{en:['Shake with ice','Strain over fresh ice, salt rim'],pt:['Agita com gelo','Coa sobre gelo novo, aro de sal']}},
+
+/* PEACH */
+{id:'bellini',cat:'peach',glass:'flute',ready:true,style:{en:'Venetian classic',pt:'clássico veneziano'},
+ ing:[['50 ml',['white peach purée','puré de pêssego branco']],['top',['prosecco','prosecco']]],
+ steps:{en:['Spoon peach purée into a flute','Top slowly with prosecco, stir gently'],pt:['Põe o puré de pêssego na flute','Completa devagar com prosecco, mexe com cuidado']}},
+{id:'peach-smash',cat:'peach',glass:'rocks',ready:true,style:{en:'lemon + peach tree ✓',pt:'limoeiro + pessegueiro ✓'},
+ ing:[['60 ml',['bourbon','bourbon']],['2 wedges',['fresh peach','pêssego fresco']],['20 ml',['fresh lemon','sumo de limão']],['10 ml',['agave','agave']],['4 leaves',['mint','hortelã']]],
+ steps:{en:['Muddle peach, lemon, agave & mint','Add bourbon + ice, shake','Strain over crushed ice'],pt:['Macera pêssego, limão, agave e hortelã','Junta bourbon + gelo, agita','Coa sobre gelo picado']}},
+{id:'peach-margarita',cat:'peach',glass:'rocks',ready:true,
+ ing:[['50 ml',['tequila','tequila']],['2 wedges',['fresh peach','pêssego fresco']],['20 ml',['fresh lime','sumo de lima']],['15 ml',['agave','agave']]],
+ steps:{en:['Muddle peach','Add the rest + ice, shake hard','Strain over fresh ice, salt rim'],pt:['Macera o pêssego','Junta o resto + gelo, agita bem','Coa sobre gelo novo, aro de sal']}},
+{id:'peach-daiquiri',cat:'peach',glass:'coupe',ready:true,
+ ing:[['50 ml',['white rum','rum branco']],['2 wedges',['fresh peach','pêssego fresco']],['20 ml',['fresh lime','sumo de lima']],['15 ml',['agave','agave']]],
+ steps:{en:['Muddle peach','Add the rest + ice, shake hard','Double-strain into a coupe'],pt:['Macera o pêssego','Junta o resto + gelo, agita bem','Coa duas vezes para uma taça']}},
+
+/* LIQUEUR & PORTUGUESE */
+{id:'amarguinha-limao',cat:'liqueur',glass:'rocks',ready:true,style:{en:'classic PT serve',pt:'serviço clássico PT'},
+ ing:[['50 ml',['Amarguinha','Amarguinha']],['',['big squeeze of fresh lemon','bom aperto de limão fresco']]],
+ steps:{en:['Pour over ice','Big squeeze of lemon, stir'],pt:['Verte sobre gelo','Bom aperto de limão, mexe']}},
+{id:'amarguinha-sour',cat:'liqueur',glass:'rocks',ready:true,
+ ing:[['50 ml',['Amarguinha','Amarguinha']],['25 ml',['fresh lemon','sumo de limão']],['10 ml',['agave','agave']],['1',['egg white (optional)','clara de ovo (opcional)']]],
+ steps:{en:['Dry-shake if using egg','Shake with ice','Strain over fresh ice'],pt:['Agita sem gelo se usares clara','Agita com gelo','Coa sobre gelo novo']}},
+{id:'ginjinha',cat:'liqueur',glass:'cordial',ready:true,style:{en:'Óbidos tradition',pt:'tradição de Óbidos'},
+ ing:[['40 ml',['Ginja de Óbidos','Ginja de Óbidos']],['',['+ a couple of the cherries','+ duas das cerejas']]],
+ steps:{en:['Serve room-temp or lightly chilled','In a chocolate cup if you\u2019re fancy'],pt:['Serve à temperatura ambiente ou fresca','Num copo de chocolate, se quiseres luxo']}},
+{id:'cafe-amarguinha',cat:'liqueur',glass:'cordial',ready:true,style:{en:'espresso machine ✓',pt:'máquina de café ✓'},
+ ing:[['30 ml',['Creme de Amarguinha','Creme de Amarguinha']],['1 shot',['hot espresso','expresso quente']],['',['splash of milk (optional)','um pouco de leite (opcional)']]],
+ steps:{en:['Pull an espresso','Stir in the cream liqueur'],pt:['Tira um expresso','Mexe com o creme de licor']}},
+{id:'creme-digestif',cat:'liqueur',glass:'rocks',ready:true,
+ ing:[['50 ml',['Creme de Amarguinha','Creme de Amarguinha']],['',['over ice, or with cold milk','com gelo, ou com leite frio']]],
+ steps:{en:['Pour over ice','Dessert in a glass'],pt:['Verte sobre gelo','Sobremesa num copo']}},
+{id:'pf-spritz',cat:'liqueur',glass:'wine',ready:true,style:{en:'tropical spritz',pt:'spritz tropical'},
+ ing:[['40 ml',['passion fruit liqueur','licor de maracujá']],['90 ml',['prosecco','prosecco']],['splash',['soda','soda']]],
+ steps:{en:['Build over ice in a wine glass','Lime wheel'],pt:['Monta com gelo num copo de vinho','Rodela de lima']}}
+];
+
+/* ============ render ============ */
+function L(o){ return o ? (o[lang]!==undefined?o[lang]:o.en) : ''; }
+function ingText(tr){ return tr[lang==='en'?0:1]; }
+
+function tagHtml(d){
+  let t=`<span class="tag ready">${T[lang].ready}</span>`;
+  if(d.style) t+=`<span class="tag style">${L(d.style)}</span>`;
+  return t;
+}
+function cardHtml(d){
+  const ing=d.ing.map(([a,tr])=>`<li><span class="amt">${a}</span><span class="ing">${ingText(tr)}</span></li>`).join('');
+  const steps=d.steps[lang].map(s=>`<li>${s}</li>`).join('');
+  const note=d.note?`<div class="note">${L(d.note)}</div>`:'';
+  const isT=!!tried[d.id];
+  return `<article class="card ${isT?'tried':''}" data-cat="${d.cat}" data-ready="1" data-id="${d.id}">
+    <span class="tick">✓</span>
+    <div class="card-top">
+      <div class="glass">${glass(d.glass)}</div>
+      <div class="card-head"><h3>${d.id&&''}${cocktailName(d)}</h3><div class="tags">${tagHtml(d)}</div></div>
+    </div>
+    <ul class="ingredients">${ing}</ul>
+    <div class="method"><div class="lbl">${T[lang].method}</div><ol class="steps">${steps}</ol></div>
+    ${note}
+    <button class="tried-btn ${isT?'done':''}" onclick="toggleTried('${d.id}',this)">${isT?T[lang].done:T[lang].ask}</button>
+  </article>`;
+}
+/* cocktail display names (proper nouns stay; a few localise) */
+const NAMES={
+  'reposado-of':{en:'Reposado Old Fashioned',pt:'Reposado Old Fashioned'},
+  'tommys':{en:"Tommy's Margarita",pt:"Tommy's Margarita"},
+  'pf-margarita':{en:'Passion Fruit Margarita',pt:'Margarita de Maracujá'},
+  'sunrise':{en:'Tequila Sunrise',pt:'Tequila Sunrise'},
+  'tequila-negroni':{en:'Tequila Negroni',pt:'Negroni de Tequila'},
+  'bianco-martini':{en:'Bianco Martini',pt:'Martini Bianco'},
+  'gt':{en:'Gin & Tonic',pt:'Gin & Tónica'},
+  'white-lady':{en:'White Lady',pt:'White Lady'},
+  'tom-collins':{en:'Tom Collins',pt:'Tom Collins'},
+  'french75':{en:'French 75',pt:'French 75'},
+  'vodka-tonic':{en:'Vodka Tonic',pt:'Vodka Tónica'},
+  'espresso-martini':{en:'Espresso Martini',pt:'Espresso Martini'},
+  'mule':{en:'Moscow Mule',pt:'Moscow Mule'},
+  'cosmo':{en:'Cosmopolitan',pt:'Cosmopolitan'},
+  'cape-codder':{en:'Cape Codder',pt:'Cape Codder'},
+  'screwdriver':{en:'Screwdriver',pt:'Screwdriver'},
+  'white-russian':{en:'White Russian',pt:'White Russian'},
+  'pornstar':{en:'Pornstar Martini',pt:'Pornstar Martini'},
+  'rum-of':{en:'Rum Old Fashioned',pt:'Rum Old Fashioned'},
+  'daiquiri':{en:'Daiquiri',pt:'Daiquiri'},
+  'mojito':{en:'Mojito',pt:'Mojito'},
+  'dns':{en:"Dark 'n' Stormy",pt:"Dark 'n' Stormy"},
+  'cuba-libre':{en:'Cuba Libre',pt:'Cuba Libre'},
+  'el-presidente':{en:'El Presidente',pt:'El Presidente'},
+  'pf-daiquiri':{en:'Passion Fruit Daiquiri',pt:'Daiquiri de Maracujá'},
+  'jameson-of':{en:'Jameson Old Fashioned',pt:'Jameson Old Fashioned'},
+  'whiskey-sour':{en:'Whiskey Sour',pt:'Whiskey Sour'},
+  'irish-coffee':{en:'Irish Coffee',pt:'Café Irlandês'},
+  'irish-highball':{en:'Irish Highball',pt:'Irish Highball'},
+  'rob-roy':{en:'Rob Roy',pt:'Rob Roy'},
+  'bianco-rob-roy':{en:'Bianco Rob Roy',pt:'Rob Roy Bianco'},
+  'godfather':{en:'Godfather',pt:'Godfather'},
+  'rusty-nail':{en:'Rusty Nail',pt:'Rusty Nail'},
+  'blood-and-sand':{en:'Blood and Sand',pt:'Blood and Sand'},
+  'scotch-highball':{en:'Scotch Highball',pt:'Scotch Highball'},
+  'scotch-boulevardier':{en:'Scotch Boulevardier',pt:'Boulevardier de Whisky'},
+  'manhattan':{en:'Manhattan',pt:'Manhattan'},
+  'old-fashioned':{en:'Old Fashioned',pt:'Old Fashioned'},
+  'boulevardier':{en:'Boulevardier',pt:'Boulevardier'},
+  'bourbon-sour':{en:'Bourbon Sour',pt:'Bourbon Sour'},
+  'julep':{en:'Mint Julep',pt:'Mint Julep'},
+  'whiskey-smash':{en:'Whiskey Smash',pt:'Whiskey Smash'},
+  'sidecar':{en:'Sidecar',pt:'Sidecar'},
+  'french-connection':{en:'French Connection',pt:'French Connection'},
+  'portonico':{en:'Portónico',pt:'Portónico'},
+  'tawny-rocks':{en:'Tawny on the Rocks',pt:'Tawny com Gelo'},
+  'ny-sour':{en:'New York Sour',pt:'New York Sour'},
+  'aperol-spritz':{en:'Aperol Spritz',pt:'Aperol Spritz'},
+  'campari-spritz':{en:'Campari Spritz',pt:'Campari Spritz'},
+  'americano':{en:'Americano',pt:'Americano'},
+  'sbagliato':{en:'Negroni Sbagliato',pt:'Negroni Sbagliato'},
+  'mimosa':{en:'Mimosa',pt:'Mimosa'},
+  'saketini':{en:'Saketini',pt:'Saketini'},
+  'sake-sour':{en:'Sake Sour',pt:'Sake Sour'},
+  'sake-highball':{en:'Sake Highball',pt:'Sake Highball'},
+  'sakerita':{en:'Sake-rita',pt:'Sake-rita'},
+  'bellini':{en:'Bellini',pt:'Bellini'},
+  'peach-smash':{en:'Peach Bourbon Smash',pt:'Smash de Pêssego'},
+  'peach-margarita':{en:'Fresh Peach Margarita',pt:'Margarita de Pêssego'},
+  'peach-daiquiri':{en:'White Peach Daiquiri',pt:'Daiquiri de Pêssego'},
+  'amarguinha-limao':{en:'Amarguinha com Limão',pt:'Amarguinha com Limão'},
+  'amarguinha-sour':{en:'Amarguinha Sour',pt:'Amarguinha Sour'},
+  'ginjinha':{en:'Ginjinha, neat',pt:'Ginjinha, pura'},
+  'cafe-amarguinha':{en:'Café com Amarguinha',pt:'Café com Amarguinha'},
+  'creme-digestif':{en:'Creme de Amarguinha, digestif',pt:'Creme de Amarguinha, digestivo'},
+  'negroni':{en:'Negroni',pt:'Negroni'},
+  'margarita':{en:'Margarita',pt:'Margarita'},
+  'gimlet':{en:'Gimlet',pt:'Gimlet'},
+  'paloma':{en:'Paloma',pt:'Paloma'},
+  'pf-spritz':{en:'Passion Fruit Spritz',pt:'Spritz de Maracujá'}
+};
+function cocktailName(d){ const n=NAMES[d.id]; return n?L(n):d.id; }
+
+function howtoNode(){
+  const en = lang==='en';
+  const tech = en ? [
+    ['① Stir','For all-spirit drinks — Old Fashioned, Manhattan, Negroni, Martini. Stir with ice 20–30s until the glass frosts, then strain. Cold, silky, clear.','No juice = stir.'],
+    ['② Shake','For anything with citrus, juice, egg or cream. Fill with ice, shake hard 10–15s, strain. Cold, lively, aerated.','Juice = shake.'],
+    ['③ Build','Pour straight into the serving glass over ice and stir gently — G&T, Mule, highballs, Spritz.','Top-with-fizz = build.'],
+    ['④ Muddle','Press herbs or fruit gently to release oils (mint, peach). Press, don\u2019t shred.','Mint, peach & fruit.'],
+    ['Dry shake','Egg white for a silky sour? Shake once with no ice to whip it, then again with ice.',''],
+    ['Rim & peel','Rim: rub citrus round the glass, roll in pink salt or sugar. Peel: twist skin-side down over the glass to spray the oils.','']
+  ] : [
+    ['① Mexer','Para bebidas só de destilados — Old Fashioned, Manhattan, Negroni, Martini. Mexe com gelo 20–30s até o copo arrefecer, depois coa. Frio, sedoso, límpido.','Sem sumo = mexer.'],
+    ['② Agitar','Para tudo com citrinos, sumo, clara ou natas. Enche de gelo, agita com força 10–15s, coa. Frio, vivo, arejado.','Com sumo = agitar.'],
+    ['③ Montar','Verte direto no copo de serviço com gelo e mexe devagar — Gin & Tónica, Mule, highballs, Spritz.','Completar com gás = montar.'],
+    ['④ Macerar','Pressiona ervas ou fruta com cuidado para libertar os óleos (hortelã, pêssego). Pressiona, não esmagues.','Hortelã, pêssego e fruta.'],
+    ['Agitar a seco','Clara de ovo para um sour sedoso? Agita uma vez sem gelo para bater, depois outra vez com gelo.',''],
+    ['Aro & casca','Aro: passa citrino à volta do copo, rola em sal rosa ou açúcar. Casca: torce com a pele para baixo sobre o copo para libertar os óleos.','']
+  ];
+  const cards = tech.map(([h,p,w])=>`<div class="howcard"><h4>${h}</h4><p>${p}</p>${w?`<span class="when">${w}</span>`:''}</div>`).join('');
+  const jig = en
+    ? [['15 / 30','dashes & splits'],['20 / 40','vermouth, modifiers'],['25 / 50','the workhorse'],['30 / 60','spirit bases']]
+    : [['15 / 30','gotas e divisões'],['20 / 40','vermute, modificadores'],['25 / 50','o do dia-a-dia'],['30 / 60','bases de destilado']];
+  const jigHtml = jig.map(([b,s])=>`<div><b>${b}</b><span>${s}</span></div>`).join('');
+  const glasses = en
+    ? [['rocks','Rocks'],['coupe','Coupe'],['martini','Martini'],['highball','Highball'],['collins','Collins'],['flute','Flute'],['wine','Wine'],['mug','Mug'],['cordial','Cordial']]
+    : [['rocks','Rocks'],['coupe','Taça'],['martini','Martini'],['highball','Highball'],['collins','Collins'],['flute','Flute'],['wine','Vinho'],['mug','Caneca'],['cordial','Licoreiro']];
+  const glassHtml = glasses.map(([g,c])=>`<figure>${glass(g)}<figcaption>${c}</figcaption></figure>`).join('');
+  return `<div class="section-head"><h2>${en?'How to pour':'Como servir'}</h2><span class="bottle">${en?'the four moves & your kit':'os quatro gestos e o teu equipamento'}</span></div>
+    <div class="howto-grid">${cards}</div>
+    <h4 class="sub-h">${en?'Your jigger — which cup is which':'O teu jigger — que copo é qual'}</h4>
+    <p class="sub-p">${en?'Four double-ended cups. Small side / big side:':'Quatro copos de dois lados. Lado pequeno / lado grande:'}</p>
+    <div class="jigger-key">${jigHtml}</div>
+    <p class="sub-note">${en?'“1 bar spoon” ≈ 5 ml. Your agave syrup is the sweetener everywhere a recipe says agave. Big clear cube for stirred drinks; regular cubes for shaking & building; crushed for Juleps & Smashes.':'“1 colher de bar” ≈ 5 ml. O teu xarope de agave é o adoçante sempre que a receita diz agave. Cubo grande para bebidas mexidas; cubos normais para agitar e montar; gelo picado para Juleps e Smashes.'}</p>
+    <h4 class="sub-h">${en?'Glassware at a glance':'Copos num relance'}</h4>
+    <div class="glasskey">${glassHtml}</div>`;
+}
+
+function shopNode(){
+  const en = lang==='en';
+  return `<div class="section-head"><h2>${en?'Restock & extras':'Repor & extras'}</h2><span class="bottle">${en?'you\u2019re basically complete':'estás praticamente completo'}</span></div>
+    <div class="shop-tier">
+      <h4>${en?'Running low — restock before Saturday':'A acabar — repor antes de sábado'}</h4>
+      <p class="cap">${en?'The two bottles getting low with the crowd coming.':'As duas garrafas a acabar, com a malta a chegar.'}</p>
+      <div class="shop-list">
+        <div class="shop-item low"><b>SKYY Vodka</b><span class="unlocks">${en?'Powers the Espresso Martini, Pornstar, Mule, Cosmo & more — the workhorse for a crowd.':'Move o Espresso Martini, Pornstar, Mule, Cosmo e mais — o cavalo de batalha para um grupo.'}</span></div>
+        <div class="shop-item low"><b>${en?'Aged dark rum':'Rum escuro envelhecido'}</b><span class="unlocks">${en?'Abuelo / Havana are low — needed for the Rum Old Fashioned, Dark \u2019n\u2019 Stormy & El Presidente.':'O Abuelo / Havana estão a acabar — precisas deles para o Rum Old Fashioned, Dark \u2019n\u2019 Stormy e El Presidente.'}</span></div>
+      </div>
+    </div>
+    <div class="shop-tier">
+      <h4>${en?'Optional deep cuts':'Extras opcionais'}</h4>
+      <p class="cap">${en?'Only if you want to widen the menu further.':'Só se quiseres alargar ainda mais a carta.'}</p>
+      <div class="shop-list">
+        <div class="shop-item opt"><b>${en?'Fresh passion fruit':'Maracujá fresco'}</b><span class="unlocks">${en?'Real pulp takes the Pornstar Martini from great to unforgettable.':'A polpa verdadeira leva o Pornstar Martini de bom a inesquecível.'}</span></div>
+        <div class="shop-item opt"><b>${en?'Crème de cacao':'Crème de cacao'}</b><span class="unlocks">${en?'Unlocks the Brandy Alexander with your Courvoisier + cream.':'Abre o Brandy Alexander com o teu Courvoisier + natas.'}</span></div>
+        <div class="shop-item opt"><b>${en?'Pineapple juice':'Sumo de ananás'}</b><span class="unlocks">${en?'Piña Colada (with coconut cream) and tropical riffs.':'Piña Colada (com creme de coco) e variações tropicais.'}</span></div>
+      </div>
+    </div>
+    <div class="shop-tier">
+      <h4>${en?'Already stocked ✓':'Já em casa ✓'}</h4>
+      <div class="pillrow">
+        ${['🍋 '+(en?'Lemons (your tree)':'Limões (a tua árvore)'),'🍑 '+(en?'Peaches (your tree)':'Pêssegos (a tua árvore)'),'🥃 Bourbon','🍷 '+(en?'Red vermouth':'Vermute tinto'),'🟠 Aperol','🔴 Campari','☕ Tia Maria','🥂 Prosecco','🥥 '+(en?'White rum':'Rum branco'),'🍈 '+(en?'Passion fruit liqueur':'Licor de maracujá'),'🍸 '+(en?'Cognac':'Conhaque'),'🥃 Drambuie','🍶 '+(en?'Sake':'Saké'),'🥤 '+(en?'Tonic, soda, 3× ginger beer':'Tónica, soda, 3× ginger beer'),'🔴 '+(en?'Cranberry':'Arando'),'🍊 '+(en?'Oranges':'Laranjas'),'🌿 '+(en?'Mint':'Hortelã')].map(p=>`<span class="p">${p}</span>`).join('')}
+      </div>
+    </div>`;
+}
+
+const menu=document.getElementById('menu');
+function buildMenu(){
+  menu.innerHTML='';
+  SECTIONS.forEach(s=>{
+    const drinks=D.filter(d=>d.cat===s.cat);
+    if(!drinks.length) return;
+    const sec=document.createElement('section');
+    sec.className='section'; sec.dataset.cat=s.cat;
+    sec.innerHTML=`<div class="section-head"><h2>${L(s.t)}</h2><span class="bottle ${s.low?'low':''}">${L(s.b)}</span></div>
+                   <div class="grid">${drinks.map(cardHtml).join('')}</div>`;
+    menu.appendChild(sec);
+  });
+}
+
+function buildChips(){
+  const track=document.getElementById('chipTrack'); track.innerHTML='';
+  const chips=[
+    {key:'all',label:T[lang].all},
+    {key:'ready',label:T[lang].ready,cls:'ready'},
+    {key:'tried',label:T[lang].triedF,cls:'tried'},
+    {key:'untried',label:T[lang].untried,cls:'tried'},
+    ...SECTIONS.filter(s=>D.some(d=>d.cat===s.cat)).map(s=>({key:s.cat,label:L(s.t)})),
+    {key:'howto',label:T[lang].howto},
+    {key:'shop',label:T[lang].shop}
+  ];
+  chips.forEach(c=>{
+    const el=document.createElement('button');
+    el.className='chip '+(c.cls||'')+(c.key===active?' active':'');
+    el.dataset.key=c.key;
+    el.innerHTML=(c.cls?'<span class="dot"></span>':'')+c.label;
+    el.addEventListener('click',()=>applyFilter(c.key));
+    track.appendChild(el);
+  });
+}
+
+function renderStatic(){
+  document.getElementById('markLine').textContent=T[lang].mark;
+  document.getElementById('hint').textContent=T[lang].hint;
+  const readyN=D.filter(d=>d.ready).length;
+  document.getElementById('counts').innerHTML=T[lang].counts(readyN,D.length);
+  document.getElementById('howto').innerHTML=howtoNode();
+  document.getElementById('shop').innerHTML=shopNode();
+  document.getElementById('empty').textContent=T[lang].empty;
+  document.getElementById('footer').innerHTML=`${T[lang].foot1} &nbsp;<span class="heart">♥</span><br><span style="font-size:.8rem;">${T[lang].foot2}</span>`;
+  document.documentElement.lang=lang;
+}
+
+/* ============ photo banner ============ */
+const PHOTOS=[
+  {src:'img/bar-wide.jpg',   alt:{en:'The bar — bottles, fruit and copper mugs', pt:'O bar — garrafas, fruta e canecas de cobre'}},
+  {src:'img/ronda.jpg',      alt:{en:'Ronda — the Puente Nuevo', pt:'Ronda — a Puente Nuevo'}},
+  {src:'img/bottles.jpg',    alt:{en:'Bottles, up close', pt:'Garrafas, de perto'}},
+  {src:'img/beach-sol.jpg',  alt:{en:'Finalmente! Sol! — the beach', pt:'Finalmente! Sol! — a praia'}},
+  {src:'img/bar-angle.jpg',  alt:{en:'The bar from the side', pt:'O bar de lado'}},
+  {src:'img/sea.jpg',        alt:{en:'Silver sea, a lone swimmer', pt:'Mar prateado, um nadador'}},
+  {src:'img/bar-corner.jpg', alt:{en:'The bar corner and shelf', pt:'O canto do bar e a prateleira'}},
+  {src:'img/food.jpg',       alt:{en:'Dinner out', pt:'Jantar fora'}}
+];
+let bannerBuilt=false;
+function buildBanner(){
+  if(bannerBuilt) return;
+  const real=PHOTOS.map(p=>`<div class="shot"><img src="${p.src}" alt="${L(p.alt)}" decoding="async"></div>`).join('');
+  const dup =PHOTOS.map(p=>`<div class="shot" aria-hidden="true"><img src="${p.src}" alt="" loading="lazy" decoding="async"></div>`).join('');
+  document.getElementById('banner').innerHTML=`<div class="banner-track">${real}${dup}</div>`;
+  bannerBuilt=true;
+}
+
+/* ============ countdown ============ */
+const ARRIVE=new Date('2026-06-06T15:00:00+01:00').getTime();
+let cdTimer=null;
+function buildCountdown(){
+  const el=document.getElementById('countdown'); if(!el) return;
+  el.classList.remove('arrived');
+  el.innerHTML=`<div class="cd-label">${T[lang].cdLabel}</div>
+    <div class="cd-clock">
+      <div class="cd-unit"><b id="cdD">00</b><span>${T[lang].cdUnits[0]}</span></div>
+      <div class="cd-unit"><b id="cdH">00</b><span>${T[lang].cdUnits[1]}</span></div>
+      <div class="cd-unit"><b id="cdM">00</b><span>${T[lang].cdUnits[2]}</span></div>
+      <div class="cd-unit"><b id="cdS">00</b><span>${T[lang].cdUnits[3]}</span></div>
+    </div>
+    <div class="cd-sub">${T[lang].cdSub}</div>`;
+  if(cdTimer) clearInterval(cdTimer);
+  tickCountdown();
+  cdTimer=setInterval(tickCountdown,1000);
+}
+function tickCountdown(){
+  const el=document.getElementById('countdown'); if(!el) return;
+  let diff=Math.floor((ARRIVE-Date.now())/1000);
+  if(diff<=0){
+    if(cdTimer) clearInterval(cdTimer);
+    el.classList.add('arrived');
+    el.innerHTML=`<div class="cd-label">${T[lang].cdLabel}</div><div class="cd-arrived">${T[lang].cdArrived}</div><div class="cd-sub">${T[lang].cdSub}</div>`;
+    return;
+  }
+  const d=Math.floor(diff/86400); diff-=d*86400;
+  const h=Math.floor(diff/3600); diff-=h*3600;
+  const m=Math.floor(diff/60); const s=diff-m*60;
+  const set=(id,v)=>{const n=document.getElementById(id); if(n) n.textContent=String(v).padStart(2,'0');};
+  set('cdD',d); set('cdH',h); set('cdM',m); set('cdS',s);
+}
+
+/* ============ the Bobi Special (signature) ============ */
+const BOBI={
+  img:'img/bobi.jpg',
+  name:{en:'The Bobi Special',pt:'O Bobi Special'},
+  tag:{en:'Sake Manhattan · over one big cube · smoked',pt:'Manhattan de Saké · sobre um cubo grande · fumado'},
+  ing:[
+    ['60 ml',['Junmai sake','saké Junmai']],
+    ['20 ml',['sweet red vermouth','vermute tinto doce']],
+    ['2 dashes',['Angostura','Angostura']],
+    ['1 big cube',['ice','gelo']],
+    ['to top',['smoke','fumo']]
+  ],
+  steps:{
+    en:['Stir sake, vermouth & Angostura with ice 20–30s','Strain over one big cube in a rocks glass','Trap a puff of smoke over the top — cover, swirl, lift','Garnish with a ginja cherry'],
+    pt:['Mexe saké, vermute e Angostura com gelo 20–30s','Coa sobre um cubo grande num copo baixo','Captura um sopro de fumo por cima — tapa, roda, levanta','Decora com uma cereja de ginja']
+  },
+  note:{en:'A Manhattan in a kimono: sake for whiskey, smoke for the drama. Stirred, never shaken — like Bobi.',pt:'Um Manhattan de quimono: saké em vez de whiskey, fumo para o efeito. Mexido, nunca agitado — como o Bobi.'},
+  quote:{en:'Sometimes things are smol, sometimes things are amazing, and just once, in a hundred thousand years, they are both.',pt:'Às vezes as coisas são pequeninas, às vezes são extraordinárias, e só uma vez, em cem mil anos, são as duas ao mesmo tempo.'},
+  by:'THE BOBI'
+};
+function renderBobi(){
+  const link=document.getElementById('bobiLink');
+  if(link) link.innerHTML=`<span class="bs-star">✦</span> ${T[lang].bobiCta}`;
+  const body=document.getElementById('bobiBody'); if(!body) return;
+  const ing=BOBI.ing.map(([a,tr])=>`<li><span class="amt">${a}</span><span class="ing">${ingText(tr)}</span></li>`).join('');
+  const steps=BOBI.steps[lang].map(s=>`<li>${s}</li>`).join('');
+  body.innerHTML=`
+    <figure class="bobi-fig">
+      <img src="${BOBI.img}" alt="Bobi, the best boi" onerror="this.style.display='none'">
+      <figcaption>${T[lang].bobiTribute}</figcaption>
+    </figure>
+    <div class="bobi-body">
+      <h3 class="bobi-title">${L(BOBI.name)}</h3>
+      <div class="bobi-sub">${L(BOBI.tag)}</div>
+      <ul class="ingredients">${ing}</ul>
+      <div class="method"><div class="lbl">${T[lang].method}</div><ol class="steps">${steps}</ol></div>
+      <div class="note">${L(BOBI.note)}</div>
+      <blockquote class="bobi-quote">${L(BOBI.quote)}<cite>— ${BOBI.by}</cite></blockquote>
+    </div>`;
+}
+function openBobi(){ const m=document.getElementById('bobiModal'); m.classList.add('open'); m.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; }
+function closeBobi(){ const m=document.getElementById('bobiModal'); m.classList.remove('open'); m.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
+function bobiOuter(e){ if(e.target===e.currentTarget) closeBobi(); }
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeBobi(); });
+
+function render(){ renderStatic(); buildChips(); buildMenu(); buildBanner(); buildCountdown(); renderBobi(); applyFilter(active,true); }
+
+const empty=document.getElementById('empty');
+function applyFilter(key,silent){
+  active=key;
+  document.querySelectorAll('.chip').forEach(c=>c.classList.toggle('active',c.dataset.key===key));
+  const allSections=document.querySelectorAll('.section');
+  const util=['howto','shop'];
+  if(util.includes(key)){
+    allSections.forEach(s=>s.classList.toggle('hide',s.dataset.cat!==key));
+    empty.style.display='none';
+    if(!silent) document.getElementById(key).scrollIntoView({behavior:'smooth',block:'start'});
+    return;
+  }
+  let any=false;
+  allSections.forEach(s=>{
+    const c=s.dataset.cat;
+    if(util.includes(c)){ s.classList.add('hide'); return; }
+    let secVisible=false;
+    s.querySelectorAll('.card').forEach(card=>{
+      let show=true;
+      if(key==='ready') show=card.dataset.ready==='1';
+      else if(key==='tried') show=!!tried[card.dataset.id];
+      else if(key==='untried') show=!tried[card.dataset.id];
+      else if(key!=='all') show=card.dataset.cat===key;
+      card.classList.toggle('hide',!show);
+      if(show) secVisible=true;
+    });
+    s.classList.toggle('hide',!secVisible);
+    if(secVisible) any=true;
+  });
+  empty.style.display=any?'none':'block';
+  if(!silent) window.scrollTo({top:document.querySelector('.filters').offsetTop-10,behavior:'smooth'});
+}
+
+function toggleTried(id,btn){
+  tried[id]=!tried[id];
+  if(!tried[id]) delete tried[id];
+  store.set(STORE_KEY,tried);
+  const card=btn.closest('.card');
+  const on=!!tried[id];
+  card.classList.toggle('tried',on);
+  btn.classList.toggle('done',on);
+  btn.textContent=on?T[lang].done:T[lang].ask;
+  if(active==='tried'||active==='untried') applyFilter(active);
+}
+
+function setLang(l){
+  if(l===lang) return;
+  lang=l;
+  document.getElementById('langEn').classList.toggle('on',l==='en');
+  document.getElementById('langPt').classList.toggle('on',l==='pt');
+  render();
+}
+
+render();
+</script>
+</body>
+</html>
