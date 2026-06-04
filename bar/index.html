@@ -40,12 +40,12 @@
   }
   .wrap{position:relative; z-index:1; max-width:1080px; margin:0 auto; padding:0 20px 80px;}
 
-  header.hero{ position:relative; display:flex; align-items:center; justify-content:space-between; gap:40px; flex-wrap:wrap; text-align:left; padding:44px 8px 26px; }
+  header.hero{ position:relative; display:flex; align-items:center; justify-content:space-between; gap:26px; flex-wrap:wrap; text-align:left; padding:44px 8px 26px; }
   header.hero::before{ content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
     background:linear-gradient(rgba(21,16,11,.82),rgba(21,16,11,.82)), url("img/bobi.jpg") center/cover no-repeat;
     -webkit-mask-image:radial-gradient(115% 130% at 50% 50%, #000 6%, transparent 70%);
             mask-image:radial-gradient(115% 130% at 50% 50%, #000 6%, transparent 70%); }
-  .hero-main{ position:relative; z-index:1; flex:1 1 360px; }
+  .hero-main{ position:relative; z-index:1; flex:0 1 auto; }
   .hero .mark{ font-family:"Fraunces"; font-weight:500; font-style:italic; color:var(--brass); letter-spacing:.26em; text-transform:uppercase; font-size:.72rem; }
   .hero h1{ font-family:"Fraunces"; font-weight:900; font-optical-sizing:144; font-size:clamp(2.9rem,9vw,5.4rem); line-height:.92; letter-spacing:-.01em; margin:.16em 0 .2em; color:var(--cream); text-shadow:0 2px 0 rgba(0,0,0,.25); }
   .hero h1 em{ font-style:italic; color:var(--brass-bright); font-weight:600; }
@@ -187,12 +187,13 @@
   }
 
   /* ===== Bobi Special link + tribute modal ===== */
-  .bobi-link{ display:inline-flex; align-items:center; gap:8px; margin-top:13px; cursor:pointer;
+  .bobi-link{ display:inline-flex; align-items:center; justify-content:center; gap:8px; cursor:pointer;
     font-family:"Fraunces"; font-style:italic; font-weight:600; font-size:1rem; color:var(--brass-bright);
     background:linear-gradient(180deg,var(--brass-soft),transparent); border:1px solid var(--brass);
     border-radius:999px; padding:9px 18px; min-height:42px; transition:all .2s ease; box-shadow:0 6px 18px -10px var(--brass); }
   .bobi-link:hover{ background:var(--brass); color:#1a130a; transform:translateY(-1px); }
   .bobi-link .bs-star{ font-style:normal; }
+  .hero-cta{ flex:0 0 auto; display:flex; flex-direction:column; gap:11px; align-items:stretch; min-width:188px; max-width:252px; }
 
   .modal-overlay{ position:fixed; inset:0; z-index:100; display:flex; align-items:center; justify-content:center;
     padding:20px; background:rgba(10,7,4,.74); backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px);
@@ -209,7 +210,7 @@
     display:flex; align-items:center; justify-content:center; transition:all .18s; backdrop-filter:blur(4px); }
   .modal-x:hover{ background:var(--porto); border-color:var(--porto); color:#fff; }
   .bobi-fig{ margin:0; position:relative; }
-  .bobi-fig img{ width:100%; height:auto; display:block; border-radius:18px 18px 0 0; }
+  .bobi-fig img{ width:100%; height:auto; max-height:320px; object-fit:cover; object-position:center 40%; display:block; border-radius:18px 18px 0 0; }
   .bobi-fig figcaption{ position:absolute; left:0; right:0; bottom:0; padding:36px 20px 13px;
     background:linear-gradient(transparent,rgba(13,9,5,.93)); color:var(--cream); font-family:"Fraunces";
     font-style:italic; font-weight:600; font-size:.96rem; }
@@ -230,6 +231,7 @@
     header.hero{ flex-direction:column; align-items:stretch; text-align:center; gap:20px; padding:36px 8px 22px;}
     .rule{ margin-left:auto; margin-right:auto;}
     .countdown{ align-self:center;}
+    .hero-cta{ align-self:center; max-width:320px; width:100%;}
     .filters{ margin:6px -14px 0;}
     .bar-left{ padding-left:14px;}
     .filters .track{ padding:2px 14px 6px;}
@@ -247,9 +249,12 @@
       <div class="mark" id="markLine"></div>
       <h1>Bar do <em>Bobi</em></h1>
       <div class="rule"><span>✦</span></div>
-      <button class="bobi-link" id="bobiLink" type="button" onclick="openBobi()"></button>
       <div class="counts" id="counts"></div>
       <div class="hint" id="hint"></div>
+    </div>
+    <div class="hero-cta">
+      <button class="bobi-link" id="bobiLink" type="button" onclick="openSpecial('bobi')"></button>
+      <button class="bobi-link" id="timberLink" type="button" onclick="openSpecial('timber')"></button>
     </div>
     <aside class="countdown" id="countdown" aria-label="Countdown to guests arriving"></aside>
   </header>
@@ -280,10 +285,10 @@
 
 </div>
 
-<div class="modal-overlay" id="bobiModal" aria-hidden="true" onclick="bobiOuter(event)">
-  <div class="modal" role="dialog" aria-modal="true" aria-label="The Bobi Special">
-    <button class="modal-x" type="button" onclick="closeBobi()" aria-label="Close">✕</button>
-    <div id="bobiBody"></div>
+<div class="modal-overlay" id="specialModal" aria-hidden="true" onclick="specialOuter(event)">
+  <div class="modal" role="dialog" aria-modal="true" aria-label="House special">
+    <button class="modal-x" type="button" onclick="closeSpecial()" aria-label="Close">✕</button>
+    <div id="specialBody"></div>
   </div>
 </div>
 
@@ -317,7 +322,7 @@ function glass(t){ switch(t){
 /* ============ UI strings ============ */
 const T={
   en:{ mark:'Carvoeiro · Cocktail List',
-    bobiCta:'Try the Bobi Special', bobiTribute:'Bobi · the best boi of the millennium', searchPh:'Search drinks or ingredients…',
+    bobiCta:'Try the Bobi Special', timberCta:'Try the Timber Special', bobiTribute:'Bobi · the best boi of the millennium', searchPh:'Search drinks or ingredients…',
     cdLabel:'Europe Beans', cdSub:'guests arrive · Sat 3pm', cdUnits:['days','hrs','min','sec'], cdArrived:'They’re here! 🍹',
     counts:(r,t)=>`<b>${r}</b> ready now &nbsp;·&nbsp; <b>${t}</b> recipes`,
     hint:'Filter by spirit, by what\u2019s ready, or by what you\u2019ve tried.',
@@ -326,7 +331,7 @@ const T={
     all:'All', ready:'Ready now', triedF:'Tried', untried:'Not yet', howto:'How-to', shop:'Shopping',
     foot1:'Poured with care at Bar do Bobi · Carvoeiro', foot2:'Tap “Tried” on a drink to track your way through the menu — it remembers.' },
   pt:{ mark:'Carvoeiro · Carta de Cocktails',
-    bobiCta:'Prova o Bobi Special', bobiTribute:'Bobi · o melhor menino do milénio', searchPh:'Procurar bebidas ou ingredientes…',
+    bobiCta:'Prova o Bobi Special', timberCta:'Prova o Timber Special', bobiTribute:'Bobi · o melhor menino do milénio', searchPh:'Procurar bebidas ou ingredientes…',
     cdLabel:'Europe Beans', cdSub:'convidados chegam · sáb 15h', cdUnits:['dias','h','min','seg'], cdArrived:'Chegaram! 🍹',
     counts:(r,t)=>`<b>${r}</b> prontos já &nbsp;·&nbsp; <b>${t}</b> receitas`,
     hint:'Filtra por bebida, pelo que está pronto, ou pelo que já provaste.',
@@ -350,7 +355,8 @@ const SECTIONS=[
   {cat:'aperitivo',t:{en:'Aperitivo & Sparkling',pt:'Aperitivo & Espumante'}, b:{en:'Campari · Aperol · Prosecco',pt:'Campari · Aperol · Prosecco'}},
   {cat:'sake',    t:{en:'Sake',pt:'Saké'}, b:{en:'Junmai — dry & savoury',pt:'Junmai — seco e saboroso'}},
   {cat:'peach',   t:{en:'From the Peach Tree',pt:'Do Pessegueiro'}, b:{en:'fresh from your garden',pt:'fresco do teu jardim'}},
-  {cat:'liqueur', t:{en:'Liqueurs & Portuguese',pt:'Licores & Portugueses'}, b:{en:'Amarguinha · Ginja de Óbidos · Passion fruit',pt:'Amarguinha · Ginja de Óbidos · Maracujá'}}
+  {cat:'liqueur', t:{en:'Liqueurs & Portuguese',pt:'Licores & Portugueses'}, b:{en:'Amarguinha · Ginja de Óbidos · Passion fruit',pt:'Amarguinha · Ginja de Óbidos · Maracujá'}},
+  {cat:'mocktail', t:{en:'Mocktails',pt:'Sem Álcool'}, b:{en:'no alcohol, all the care',pt:'sem álcool, todo o cuidado'}}
 ];
 
 /* ============ drinks ============
@@ -608,7 +614,27 @@ const D=[
  steps:{en:['Pour over ice','Dessert in a glass'],pt:['Verte sobre gelo','Sobremesa num copo']}},
 {id:'pf-spritz',cat:'liqueur',glass:'wine',ready:true,style:{en:'tropical spritz',pt:'spritz tropical'},
  ing:[['40 ml',['passion fruit liqueur','licor de maracujá']],['90 ml',['prosecco','prosecco']],['splash',['soda','soda']]],
- steps:{en:['Build over ice in a wine glass','Lime wheel'],pt:['Monta com gelo num copo de vinho','Rodela de lima']}}
+ steps:{en:['Build over ice in a wine glass','Lime wheel'],pt:['Monta com gelo num copo de vinho','Rodela de lima']}},
+
+/* MOCKTAILS */
+{id:'virgin-mojito',cat:'mocktail',glass:'collins',ready:true,style:{en:'refresher',pt:'refrescante'},
+ ing:[['25 ml',['fresh lime','sumo de lima']],['15 ml',['agave','agave']],['8 leaves',['mint','hortelã']],['top',['soda','soda']]],
+ steps:{en:['Gently muddle mint + agave','Add lime & ice','Top with soda, mint sprig'],pt:['Macera hortelã + agave com cuidado','Junta lima e gelo','Completa com soda, raminho de hortelã']}},
+{id:'virgin-paloma',cat:'mocktail',glass:'highball',ready:true,
+ ing:[['15 ml',['fresh lime','sumo de lima']],['1 pinch',['salt','sal']],['top',['grapefruit soda','refrigerante de toranja']]],
+ steps:{en:['Build over ice','Stir gently, lime wedge'],pt:['Monta com gelo','Mexe devagar, rodela de lima']}},
+{id:'virgin-mule',cat:'mocktail',glass:'mug',ready:true,
+ ing:[['15 ml',['fresh lime','sumo de lima']],['top',['ginger beer','ginger beer']]],
+ steps:{en:['Build over ice','Lime wedge'],pt:['Monta com gelo','Rodela de lima']}},
+{id:'peach-lemonade',cat:'mocktail',glass:'collins',ready:true,style:{en:'peach + lemon tree ✓',pt:'pessegueiro + limoeiro ✓'},
+ ing:[['2 wedges',['fresh peach','pêssego fresco']],['25 ml',['fresh lemon','sumo de limão']],['15 ml',['agave','agave']],['top',['soda','soda']]],
+ steps:{en:['Muddle peach, lemon & agave','Add ice','Top with soda'],pt:['Macera pêssego, limão e agave','Junta gelo','Completa com soda']}},
+{id:'shirley-temple',cat:'mocktail',glass:'highball',ready:true,style:{en:'the classic',pt:'o clássico'},
+ ing:[['15 ml',['grenadine','groselha']],['top',['ginger ale','ginger ale']],['',['a cherry','uma cereja']]],
+ steps:{en:['Build over ice','Stir, drop in a cherry'],pt:['Monta com gelo','Mexe, põe uma cereja']}},
+{id:'cranberry-cooler',cat:'mocktail',glass:'highball',ready:true,
+ ing:[['90 ml',['cranberry','sumo de arando']],['15 ml',['fresh lime','sumo de lima']],['top',['soda','soda']]],
+ steps:{en:['Build over ice','Stir, lime wedge'],pt:['Monta com gelo','Mexe, rodela de lima']}}
 ];
 
 /* ============ render ============ */
@@ -648,6 +674,12 @@ const NAMES={
   'gt':{en:'Gin & Tonic',pt:'Gin & Tónica'},
   'white-lady':{en:'White Lady',pt:'White Lady'},
   'pink-lady':{en:'Pink Lady',pt:'Pink Lady'},
+  'virgin-mojito':{en:'Virgin Mojito',pt:'Mojito Virgem'},
+  'virgin-paloma':{en:'Virgin Paloma',pt:'Paloma Virgem'},
+  'virgin-mule':{en:'Virgin Mule',pt:'Mule Virgem'},
+  'peach-lemonade':{en:'Peach Lemonade',pt:'Limonada de Pêssego'},
+  'shirley-temple':{en:'Shirley Temple',pt:'Shirley Temple'},
+  'cranberry-cooler':{en:'Cranberry Cooler',pt:'Cranberry Cooler'},
   'tom-collins':{en:'Tom Collins',pt:'Tom Collins'},
   'french75':{en:'French 75',pt:'French 75'},
   'vodka-tonic':{en:'Vodka Tonic',pt:'Vodka Tónica'},
@@ -897,34 +929,56 @@ const BOBI={
   },
   note:{en:'A Manhattan in a kimono: sake for whiskey, smoke for the drama. Stirred, never shaken — like Bobi.',pt:'Um Manhattan de quimono: saké em vez de whiskey, fumo para o efeito. Mexido, nunca agitado — como o Bobi.'},
   quote:{en:'Sometimes things are smol, sometimes things are amazing, and just once, in a hundred thousand years, they are both.',pt:'Às vezes as coisas são pequeninas, às vezes são extraordinárias, e só uma vez, em cem mil anos, são as duas ao mesmo tempo.'},
+  tribute:{en:'Bobi · the best boi of the millennium',pt:'Bobi · o melhor menino do milénio'},
   by:'THE BOBI'
 };
-function renderBobi(){
-  const link=document.getElementById('bobiLink');
-  if(link) link.innerHTML=`<span class="bs-star">✦</span> ${T[lang].bobiCta}`;
-  const body=document.getElementById('bobiBody'); if(!body) return;
-  const ing=BOBI.ing.map(([a,tr])=>`<li><span class="amt">${a}</span><span class="ing">${ingText(tr)}</span></li>`).join('');
-  const steps=BOBI.steps[lang].map(s=>`<li>${s}</li>`).join('');
-  body.innerHTML=`
+const TIMBER={
+  img:'img/timber.jpg',
+  name:{en:'The Timber Special',pt:'O Timber Special'},
+  tag:{en:'Passion Fruit Margarita · extra lime',pt:'Margarita de Maracujá · lima a mais'},
+  ing:[
+    ['50 ml',['tequila','tequila']],
+    ['20 ml',['passion fruit liqueur','licor de maracujá']],
+    ['30 ml',['fresh lime','sumo de lima']],
+    ['10 ml',['agave','agave']]
+  ],
+  steps:{
+    en:['Shake hard with ice','Strain over fresh ice','Salt rim optional, extra lime wedge'],
+    pt:['Agita bem com gelo','Coa sobre gelo novo','Aro de sal opcional, gomo de lima a mais']
+  },
+  note:{en:'A Passion Fruit Margarita with extra lime — bright, tart, and ready for anything, just like Timber.',pt:'Uma Margarita de maracujá com lima a mais — viva, ácida e pronta para tudo, tal como o Timber.'},
+  quote:{en:'Meet Timber — equal parts adventure buddy and professional couch potato! He’s always up for a stroll or a snuggle session, and honestly? He’s pretty great at both.',pt:'Apresentamos o Timber — meio companheiro de aventuras, meio preguiçoso profissional! Está sempre pronto para um passeio ou uma sessão de miminhos e, sinceramente? É bastante bom nas duas coisas.'},
+  tribute:{en:'Timber · adventure buddy & professional couch potato',pt:'Timber · companheiro de aventuras e preguiçoso profissional'},
+  by:'TIMBER'
+};
+const SPECIALS={bobi:BOBI,timber:TIMBER};
+function buildSpecialBody(s){
+  const ing=s.ing.map(([a,tr])=>`<li><span class="amt">${a}</span><span class="ing">${ingText(tr)}</span></li>`).join('');
+  const steps=s.steps[lang].map(x=>`<li>${x}</li>`).join('');
+  return `
     <figure class="bobi-fig">
-      <img src="${BOBI.img}" alt="Bobi, the best boi" onerror="this.style.display='none'">
-      <figcaption>${T[lang].bobiTribute}</figcaption>
+      <img src="${s.img}" alt="${L(s.name)}" onerror="this.style.display='none'">
+      <figcaption>${L(s.tribute)}</figcaption>
     </figure>
     <div class="bobi-body">
-      <h3 class="bobi-title">${L(BOBI.name)}</h3>
-      <div class="bobi-sub">${L(BOBI.tag)}</div>
+      <h3 class="bobi-title">${L(s.name)}</h3>
+      <div class="bobi-sub">${L(s.tag)}</div>
       <ul class="ingredients">${ing}</ul>
       <div class="method"><div class="lbl">${T[lang].method}</div><ol class="steps">${steps}</ol></div>
-      <div class="note">${L(BOBI.note)}</div>
-      <blockquote class="bobi-quote">${L(BOBI.quote)}<cite>— ${BOBI.by}</cite></blockquote>
+      <div class="note">${L(s.note)}</div>
+      <blockquote class="bobi-quote">${L(s.quote)}<cite>— ${s.by}</cite></blockquote>
     </div>`;
 }
-function openBobi(){ const m=document.getElementById('bobiModal'); m.classList.add('open'); m.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; }
-function closeBobi(){ const m=document.getElementById('bobiModal'); m.classList.remove('open'); m.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
-function bobiOuter(e){ if(e.target===e.currentTarget) closeBobi(); }
-document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeBobi(); });
+function renderSpecials(){
+  const b=document.getElementById('bobiLink'); if(b) b.innerHTML=`<span class="bs-star">✦</span> ${T[lang].bobiCta}`;
+  const t=document.getElementById('timberLink'); if(t) t.innerHTML=`<span class="bs-star">✦</span> ${T[lang].timberCta}`;
+}
+function openSpecial(key){ const s=SPECIALS[key]; if(!s) return; document.getElementById('specialBody').innerHTML=buildSpecialBody(s); const m=document.getElementById('specialModal'); m.classList.add('open'); m.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; }
+function closeSpecial(){ const m=document.getElementById('specialModal'); m.classList.remove('open'); m.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
+function specialOuter(e){ if(e.target===e.currentTarget) closeSpecial(); }
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeSpecial(); });
 
-function render(){ renderStatic(); buildChips(); buildMenu(); buildBanner(); buildCountdown(); renderBobi(); applyFilter(active,true); }
+function render(){ renderStatic(); buildChips(); buildMenu(); buildBanner(); buildCountdown(); renderSpecials(); applyFilter(active,true); }
 
 const empty=document.getElementById('empty');
 let searchTerm='';
