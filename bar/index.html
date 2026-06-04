@@ -245,6 +245,14 @@
     .banner{ margin:16px -14px 4px; }
     .shot{ width:188px; height:118px; margin-right:10px; }
   }
+
+  /* desktop: chips wrap into rows instead of a long horizontal scroll */
+  @media (min-width:521px){
+    .filters{ position:static; align-items:flex-start; }
+    .filters .track{ flex-wrap:wrap; overflow-x:visible; row-gap:8px; }
+    .chip{ min-height:36px; padding:6px 13px; font-size:.9rem; }
+    .section{ scroll-margin-top:24px; }
+  }
 </style>
 </head>
 <body>
@@ -963,6 +971,13 @@ const TIMBER={
   by:'TIMBER'
 };
 const SPECIALS={bobi:BOBI,timber:TIMBER};
+/* surface the house specials as cards in their spirit sections (reuse the modal data) */
+D.push(
+  {id:'bobi-special',cat:'sake',glass:'rocks',ready:true,style:{en:'house special ✦',pt:'especial da casa ✦'},ing:BOBI.ing,steps:BOBI.steps,note:BOBI.note},
+  {id:'timber-special',cat:'tequila',glass:'rocks',ready:true,style:{en:'house special ✦',pt:'especial da casa ✦'},ing:TIMBER.ing,steps:TIMBER.steps,note:TIMBER.note}
+);
+NAMES['bobi-special']=BOBI.name;
+NAMES['timber-special']=TIMBER.name;
 function buildSpecialBody(s){
   const ing=s.ing.map(([a,tr])=>`<li><span class="amt">${a}</span><span class="ing">${ingText(tr)}</span></li>`).join('');
   const steps=s.steps[lang].map(x=>`<li>${x}</li>`).join('');
