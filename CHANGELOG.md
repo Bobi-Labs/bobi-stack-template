@@ -4,6 +4,10 @@ Date-keyed, hand-written, one entry per meaningful change. **Not semver.** bobi-
 
 A downstream project reads this to decide whether a pattern is worth re-pulling. Keep entries about *what changed and why it matters to a project built on this*, not commit-by-commit detail.
 
+## 2026-07-13
+
+- **Recipe added: multi-session orchestration** (`docs/recipes/multi-session-orchestration.md`, first entry in a new `docs/recipes/` dir). Actions the `[idea-only]` umbrella-protocol candidate from `backport-candidates.md` at exactly the treatment that entry prescribed: a documented situational method, explicitly NOT standardized into the scaffold. Operator-requested after the pattern carried a multi-repo marketing build-out. Adds the parts the original candidate predated: the master-chat + pointed-worker-chat session hierarchy, the work-order entry format, context-window hygiene (pointed same-tree chats exhaust context slower and stay more accurate), and the failure modes (reporting gaps, stale status markers, keeper resolution rights). Single-repo projects should keep ignoring all of it.
+
 ## 2026-05-17
 
 Git-hygiene and cross-chat continuity pass. Root-caused by a real client project where a permanent obligation (filing call transcripts) lapsed silently because the convention had a home but no lifecycle trigger and no mechanical check. It survived only on someone remembering, which fails across context-constricted chats.

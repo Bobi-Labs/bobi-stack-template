@@ -38,12 +38,6 @@ A fifth feedback principle: when a copy or design choice is between safer/cleane
 
 **New-project relevance:** low to medium, domain-specific. Only applies to projects with a sales/positioning/portfolio dimension. An internal CRUD tool or client app has no "wins the most work" axis. Candidate for an *optional* memory template (clearly labeled "for client-facing / portfolio / sales-adjacent projects"), not a fifth universal principle. The template's strength is that its four universal principles are genuinely universal; do not dilute that set.
 
-## [idea-only] The umbrella protocol (multi-repo coordination)
-
-`docs/umbrella/` with per-sub-project append-only log files plus a curated `_changelog.md`, a keeper/consumer asymmetry (one repo is the keeper, others report up), and a read/write protocol embedded in every participating repo's CLAUDE.md. It is the persistent, git-tracked, async coordination primitive that lets multiple Claude sessions across multiple repos cooperate without polling or a daemon. Proven across six repos in the Bobi Labs ecosystem.
-
-**New-project relevance:** low for the generic case, on purpose. A single-repo project does not need any of this; it would be pure overhead. This is specifically a solution for the unusual situation of one operator running many coordinated repos through many separate Claude sessions. **Do not standardize it.** The right treatment is a documented optional method ("if your project grows into multiple coordinated repos and you are hitting cross-session knowledge loss, here is a pattern that worked") in a `docs/recipes/` or appendix, explicitly flagged as situational. The general problem it solves (cross-session/cross-repo knowledge loss) is real and universal; the template already addresses the single-repo half of it via the session-END checklist and `check-integrity`. The umbrella protocol is the multi-repo extension, and most projects will never need it.
-
 ## [idea-only] Path-based multi-deploy rewrite
 
 A portfolio/marketing site fronting separate sub-app demo deployments via `portfolio.tld/<product>/:path*` Vercel rewrites to standalone Vercel projects. Lets one domain showcase many independently-deployed sub-products.
