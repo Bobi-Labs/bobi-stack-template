@@ -45,6 +45,7 @@ flowchart LR
 - `docs/calls/`: parsed call-notes convention (raw transcripts gitignored, parsed notes committed)
 - `.screenshots/`: image-sharing convention for Claude sessions
 - Principle files: fail-loudly, mutual-check-in, invoice-language, client-facing-quality
+- `docs/recipes/`: situational patterns that are deliberately NOT default scaffold; adopt one when the project's shape calls for it
 
 **Tooling:**
 
@@ -84,6 +85,16 @@ Everything goes through `ops.sh`:
 - **One commit per logical change.** No while-I-am-at-it bundling.
 - **Memory files are lessons learned, not summaries.** The memory folder captures what was hard-won. `CLAUDE.md` captures current project state.
 - **Start fresh chats for new batches of work.** Long chats degrade. Memory carries forward what matters; chat context does not need to.
+
+## Scaling up: many repos, many sessions
+
+A single repo needs none of this section. But when one operator runs **multiple coordinated repos through multiple Claude sessions**, the scaffold has a proven answer: the **umbrella pattern** ([`docs/recipes/multi-session-orchestration.md`](docs/recipes/multi-session-orchestration.md)).
+
+The short version: one repo becomes the **keeper**, holding append-only comms logs (one per participating repo) plus a curated decisions changelog. The operator runs one **master chat** in the keeper for planning, and opens **pointed worker chats** per repo that pick up written **work orders** from the logs. Chats never coordinate live; the git-tracked logs are the channel, so the system survives context resets, machine changes, and weeks of idle time.
+
+Why bother: pointed single-purpose chats exhaust context windows far slower and stay more accurate than one sprawling chat, and a written chain of command means no session overwrites another's work and no decision has to be re-explained. Field-tested across six coordinated repos through a three-month build-out (including sub-project sessions surfacing cross-cutting infra incidents to the keeper, and the keeper resolving stale asks when a sub-project went idle).
+
+When to adopt: the first time two repos need to agree on something (shared database, shared brand rules, one product embedding another). Copy-paste starter files live in [`docs/recipes/umbrella-starter/`](docs/recipes/umbrella-starter/); adopt them via the recipe's "Adopting it" steps, not by copying the folder wholesale. Until then, ignore it: the overhead is real, and single-repo projects should skip it on purpose.
 
 ## Internal docs
 

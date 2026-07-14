@@ -40,7 +40,7 @@ The highest-leverage artifact. When the master chat delegates, it appends a `WOR
 
 Reply here when landed with <the specific facts the keeper needs back>.
 
-**Status:** [needs-response] — awaiting a <repo> session to claim.
+**Status:** [needs-response] — awaiting a <project> session to claim.
 ```
 
 The operator then opens a chat in that repo and says little more than "check the umbrella log and pick up the work order."
@@ -54,3 +54,15 @@ The operator then opens a chat in that repo and says little more than "check the
 ## When not to use this
 
 One repo, or repos that never actually depend on each other: skip it all. The overhead is only worth it once cross-repo state genuinely exists (shared database, shared brand rules, one product embedding another). Start with just a keeper + one log the first time two repos need to agree on something, and let the rest grow as needed.
+
+## Adopting it
+
+Starter files live in [`umbrella-starter/`](umbrella-starter/). The mechanical steps:
+
+1. **Pick the keeper** (the oldest or most central repo; it must also own the umbrella's strategy doc).
+2. Copy `umbrella-starter/README.template.md` and `umbrella-starter/_changelog.template.md` into the keeper repo as `docs/umbrella/README.md` and `docs/umbrella/_changelog.md`; fill placeholders.
+3. For each participating repo, copy `project.log.template.md` to `docs/umbrella/<project>.log.md` in the keeper repo.
+4. Paste the matching block from `claude-md-block.template.md` into each repo's CLAUDE.md session-start checklist (keeper block vs participant block).
+5. First real use: when the next cross-cutting decision happens, write it as a log entry instead of re-explaining it in the next chat. The system earns its keep from that moment.
+
+Day to day, run it as described in "The session hierarchy" above: one master chat in the keeper, pointed worker chats picking up work orders from the logs.

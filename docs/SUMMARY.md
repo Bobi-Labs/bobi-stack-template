@@ -16,6 +16,11 @@
 - [Contributing](../CONTRIBUTING.md) — new-project ritual + template-evolution ritual
 - [Changelog](../CHANGELOG.md) — date-keyed template evolution + deferred-by-design decisions
 
+# Recipes (situational, opt-in)
+
+- [Multi-session orchestration](recipes/multi-session-orchestration.md) — the umbrella pattern for many repos + many Claude sessions; includes adoption steps
+- [Umbrella starter files](recipes/umbrella-starter/README.template.md) — copy-paste protocol README, log + changelog templates, CLAUDE.md blocks
+
 <!-- Add project-specific docs as the project grows:
 - [Architecture](architecture.md)
 - [Auth & Roles](auth-and-roles.md)
