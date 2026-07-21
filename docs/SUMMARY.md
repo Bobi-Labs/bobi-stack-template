@@ -20,6 +20,7 @@
 
 - [Multi-session orchestration](recipes/multi-session-orchestration.md) — the umbrella pattern for many repos + many Claude sessions; includes adoption steps
 - [Umbrella starter files](recipes/umbrella-starter/README.template.md) — copy-paste protocol README, log + changelog templates, CLAUDE.md blocks
+- [Source-only workspace packages](recipes/source-only-packages.md) — sharing code across apps without a build step: consumer requirements, third-party CSS, the smoke-build rule
 
 <!-- Add project-specific docs as the project grows:
 - [Architecture](architecture.md)

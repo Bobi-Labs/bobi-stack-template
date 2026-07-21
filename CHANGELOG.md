@@ -4,6 +4,14 @@ Date-keyed, hand-written, one entry per meaningful change. **Not semver.** bobi-
 
 A downstream project reads this to decide whether a pattern is worth re-pulling. Keep entries about *what changed and why it matters to a project built on this*, not commit-by-commit detail.
 
+## 2026-07-22 (later)
+
+Four scaffold defects reported by the bobi-suite extraction, each reproduced before fixing.
+
+- **`globals.css` build failure fixed.** Line 2 read `@plugin "tw-animate-css";` and must be `@import`. The `@plugin` form throws `ERR_UNKNOWN_FILE_EXTENSION ".css"` on Tailwind 4.2 + tw-animate-css 1.3.3, so **every repo freshly scaffolded from this template broke the moment it compiled CSS.** Confirmed against three shipping apps (mastjoba, bobilabs, worktracker) on identical versions: all three use `@import`. The scaffold was alone and wrong.
+- **CI actions un-deprecated.** `actions/checkout` and `actions/setup-node` bumped v4 → v5 (GitHub force-runs Node 20 actions on Node 24 and has a deprecation clock on them); `pnpm/action-setup` pinned to `v4.1.0`.
+- **New recipe: [source-only workspace packages](docs/recipes/source-only-packages.md).** Captures the consumer requirements that fail silently (`transpilePackages`, Tailwind `@source`), the third-party-CSS rule (peer dependency + consumer-side `@import ... layer(base)`, never vendored), and the **smoke-build rule**: a package is not done until a throwaway consumer app has built against it. That rule exists because a package passed typecheck, 95 tests, and an adversarial review while being impossible to import.
+
 ## 2026-07-22
 
 - **.gitignore: `node_modules/` unanchored** (was root-anchored `/node_modules`). The root-anchored form misses nested `packages/*/node_modules` the moment a clone becomes a pnpm workspace, which the bobi-suite scaffold hit on day one. One-line fix, no behavior change for single-package clones.

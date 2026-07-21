@@ -19,7 +19,7 @@ jobs:
   node:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Detect filled-in project
         id: guard
@@ -32,12 +32,12 @@ jobs:
             echo "::notice::No pnpm-lock.yaml found. This looks like the unfilled bobi-stack template, so CI is skipped. It runs in full once the project is filled in and dependencies are installed."
           fi
 
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v4.1.0
         if: steps.guard.outputs.proceed == 'true'
         with:
           version: 10.15.1
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         if: steps.guard.outputs.proceed == 'true'
         with:
           node-version: '20'
