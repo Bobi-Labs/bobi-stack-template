@@ -4,6 +4,10 @@ Date-keyed, hand-written, one entry per meaningful change. **Not semver.** bobi-
 
 A downstream project reads this to decide whether a pattern is worth re-pulling. Keep entries about *what changed and why it matters to a project built on this*, not commit-by-commit detail.
 
+## 2026-07-22
+
+- **.gitignore: `node_modules/` unanchored** (was root-anchored `/node_modules`). The root-anchored form misses nested `packages/*/node_modules` the moment a clone becomes a pnpm workspace, which the bobi-suite scaffold hit on day one. One-line fix, no behavior change for single-package clones.
+
 ## 2026-07-14
 
 - **Umbrella pattern becomes a first-class opt-in** (operator call, upgrading yesterday's recipe-only treatment). README gains a "Scaling up: many repos, many sessions" section describing the master-chat + pointed-worker-chat model, when to adopt, and when to deliberately skip. New `docs/recipes/umbrella-starter/` ships copy-paste adoption files: genericized protocol README, per-project log template (with entry + work-order formats inline), decisions-changelog template, and CLAUDE.md blocks for keeper vs participant repos. The recipe doc gains an "Adopting it" section wiring these together. Still NOT default scaffold: nothing activates in a clone (no CLAUDE.md block, no `docs/umbrella/`) until a project copies the starters in; single-repo projects remain untouched by design. One deliberate carve-out, so it is not re-litigated: the log-entry wire format (`## YYYY-MM-DD — title — from X` and the `[status] —` lines) keeps its em-dash separators. That format is field-proven across the live umbrella's logs and is machine-scannable structure, not prose; the no-em-dash rule continues to apply to all prose around it.
