@@ -4,6 +4,13 @@ Date-keyed, hand-written, one entry per meaningful change. **Not semver.** bobi-
 
 A downstream project reads this to decide whether a pattern is worth re-pulling. Keep entries about *what changed and why it matters to a project built on this*, not commit-by-commit detail.
 
+## 2026-07-22 (later still)
+
+Two lessons from the bobi-suite Phase 1 close, added to [source-only packages](docs/recipes/source-only-packages.md) because both generalize well beyond that recipe:
+
+- **A rule stated in a README needs a test that fails when it is broken.** A package shipped a violation of its own convention and documented itself as compliant in the same commit: README, code comment, and ruling were all wrong about the same file, and only an adversarial review caught it. Prose is a request; a failing test is the rule.
+- **Structured output guarantees well-formed results, not truthful ones.** A parallel audit lens returned `{"summary":"test","detail":"d"}` and the synthesis consumed it as real analysis, because it validated against the schema perfectly. Any workflow whose output feeds a decision needs a plausibility gate (minimum lengths, required file:line specifics, existence checks) before synthesis.
+
 ## 2026-07-22 (later)
 
 Four scaffold defects reported by the bobi-suite extraction, each reproduced before fixing.

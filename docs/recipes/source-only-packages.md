@@ -31,6 +31,20 @@ This is not belt-and-braces. `@bobilabs/offline` passed typecheck, 95 unit tests
 
 Create a scratch app outside the workspace, install the package, import it, build. Delete it afterward. The whole exercise costs minutes and is the only check that tests the thing consumers actually do.
 
+## A rule stated in a README needs a test that fails when it is broken
+
+Every package here will be extended by a session that reads the README and trusts it. That trust is only warranted if the rule is enforced by something that runs.
+
+The case that produced this: a package shipped a violation of its own stated convention and documented itself as compliant in the same commit. README said one thing, the code comment said the same thing, the ruling said the same thing, and all three were wrong about the same file. Only an adversarial review caught it. A three-line test would have caught it at commit time, forever, for free.
+
+So: when a package states a convention (escaping by default, no runtime CSS injection, required constructor arguments), add the test that fails when a future session forgets. Prose is a request; a failing test is the rule.
+
+## Structured output guarantees well-formed results, not truthful ones
+
+When fanning work out to parallel agents with a response schema, the schema validates *shape*. It does not validate that the agent did the work. A lens in a multi-agent audit returned `{"summary":"test","detail":"d"}` and the synthesis step consumed it as real analysis, because it was perfectly well-formed.
+
+Nothing downstream checks this by default. If a workflow's output feeds a decision, add a plausibility gate before synthesis: minimum lengths, required specifics (file paths, line numbers, quoted evidence), or a cross-check that the claimed artifact exists. Cheap to write, and the failure mode it prevents is a confident-sounding conclusion built on a placeholder.
+
 ## The general lesson
 
 Verify, do not reason. In that same extraction, an adversarial review surfaced 20 candidate findings and 3 survived refutation; two of those three would have broken every consumer who followed the README. The refutation step is what made the review worth running, and compiling is what made the refutation trustworthy.
