@@ -4,6 +4,14 @@ Date-keyed, hand-written, one entry per meaningful change. **Not semver.** bobi-
 
 A downstream project reads this to decide whether a pattern is worth re-pulling. Keep entries about *what changed and why it matters to a project built on this*, not commit-by-commit detail.
 
+## 2026-07-23
+
+Security hardening, driven by a real incident: a live client system turned out to have a full authentication bypass reachable with one curl command, alongside an app that had been quietly dying in users' browsers for months. Neither was bad code; both were habits. The full record is the incident record, held privately.
+
+- **New recipe: [security and failure modes](docs/recipes/security-and-failure-modes.md).** The five habits (an exemption list that grew by convenience; authentication mistaken for authorization; silent failure modes; a fix that was written and never shipped; a workaround that outlived its cause) and the 19-item checklist. Flagged as not-situational: this one is for every project.
+- **New: `lib/auth/require-role.ts`.** `requireRole(...)` and `requireCronSecret(...)`, shipped on day one so the complete check is the path of least resistance. `getUser()` answers "is this someone?"; the question is "is this someone who may do *this*?" Roles read from `app_metadata` (service-role-writable) and never `user_metadata` (user-writable). Cron helper returns 401 rather than a redirect, because a 307 silently breaks schedulers that follow it and report success.
+- **New: `./ops.sh audit-security`** (`scripts/audit-security.mjs`), wired into CI with `--strict`. Checks the greppable half: undocumented auth exemptions, exempt service-role routes with no caller check, authentication without authorization, webhooks without secret verification, privilege downgrade on failure, Supabase `lock` overrides, unexplained `Infinity` caches, service-worker deploy skew. Calibrated against six real codebases until the clean ones reported clean, because a tool that cries wolf gets ignored. **On its first run it found the same authentication bypass, unpatched, in a sibling repo** — same route, same missing check, same comment where a guard belonged.
+
 ## 2026-07-22 (later still)
 
 Two lessons from the bobi-suite Phase 1 close, added to [source-only packages](docs/recipes/source-only-packages.md) because both generalize well beyond that recipe:

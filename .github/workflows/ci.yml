@@ -55,6 +55,13 @@ jobs:
         if: steps.guard.outputs.proceed == 'true'
         run: bash ops.sh test
 
+      # Fails the build on the greppable half of
+      # docs/recipes/security-and-failure-modes.md. These checks exist
+      # because each one already happened in production somewhere.
+      - name: Security + failure-mode audit
+        if: steps.guard.outputs.proceed == 'true'
+        run: bash ops.sh audit-security --strict
+
       - name: Build
         if: steps.guard.outputs.proceed == 'true'
         run: bash ops.sh build

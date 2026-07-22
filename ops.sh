@@ -176,6 +176,13 @@ elif [[ "$cmd" == "clean" ]]; then
         echo "Removed node_modules/"
     fi
 
+# ─── audit-security ───────────────────────────────────
+
+elif [[ "$cmd" == "audit-security" ]]; then
+
+    cd "$PROJECT_DIR"
+    node scripts/audit-security.mjs "$@"
+
 # ─── check-integrity ──────────────────────────────────
 
 elif [[ "$cmd" == "check-integrity" ]]; then
@@ -226,6 +233,7 @@ Supabase:
 
 Utilities:
   check-integrity        Drift scan: unfiled transcripts, stale handoff/history
+  audit-security         Security + failure-mode scan (docs/recipes/security-and-failure-modes.md)
   clean [--all]          Remove .next/ and out/ (--all: also node_modules/)
   docs                   Open docs/ directory
 

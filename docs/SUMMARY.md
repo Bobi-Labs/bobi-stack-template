@@ -16,7 +16,9 @@
 - [Contributing](../CONTRIBUTING.md) — new-project ritual + template-evolution ritual
 - [Changelog](../CHANGELOG.md) — date-keyed template evolution + deferred-by-design decisions
 
-# Recipes (situational, opt-in)
+# Recipes
+
+- [Security and failure modes](recipes/security-and-failure-modes.md) — **read this one**: the five habits behind a live bypass, the 19-item checklist, and what `./ops.sh audit-security` enforces
 
 - [Multi-session orchestration](recipes/multi-session-orchestration.md) — the umbrella pattern for many repos + many Claude sessions; includes adoption steps
 - [Umbrella starter files](recipes/umbrella-starter/README.template.md) — copy-paste protocol README, log + changelog templates, CLAUDE.md blocks
