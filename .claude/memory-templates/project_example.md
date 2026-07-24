@@ -1,11 +1,11 @@
 ---
-name: {{topic}} — current state
+name: {{topic}} current state
 description: {{short description of what this file tracks}}
 type: project
 ---
 
 <!--
-  Template — rename to project_<topic>.md and fill in. Delete if not applicable.
+  Template: rename to project_<topic>.md and fill in. Delete if not applicable.
 
   Use for current-state information that doesn't belong in committed docs because it
   changes too often (DB row counts as-of-a-date, active batch IDs, decisions not yet
@@ -26,7 +26,7 @@ type: project
 
 <!-- Specific things that are missing + why. -->
 
-- {{gap}} — blocked on {{who/what}}
+- {{gap}}, blocked on {{who/what}}
 
 ## Decisions made + not yet documented
 

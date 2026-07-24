@@ -1,5 +1,5 @@
 /**
- * Query registry — pairs each key factory with its query function.
+ * Query registry: pairs each key factory with its query function.
  *
  * useClientQuery enforces this pairing: you pick a name from this registry
  * and the hook calls the right key + fn together. Params must match between

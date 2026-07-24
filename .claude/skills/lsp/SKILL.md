@@ -1,6 +1,6 @@
 ---
 name: lsp
-description: Convention for using Language Server Protocol tools for precise code intelligence — references, definitions, type checking — instead of guessing from grep results.
+description: Convention for using Language Server Protocol tools for precise code intelligence (references, definitions, type checking) instead of guessing from grep results.
 user-invocable: false
 ---
 
@@ -28,4 +28,4 @@ Use LSP tools instead of guessing from grep results when:
 
 ## Key Principle
 
-Prefer semantic queries over text search. Don't speculate about types — verify with tools.
+Prefer semantic queries over text search. Don't speculate about types. Verify with tools.

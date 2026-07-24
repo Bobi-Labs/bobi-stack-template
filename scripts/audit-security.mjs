@@ -1,5 +1,5 @@
 /**
- * audit-security — mechanical detector for the failure classes that took a
+ * audit-security: mechanical detector for the failure classes that took a
  * live client system down (and open) for months without anyone noticing.
  *
  * Every check here exists because it actually happened, not because it is

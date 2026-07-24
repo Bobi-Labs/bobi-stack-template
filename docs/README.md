@@ -2,15 +2,15 @@
 
 This folder is the project's living documentation. Every markdown file here serves three purposes:
 
-1. **Human reference** — Lessons learned, architectural decisions, integration quirks, and incident postmortems
-2. **AI context** — A knowledge base that AI agents read to understand the project deeply
-3. **Publishable docs** — Markdown with a `SUMMARY.md` table of contents, ready to build into a docs site
+1. **Human reference**: Lessons learned, architectural decisions, integration quirks, and incident postmortems
+2. **AI context**: A knowledge base that AI agents read to understand the project deeply
+3. **Publishable docs**: Markdown with a `SUMMARY.md` table of contents, ready to build into a docs site
 
 ## Structure
 
 ```
 docs/
-  README.md          # This file — explains the docs convention
+  README.md          # This file: explains the docs convention
   SUMMARY.md         # Table of contents (required for doc site generators)
   index.md           # Landing page / project overview
 ```

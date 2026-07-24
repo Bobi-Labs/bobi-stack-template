@@ -1,33 +1,33 @@
-# CLAUDE.md — {{PROJECT_NAME}}
+# CLAUDE.md: {{PROJECT_NAME}}
 
 > **Template file.** Replace `{{PLACEHOLDERS}}` with project-specific content.
 > Delete this blockquote once filled in.
 
-## ⚠️ Session-start checklist — READ THIS FIRST, EVERY TIME
+## ⚠️ Session-start checklist: READ THIS FIRST, EVERY TIME
 
 The #1 cause of unproductive sessions is skipping the context load. Before touching code or client-facing output:
 
 1. **Read `~/.claude/projects/{{PROJECT_DIR_SLUG}}/memory/session_history.md` in full.** It's the briefing. It tells you what's shipped, what went wrong in prior sessions, and where the full chat archive lives.
-2. **Open and read every memory file the session history points to** — `feedback_*.md`, `project_*.md`, `user_*.md`, `reference_*.md`. The `MEMORY.md` index is a table of contents, not a briefing.
+2. **Open and read every memory file the session history points to**: `feedback_*.md`, `project_*.md`, `user_*.md`, `reference_*.md`. The `MEMORY.md` index is a table of contents, not a briefing.
 3. **Read `docs/` files relevant to current work** + `TODO.md`. These are live sources of truth for what's in flight.
-4. **Run `./ops.sh check-integrity`.** Mechanical drift detector for permanent ongoing obligations — unfiled call transcripts, stale `handoff_note.md` / `session_history.md`. Resolve anything it flags before starting work. This catches the gaps that relevance-gated context loading structurally misses.
+4. **Run `./ops.sh check-integrity`.** Mechanical drift detector for permanent ongoing obligations: unfiled call transcripts, stale `handoff_note.md` / `session_history.md`. Resolve anything it flags before starting work. This catches the gaps that relevance-gated context loading structurally misses.
 5. **Run a health check** before touching anything client-visible: build passes, typecheck status known, deploy healthy.
 6. **Summarize current state back to the user before proposing changes.** If you can't summarize it, you haven't read enough.
 7. **One batch = one chat.** Long chats degrade. When a batch of work commits cleanly, end the session and start fresh.
 8. **Never bundle "while I'm at it" fixes.** One commit per logical change.
 
-If anything in this file conflicts with a memory file, **the memory file wins** — memory files are the record of lessons learned; CLAUDE.md is a summary that can drift.
+If anything in this file conflicts with a memory file, **the memory file wins**. Memory files are the record of lessons learned; CLAUDE.md is a summary that can drift.
 
-## ⚠️ Session-END checklist — DO THIS BEFORE THE CHAT CLOSES
+## ⚠️ Session-END checklist: DO THIS BEFORE THE CHAT CLOSES
 
-The #1 cause of cross-chat knowledge loss is a permanent obligation with no end-of-session trigger. Relevance-gated context loading cannot catch obligations that aren't relevant to today's task — so they get caught here, at the boundary, every time. When a batch of work is committed and the session is wrapping:
+The #1 cause of cross-chat knowledge loss is a permanent obligation with no end-of-session trigger. Relevance-gated context loading cannot catch obligations that aren't relevant to today's task, so they get caught here, at the boundary, every time. When a batch of work is committed and the session is wrapping:
 
 1. **File any new call transcripts.** Raw → `.transcripts/YYYY-MM-DD-slug.txt` (gitignored), parse the load-bearing ones → `docs/calls/YYYY-MM-DD-slug.md`, add a row to `docs/calls/INDEX.md`. See `docs/calls/README.md`. `./ops.sh check-integrity` tells you what's unfiled.
-2. **Update `handoff_note.md`** if project state changed — it's the next chat's first read. Bump its `lastWritten`.
+2. **Update `handoff_note.md`** if project state changed. It's the next chat's first read. Bump its `lastWritten`.
 3. **Update `session_history.md`** if a meaningful arc completed (shipped feature, scope change, new lesson).
-4. **Update `TODO.md`** — mark done `[x]`, add anything discovered.
-5. **Capture new lessons into memory** (`feedback_*` / `project_*` / `user_*`) — anything learned the hard way this session that a future chat must not relearn.
-6. **Re-run `./ops.sh check-integrity`** — it should come back clean. If it doesn't, you're not done.
+4. **Update `TODO.md`**: mark done `[x]`, add anything discovered.
+5. **Capture new lessons into memory** (`feedback_*` / `project_*` / `user_*`): anything learned the hard way this session that a future chat must not relearn.
+6. **Re-run `./ops.sh check-integrity`.** It should come back clean. If it doesn't, you're not done.
 
 ## Project Overview
 
@@ -42,7 +42,7 @@ The #1 cause of cross-chat knowledge loss is a permanent obligation with no end-
 - **Styling:** Tailwind CSS + shadcn/ui (Radix UI primitives)
 - **Icons:** Lucide React
 - **Dates:** date-fns
-- **Backend:** Supabase (PostgreSQL, Auth, RLS) — client-side SDK
+- **Backend:** Supabase (PostgreSQL, Auth, RLS) via the client-side SDK
 - **Data Fetching:** TanStack React Query + Supabase browser client
 - **Validation:** Zod (client-side, shared schemas)
 - **Forms:** React Hook Form + @hookform/resolvers
@@ -53,7 +53,7 @@ The #1 cause of cross-chat knowledge loss is a permanent obligation with no end-
 
 ## Database State
 
-**Connection:** `https://{{SUPABASE_PROJECT_REF}}.supabase.co` — env vars in `.env.local`
+**Connection:** `https://{{SUPABASE_PROJECT_REF}}.supabase.co` (env vars in `.env.local`)
 
 <!-- Fill in after creating Supabase project. Keep the table refreshed periodically. -->
 
@@ -110,9 +110,9 @@ Tests live in `lib/tests/`. See `lib/tests/_runner.ts` for the module list and `
 
 Two paths, both lean on chat context:
 
-**Option A — local file drop.** Drop screenshots into `.screenshots/` (gitignored). Tell Claude the filename or "latest" — Claude uses the Read tool on the path directly.
+**Option A, local file drop.** Drop screenshots into `.screenshots/` (gitignored). Tell Claude the filename or "latest". Claude uses the Read tool on the path directly.
 
-**Option B — Google Doc.** Paste images into a doc shared with the project's service account (Editor). Then:
+**Option B, Google Doc.** Paste images into a doc shared with the project's service account (Editor). Then:
 
 ```bash
 node scripts/pull-doc-images.mjs <docId>
@@ -185,11 +185,11 @@ Form → React Hook Form + Zod → useClientMutation("name") → registry → Su
 ```
 
 Key files:
-- `lib/query-keys.ts` — Centralized key factories, shared by reads and writes
-- `lib/queries/index.ts` — Registry pairing keys with query functions
-- `lib/mutations/index.ts` — Registry pairing mutation fns with invalidation keys
-- `hooks/use-client-query.ts` — Read hook, enforces registry
-- `hooks/use-client-mutation.ts` — Write hook, enforces registry + auto-invalidation
+- `lib/query-keys.ts`: Centralized key factories, shared by reads and writes
+- `lib/queries/index.ts`: Registry pairing keys with query functions
+- `lib/mutations/index.ts`: Registry pairing mutation fns with invalidation keys
+- `hooks/use-client-query.ts`: Read hook, enforces registry
+- `hooks/use-client-mutation.ts`: Write hook, enforces registry + auto-invalidation
 
 DB types flow end-to-end: schema → generated types → SDK → query fn → registry → hook → component. No manual type definitions for DB data.
 
@@ -199,7 +199,7 @@ DB types flow end-to-end: schema → generated types → SDK → query fn → re
 
 | Role | Sees | Hard Restriction |
 |------|------|------------------|
-| Admin | Everything | — |
+| Admin | Everything | None |
 | {{Role2}} | {{Scope}} | {{Restriction}} |
 
 ### Two-tenant / Multi-company (optional)
@@ -212,7 +212,7 @@ DB types flow end-to-end: schema → generated types → SDK → query fn → re
 - **Components:** One component per file (exceptions documented).
 - **Styling:** Tailwind utility classes. shadcn/ui primitives.
 - **Numbers:** Financial figures use `font-mono`.
-- **No hardcoded strings** for enums or lookup values — source from DB or config.
+- **No hardcoded strings** for enums or lookup values. Source them from DB or config.
 
 ### Commits
 
@@ -228,9 +228,9 @@ The git log is documentation. It should read as a narrative, not a pile of squas
 
 <!-- Running checklist of what's shipped + what's in flight. Keep refreshed. -->
 
-- [ ] Phase 1 — core scaffold
-- [ ] Phase 2 — feature set A
-- [ ] Phase 3 — feature set B
+- [ ] Phase 1: core scaffold
+- [ ] Phase 2: feature set A
+- [ ] Phase 3: feature set B
 
 ## Known Issues
 
@@ -252,38 +252,38 @@ The git log is documentation. It should read as a narrative, not a pile of squas
 
 ### Docs
 
-`docs/` is the source of truth. Update as conventions evolve. `docs/calls/` holds parsed call notes — see `docs/calls/README.md`.
+`docs/` is the source of truth. Update as conventions evolve. `docs/calls/` holds parsed call notes. See `docs/calls/README.md`.
 
 ### TODO
 
-`TODO.md` — Active backlog + blocked items + future phase items. Mark `[~]` pending, `[x]` done.
+`TODO.md`: Active backlog + blocked items + future phase items. Mark `[~]` pending, `[x]` done.
 
 ### Skills
 
-`.claude/skills/` — auto-loaded reference skills + invocable task skills.
+`.claude/skills/`: auto-loaded reference skills + invocable task skills.
 
 **Active reference skills (auto-load in Claude Code):**
 
-- `cli-first` — CLI tools + env files for third-party services
-- `bobi-stack` — Docs, TODO, ops.sh workflow conventions
-- `supabase-query-system` — Read path
-- `supabase-mutations` — Write path
+- `cli-first`: CLI tools + env files for third-party services
+- `bobi-stack`: Docs, TODO, ops.sh workflow conventions
+- `supabase-query-system`: Read path
+- `supabase-mutations`: Write path
 
 **Invocable slash commands:**
 
-- `/new-query <table> [cols]` — generate a new query + registry entry
-- `/new-mutation <action-table> [fields]` — generate a new mutation + registry entry
+- `/new-query <table> [cols]`: generate a new query + registry entry
+- `/new-mutation <action-table> [fields]`: generate a new mutation + registry entry
 
 ## Memory
 
 `~/.claude/projects/{{PROJECT_DIR_SLUG}}/memory/` holds lessons learned across sessions. **Before any client-facing work, read these.**
 
-Starter memory files live at `.claude/memory-templates/` in this repo — copy them into the Claude memory folder when setting up the project for the first time. See that folder's `README.md` for how to use them.
+Starter memory files live at `.claude/memory-templates/` in this repo. Copy them into the Claude memory folder when setting up the project for the first time. See that folder's `README.md` for how to use them.
 
 Key memory categories:
 
-- `session_history.md` — briefing for future sessions (what shipped, where chat archives live)
-- `feedback_*.md` — lessons about how to communicate + what the client/team values
-- `project_*.md` — current state notes that don't belong in committed docs (blocked items, DB state as-of-a-date, etc.)
-- `user_*.md` — communication style + dynamics for specific people
-- `reference_*.md` — credentials, test accounts, API keys (only what's safe to store locally)
+- `session_history.md`: briefing for future sessions (what shipped, where chat archives live)
+- `feedback_*.md`: lessons about how to communicate + what the client/team values
+- `project_*.md`: current state notes that don't belong in committed docs (blocked items, DB state as-of-a-date, etc.)
+- `user_*.md`: communication style + dynamics for specific people
+- `reference_*.md`: credentials, test accounts, API keys (only what's safe to store locally)

@@ -14,25 +14,25 @@ This file is a **briefing for future Claude sessions** on this project. It tells
 
 | Period | Machine | Topic | Where |
 |--------|---------|-------|-------|
-| {{YYYY-MM-DD}} – {{YYYY-MM-DD}} | {{machine}} | {{batch description}} | `{{path to JSONL archive if applicable}}` |
+| {{YYYY-MM-DD}} to {{YYYY-MM-DD}} | {{machine}} | {{batch description}} | `{{path to JSONL archive if applicable}}` |
 
 ## What has shipped
 
 <!-- High-level summary of phases or features that are done. Reference committed docs for detail. -->
 
-- Phase 1 — {{status}}
-- Phase 2 — {{status}}
+- Phase 1: {{status}}
+- Phase 2: {{status}}
 
 ## Key decisions & rules (don't re-ask)
 
 <!-- Pointers to memory files the next session should read in full. -->
 
-- `feedback_error_handling.md` — fail loudly in client-facing steps
-- `feedback_mutual_check_in.md` — push back honestly
-- `feedback_client_facing_quality.md` — forms + saves must be bulletproof
-- `feedback_invoice_language.md` — invoices describe capabilities
-- `user_{{person}}.md` — {{short description, if applicable}}
-- `project_{{state}}.md` — {{short description, if applicable}}
+- `feedback_error_handling.md`: fail loudly in client-facing steps
+- `feedback_mutual_check_in.md`: push back honestly
+- `feedback_client_facing_quality.md`: forms + saves must be bulletproof
+- `feedback_invoice_language.md`: invoices describe capabilities
+- `user_{{person}}.md`: {{short description, if applicable}}
+- `project_{{state}}.md`: {{short description, if applicable}}
 
 ## Known issues / watchouts
 

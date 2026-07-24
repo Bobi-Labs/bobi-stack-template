@@ -1,16 +1,16 @@
 /**
- * check-integrity — mechanical drift detector for permanent ongoing
+ * check-integrity: mechanical drift detector for permanent ongoing
  * obligations that relevance-gated context loading structurally misses.
  *
  * Run at session START (is the scaffolding consistent?) and session END
  * (did I file/update everything before the chat closes?).
  *
- * v1 scope (intentionally narrow — grow as real gaps surface):
+ * v1 scope (intentionally narrow, grows as real gaps surface):
  *   1. Unfiled raw call transcripts sitting in .tmp/
  *   2. Raw transcripts in .transcripts/ with no docs/calls/INDEX.md row
  *   3. handoff_note.md / session_history.md stale vs last git commit
  *
- * No dependencies — pure Node builtins so it's a clean template back-port.
+ * No dependencies: pure Node builtins so it's a clean template back-port.
  * Always exits 0 (advisory, never breaks a workflow). Pass --strict to
  * exit 1 when issues are found (for hook-chaining).
  *
@@ -126,7 +126,7 @@ if (commitEpoch == null) {
   passes.push("No git history (staleness check skipped)");
 } else if (!memDir) {
   issues.push(
-    "Memory dir not found under ~/.claude/projects/ — handoff/session_history staleness unverifiable\n" +
+    "Memory dir not found under ~/.claude/projects/, so handoff/session_history staleness is unverifiable\n" +
       "   → confirm the project slug dir exists (see docs/starting-a-new-project.md)",
   );
 } else {
@@ -146,7 +146,7 @@ if (commitEpoch == null) {
     if (behindMs > c.tol) {
       const days = (behindMs / DAY).toFixed(1);
       issues.push(
-        `${c.name} is stale — last commit is ~${days}d newer than the note\n` +
+        `${c.name} is stale: last commit is ~${days}d newer than the note\n` +
           `   → update it (it's the next chat's context); see Session-END checklist in CLAUDE.md`,
       );
     } else {
@@ -157,7 +157,7 @@ if (commitEpoch == null) {
 
 /* ───────── Report ───────── */
 console.log("");
-console.log("  check-integrity — permanent-obligation drift scan");
+console.log("  check-integrity: permanent-obligation drift scan");
 console.log("  " + "─".repeat(52));
 for (const p of passes) console.log(`  ✓ ${p}`);
 if (issues.length) {
@@ -170,6 +170,6 @@ if (issues.length) {
   if (STRICT) process.exit(1);
 } else {
   console.log("");
-  console.log("  All clear — scaffolding obligations consistent.");
+  console.log("  All clear: scaffolding obligations consistent.");
   console.log("");
 }

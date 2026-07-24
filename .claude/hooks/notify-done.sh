@@ -30,7 +30,7 @@ elif [[ "$OSTYPE" == "linux"* ]]; then
     aplay /usr/share/sounds/sound-icons/prompt.wav 2>/dev/null &
   fi
 else
-  # Windows — PowerShell beep
+  # Windows: PowerShell beep
   powershell -c "[System.Media.SystemSounds]::Asterisk.Play()" 2>/dev/null &
 fi
 

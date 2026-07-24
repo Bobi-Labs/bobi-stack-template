@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# ops.sh — project CLI
+# ops.sh: project CLI
 #
 # Single entry point for all project operations: build, run, test, deploy.
 # Both humans and AI agents use this as the "how do I do anything" reference.

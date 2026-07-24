@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Drive CLI — quick inspection + safe mutations against the project Drive.
+ * Drive CLI: quick inspection + safe mutations against the project Drive.
  *
  * All operations use the service account creds in .env.local. Trimmed by the
  * library before use, so trailing-whitespace env corruption can't break this.
@@ -15,10 +15,10 @@
  *   find   <name>    [--parent ID] Find folders by exact name (optionally scoped)
  *   get    <id>                   File/folder metadata
  *   path   <id>                   Full path from root (walks parents up)
- *   mkdir  <parentId> <name>      Create folder (idempotent — returns existing ID if present)
+ *   mkdir  <parentId> <name>      Create folder (idempotent, returns existing ID if present)
  *   trash  <id>                   Move to Trash (recoverable)
  *   untrash <id>                  Restore from Trash
- *   rm     <id>  --yes            Hard-delete (UNRECOVERABLE — requires --yes)
+ *   rm     <id>  --yes            Hard-delete (UNRECOVERABLE, requires --yes)
  *
  *   help                          Show this help
  *
@@ -82,7 +82,7 @@ Flags:
       const kids = await listChildren(drive, id);
       emit(kids);
       for (const k of kids) line(`${icon(k.mimeType)} ${k.name}  (${k.id})`);
-      line(`— ${kids.length} items`);
+      line(`Total: ${kids.length} items`);
       break;
     }
 
@@ -93,7 +93,7 @@ Flags:
       const nodes = await tree(drive, id, { maxDepth: depth });
       emit(nodes);
       for (const n of nodes) line(`${"  ".repeat(n.depth)}${icon(n.mimeType)} ${n.name}  (${n.id})`);
-      line(`— ${nodes.length} items, depth ${depth}`);
+      line(`Total: ${nodes.length} items, depth ${depth}`);
       break;
     }
 
@@ -104,7 +104,7 @@ Flags:
       const hits = await findFolders(drive, name, { parentId });
       emit(hits);
       for (const h of hits) line(`📁 ${h.name}  (${h.id})  parent=${h.parents?.[0] || "?"}`);
-      line(`— ${hits.length} hits`);
+      line(`Total: ${hits.length} hits`);
       break;
     }
 
@@ -163,7 +163,7 @@ Flags:
     case "rm": {
       const id = args[1];
       if (!id) return fail("rm requires <id>");
-      if (!hasFlag("--yes")) return fail("rm is UNRECOVERABLE — pass --yes to confirm");
+      if (!hasFlag("--yes")) return fail("rm is UNRECOVERABLE. Pass --yes to confirm");
       await hardDelete(drive, id);
       emit({ deleted: id });
       line(`💥 hard-deleted ${id}`);

@@ -1,4 +1,4 @@
-# New Project Setup — Step by Step
+# New Project Setup: Step by Step
 
 Copy this template folder, then follow these steps to wire up a fully connected project.
 
@@ -29,7 +29,7 @@ gh repo create your-org/my-new-project --private --source=. --push
 
 # Or manually:
 # 1. Go to github.com → New Repository
-# 2. Create empty repo (no README, no .gitignore — you already have both)
+# 2. Create empty repo (no README, no .gitignore, since you already have both)
 # 3. Then:
 git remote add origin https://github.com/your-org/my-new-project.git
 git push -u origin main
@@ -85,7 +85,7 @@ vercel env add SUPABASE_SERVICE_ROLE_KEY       # paste service role key
 3. Import your GitHub repo
 4. Framework preset: **Next.js** (auto-detected)
 5. Add the same env vars in the Vercel UI
-6. Deploy — every push to `main` will auto-deploy
+6. Deploy: every push to `main` will auto-deploy
 
 ## Step 5: Install Dependencies & Run
 
@@ -104,7 +104,7 @@ After creating your first tables in Supabase:
 ./ops.sh gen-types
 ```
 
-This writes `lib/supabase/database.types.ts` — all your SDK calls are now typed.
+This writes `lib/supabase/database.types.ts`. All your SDK calls are now typed.
 
 ## Step 7: Run /bobi-stack
 
@@ -149,7 +149,7 @@ I just created this project from the bobi-stack template. Help me set it up:
 
 1. Update package.json name and ops.sh PROJECT_NAME to "[your-project-name]"
 2. Initialize git and create a GitHub repo at [your-org]/[your-project-name]
-3. I've already created a Supabase project — here are my credentials:
+3. I've already created a Supabase project. Here are my credentials:
    - URL: [paste URL]
    - Anon key: [paste key]
    Set up .env.local with these.

@@ -1,11 +1,11 @@
 ---
-name: {{topic}} — reference
+name: {{topic}} reference
 description: {{short description}}
 type: reference
 ---
 
 <!--
-  Template — rename to reference_<topic>.md and fill in. Delete if not applicable.
+  Template: rename to reference_<topic>.md and fill in. Delete if not applicable.
 
   For reference material that's safe to store locally:
   - Test account credentials (non-production)

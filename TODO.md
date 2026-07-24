@@ -1,7 +1,7 @@
 <!-- When prompted, complete tasks from the list below.
      Before starting work, mark the item as pending [~] so parallel agents don't collide. -->
 
-## Backlog — Setup
+## Backlog: Setup
 
 - [ ] Run /bobi-stack to auto-fill CLAUDE.md with real project data
 - [ ] Create Supabase project and add env vars to .env.local
@@ -11,6 +11,6 @@
 - [ ] Set up Vercel project and deploy preview
 - [ ] Configure RLS policies in Supabase
 
-## Backlog — Features
+## Backlog: Features
 
 - [ ] Replace this with your first real task

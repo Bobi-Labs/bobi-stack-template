@@ -5,7 +5,7 @@ user-invocable: true
 argument-hint: [populate]
 ---
 
-# /todo — Task Runner
+# /todo: Task Runner
 
 ## Two Modes
 
@@ -20,7 +20,7 @@ argument-hint: [populate]
 7. UX polish
 8. Developer experience
 
-Each task must be specific and actionable — not "improve security" but "add rate limiting to public API endpoints".
+Each task must be specific and actionable: not "improve security" but "add rate limiting to public API endpoints".
 
 **Run tasks mode** (default `/todo`): Execute uncompleted items from `TODO.md`:
 

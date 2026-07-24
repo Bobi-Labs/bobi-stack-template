@@ -9,7 +9,7 @@ Read protocol: every Claude session reads the last ~10 entries here at session s
 Format:
 
 ```markdown
-## YYYY-MM-DD — short title — `[scope]`
+## YYYY-MM-DD: short title `[scope]`
 
 One-paragraph summary of the decision. Reference the per-project log entry
 that surfaced it (if applicable) and the strategy-doc commit that promoted it.

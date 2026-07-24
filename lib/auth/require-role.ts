@@ -1,5 +1,5 @@
 /**
- * requireRole — the complete auth check, made the path of least resistance.
+ * requireRole: the complete auth check, made the path of least resistance.
  *
  * This file exists because of a real incident. Four routes in a production
  * client system correctly verified that a caller was signed in and then did

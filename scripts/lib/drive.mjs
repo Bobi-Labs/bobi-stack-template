@@ -1,5 +1,5 @@
 /**
- * Drive library — shared by scripts/drive-cli.mjs and any test suite
+ * Drive library: shared by scripts/drive-cli.mjs and any test suite
  * or ingest code that needs Google Drive access.
  *
  * Uses a service account directly with the `drive` scope. The service
@@ -9,8 +9,8 @@
  *   GOOGLE_CREDENTIALS_BASE64    base64-encoded service account JSON
  *   GOOGLE_DRIVE_FOLDER_ID       (optional) project's primary root folder ID
  *
- * Projects can define additional root folder env vars as needed —
- * expose them via the `roots()` helper in this file.
+ * Projects can define additional root folder env vars as needed.
+ * Expose them via the `roots()` helper in this file.
  *
  * All env values are trimmed on load as defense against trailing-
  * whitespace corruption (trailing \n from vercel env pull has bitten
@@ -53,12 +53,12 @@ export function getDriveClient(env = loadEnv()) {
 }
 
 /** Project root folder IDs loaded from env.
- *  Extend this per-project — add whichever root folders the project uses.
+ *  Extend this per-project. Add whichever root folders the project uses.
  *  Returns undefined for anything not configured. */
 export function roots(env = loadEnv()) {
   return {
     primary: env.GOOGLE_DRIVE_FOLDER_ID,
-    // Example — extend per project:
+    // Extend per project. Examples:
     // everyone: env.GOOGLE_DRIVE_EVERYONE_FOLDER_ID,
     // admin:    env.GOOGLE_DRIVE_ADMIN_FOLDER_ID,
   };
@@ -154,7 +154,7 @@ export async function untrash(drive, id) {
   await drive.files.update({ fileId: id, requestBody: { trashed: false } });
 }
 
-/** Hard-delete — unrecoverable. Use with care. */
+/** Hard-delete: unrecoverable. Use with care. */
 export async function hardDelete(drive, id) {
   await drive.files.delete({ fileId: id });
 }

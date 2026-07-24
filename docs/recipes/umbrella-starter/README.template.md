@@ -49,7 +49,7 @@ Trigger: **any change that affects another repo's assumptions** (architecture pi
 Format, appended to the relevant project log:
 
 ```markdown
-## YYYY-MM-DD — <short title> — from <project>
+## YYYY-MM-DD, <short title>, from <project>
 
 **What changed:** one-line summary.
 

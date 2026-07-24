@@ -30,7 +30,7 @@ Two field-tested reasons this beats one giant chat:
 The highest-leverage artifact. When the master chat delegates, it appends a `WORK ORDER` entry to the target repo's log containing everything a fresh session needs to execute without archaeology:
 
 ```markdown
-## YYYY-MM-DD — WORK ORDER: <title> — from <keeper> (keeper)
+## YYYY-MM-DD, WORK ORDER: <title>, from <keeper> (keeper)
 
 <Decision context: what the operator approved, in one paragraph.>
 
@@ -40,7 +40,7 @@ The highest-leverage artifact. When the master chat delegates, it appends a `WOR
 
 Reply here when landed with <the specific facts the keeper needs back>.
 
-**Status:** [needs-response] — awaiting a <project> session to claim.
+**Status:** [needs-response], awaiting a <project> session to claim.
 ```
 
 The operator then opens a chat in that repo and says little more than "check the umbrella log and pick up the work order."

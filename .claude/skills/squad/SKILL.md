@@ -4,7 +4,7 @@ description: Analyze a codebase and create domain-specific rules and optional sp
 user-invocable: true
 ---
 
-# /squad — Domain-Based Code Organization
+# /squad: Domain-Based Code Organization
 
 Analyze the codebase to create specialist subagents and domain-specific rules. Segments projects into 3-8 logical domains.
 
@@ -40,7 +40,7 @@ Report domain count, generated artifacts, unmapped files, and recommendations.
 
 ## Principles
 
-- Minimize domains — 4-5 well-defined beats 8 thin ones
-- Domain-specific only — don't duplicate existing project guidelines
+- Minimize domains: 4-5 well-defined beats 8 thin ones
+- Domain-specific only. Don't duplicate existing project guidelines
 - Pattern-based matching via glob syntax
-- Honest scoping — `unmapped` is better than forced assignment
+- Honest scoping: `unmapped` is better than forced assignment

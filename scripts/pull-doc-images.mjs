@@ -55,7 +55,7 @@ const res = await drive.files.export(
 writeFileSync(tmpDocx, Buffer.from(res.data));
 console.log(`  → ${tmpDocx} (${Math.round(res.data.byteLength / 1024)}KB)`);
 
-// 2. Unzip (docx is a zip) — rename to .zip so Windows tools accept it
+// 2. Unzip (docx is a zip). Rename to .zip so Windows tools accept it
 if (existsSync(tmpUnzip)) rmSync(tmpUnzip, { recursive: true, force: true });
 mkdirSync(tmpUnzip, { recursive: true });
 const tmpZip = tmpDocx.replace(/\.docx$/, ".zip");

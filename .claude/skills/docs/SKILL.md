@@ -4,7 +4,7 @@ description: Capture conversation learnings into docs and clean up the docs fold
 user-invocable: true
 ---
 
-# /docs — Documentation Update
+# /docs: Documentation Update
 
 Capture learnings from the current conversation and clean up the docs folder.
 
@@ -16,7 +16,7 @@ Review the conversation for decisions, architectural changes, and new features. 
 
 ### 2. Capture new information
 
-Find the right home for each learning — prefer existing docs. Create new files only for substantial topics. Match existing tone and include reasoning.
+Find the right home for each learning. Prefer existing docs. Create new files only for substantial topics. Match existing tone and include reasoning.
 
 ### 3. Clean up and consolidate
 
@@ -31,7 +31,7 @@ Reframe "we used to do X" as "we do Y because [reason]." Only preserve lessons l
 
 ### 4. Update CLAUDE.md
 
-Apply the same cleanup — it loads into every conversation.
+Apply the same cleanup, because it loads into every conversation.
 
 ### 5. Clarity pass
 

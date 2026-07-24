@@ -1,13 +1,13 @@
 ---
 name: new-mutation
-description: Scaffold a new Supabase mutation — creates Zod schema, mutation function, registers in the mutation registry, and runs tests.
+description: Scaffold a new Supabase mutation. Creates the Zod schema and mutation function, registers it in the mutation registry, and runs tests.
 user-invocable: true
 disable-model-invocation: true
 argument-hint: <action>-<table> [field:type ...] [--invalidates key1,key2]
 allowed-tools: Read, Write, Edit, Bash(./ops.sh test), Glob, Grep
 ---
 
-# /new-mutation — Scaffold a New Mutation
+# /new-mutation: Scaffold a New Mutation
 
 Create a complete, wired mutation from an action + table name. The user invokes this as:
 
@@ -19,9 +19,9 @@ Create a complete, wired mutation from an action + table name. The user invokes 
 ```
 
 Parse `$ARGUMENTS` to extract:
-- `$0` — action-table in kebab-case (required)
-- Remaining positional args — `field:type` pairs for Zod schema (optional)
-- `--invalidates key1,key2` — query key names to invalidate (optional, defaults to table's plural key)
+- `$0`: action-table in kebab-case (required)
+- Remaining positional args: `field:type` pairs for Zod schema (optional)
+- `--invalidates key1,key2`: query key names to invalidate (optional, defaults to table's plural key)
 
 ## Steps
 
@@ -32,24 +32,24 @@ Parse `$ARGUMENTS` to extract:
 - **Function name:** camelCase(action + table)
 - **Files:** `lib/mutations/{action}-{table}.ts`, `lib/schemas/{action}-{table}.ts`
 
-### 2. Create Zod schema — `lib/schemas/{action}-{table}.ts`
+### 2. Create Zod schema in `lib/schemas/{action}-{table}.ts`
 
 Map field types: `string` → `z.string().min(1)`, `number` → `z.coerce.number()`, `uuid` → `z.string().uuid()`, `boolean` → `z.boolean()`, `enum:a,b,c` → `z.enum(["a","b","c"])`. Add `?` suffix for optional.
 
 For `update-*`, add `id: z.string().uuid()` automatically.
-For `delete-*`, skip schema — validate id inline.
+For `delete-*`, skip the schema and validate the id inline.
 
-### 3. Create mutation function — `lib/mutations/{action}-{table}.ts`
+### 3. Create mutation function in `lib/mutations/{action}-{table}.ts`
 
 **Create:** Zod parse → insert → return `{ success, data }` or `{ success: false, error }`
 **Update:** Zod parse → build updates → update by id → return result
 **Delete:** Validate UUID → delete → return result
 
-### 4. Ensure query key exists — `lib/query-keys.ts`
+### 4. Ensure query key exists in `lib/query-keys.ts`
 
 Add table's key if missing.
 
-### 5. Register in mutation registry — `lib/mutations/index.ts`
+### 5. Register in the mutation registry at `lib/mutations/index.ts`
 
 Add import + entry with `fn` and `invalidates`.
 
@@ -65,7 +65,7 @@ Files created/modified + usage: `useClientMutation("registryName")`
 
 - Always read target files before editing
 - Match existing mutation patterns
-- Return `{ success: true/false }` — never throw from mutation functions
+- Return `{ success: true/false }`, never throw from mutation functions
 - Handle error codes: 23505 (unique), PGRST116 (not found)
-- For `delete`, skip schema file — validate id inline
-- Do NOT create form components — just data layer files
+- For `delete`, skip the schema file and validate the id inline
+- Do NOT create form components, just data layer files

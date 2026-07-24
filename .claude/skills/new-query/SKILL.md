@@ -1,13 +1,13 @@
 ---
 name: new-query
-description: Scaffold a new Supabase query — creates query function, adds key factory, registers in the query registry, and runs tests.
+description: Scaffold a new Supabase query. Creates the query function, adds the key factory, registers it in the query registry, and runs tests.
 user-invocable: true
 disable-model-invocation: true
 argument-hint: <table-name> [columns] [--param paramName:paramType]
 allowed-tools: Read, Write, Edit, Bash(./ops.sh test), Glob, Grep
 ---
 
-# /new-query — Scaffold a New Query
+# /new-query: Scaffold a New Query
 
 Create a complete, wired query from a table name. The user invokes this as:
 
@@ -18,9 +18,9 @@ Create a complete, wired query from a table name. The user invokes this as:
 ```
 
 Parse `$ARGUMENTS` to extract:
-- `$0` — table name (required)
-- `$1` — comma-separated columns (optional, defaults to `*`)
-- `--param name:type` — optional parameter for filtering
+- `$0` is the table name (required)
+- `$1` is a comma-separated column list (optional, defaults to `*`)
+- `--param name:type` sets an optional parameter for filtering
 
 ## Steps
 
@@ -32,7 +32,7 @@ From the table name, derive:
 - **Registry key:** camelCase(tableName)
 - **Query key factory name:** camelCase(tableName)
 
-### 2. Add query key factory — `lib/query-keys.ts`
+### 2. Add query key factory: `lib/query-keys.ts`
 
 Read the current file. Add a new entry to `queryKeys`. If no params:
 ```ts
@@ -45,7 +45,7 @@ items: (categoryId?: string) =>
   categoryId ? ["items", categoryId] as const : ["items"] as const,
 ```
 
-### 3. Create query function — `lib/queries/get-{name}.ts`
+### 3. Create query function: `lib/queries/get-{name}.ts`
 
 ```ts
 import { createClient } from "@/lib/supabase/client";
@@ -67,7 +67,7 @@ export async function getItems(param?: string) {
 }
 ```
 
-### 4. Register in query registry — `lib/queries/index.ts`
+### 4. Register in query registry: `lib/queries/index.ts`
 
 Add import + entry in `queries` object pairing key factory with function.
 
@@ -85,4 +85,4 @@ Tell the user files created/modified and usage: `useClientQuery("registryName")`
 - Match existing query patterns
 - Key factory params and query function params MUST match
 - Throw on Supabase errors
-- Do NOT create components or hooks — just data layer files
+- Do NOT create components or hooks, just data layer files

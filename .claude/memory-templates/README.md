@@ -1,6 +1,6 @@
 # Memory Templates
 
-Starter memory files for Claude sessions. These live at `~/.claude/projects/<your-project-dir>/memory/` — NOT in this repo's committed state. Copy them into the Claude memory folder when setting up a new project.
+Starter memory files for Claude sessions. These live at `~/.claude/projects/<your-project-dir>/memory/`, NOT in this repo's committed state. Copy them into the Claude memory folder when setting up a new project.
 
 ## Why a separate location
 
@@ -25,23 +25,23 @@ cp -r .claude/memory-templates/* "$MEM_DIR/"
 
 ## Files in this folder
 
-### Always copy (universal principles — they apply everywhere)
+### Always copy (universal principles that apply everywhere)
 
-- `feedback_error_handling.md` — fail loudly in client-facing steps
-- `feedback_mutual_check_in.md` — push back honestly, product > ego
-- `feedback_client_facing_quality.md` — forms + saves must be bulletproof
-- `feedback_invoice_language.md` — invoices describe capabilities, not dev work
+- `feedback_error_handling.md`: fail loudly in client-facing steps
+- `feedback_mutual_check_in.md`: push back honestly, product > ego
+- `feedback_client_facing_quality.md`: forms + saves must be bulletproof
+- `feedback_invoice_language.md`: invoices describe capabilities, not dev work
 
 ### Always copy (structural)
 
-- `MEMORY.md` — index file (fill in per project)
-- `session_history.md` — day-one briefing (fill in per project)
+- `MEMORY.md`: index file (fill in per project)
+- `session_history.md`: day-one briefing (fill in per project)
 
 ### Copy + rename if relevant
 
-- `project_example.md` — template for DB state / blocker notes / current-state
-- `user_example.md` — template for person-specific communication notes
-- `reference_example.md` — template for credentials / test accounts / API doc links
+- `project_example.md`: template for DB state / blocker notes / current-state
+- `user_example.md`: template for person-specific communication notes
+- `reference_example.md`: template for credentials / test accounts / API doc links
 
 ## Why these specific four principles
 
@@ -57,5 +57,5 @@ Each principle file is short (1 page) and actionable. Read all four before any c
 ## Don't
 
 - Don't commit actual memory files from a live project back into this template. They contain operational state + names + context that's project-specific.
-- Don't add project-specific lessons here — those go in the live project's `~/.claude/projects/.../memory/` folder.
+- Don't add project-specific lessons here. Those go in the live project's `~/.claude/projects/.../memory/` folder.
 - Don't edit these templates in-place while working in a specific project. Edit the live memory file instead; if a pattern emerges that's universal, consider porting back into the template in a separate pass.

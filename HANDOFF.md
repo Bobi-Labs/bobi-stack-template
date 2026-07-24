@@ -1,7 +1,7 @@
-# HANDOFF — Deploy "Bar do Bobi" cocktail menu to a subdomain
+# HANDOFF: Deploy "Bar do Bobi" cocktail menu to a subdomain
 
 **Goal:** publish `bar-do-bobi.html` as a static page at a subdomain of `bobilabs.dev`
-(suggested: **`bar.bobilabs.dev`** — swap for `cocktails.bobilabs.dev` if preferred).
+(suggested: **`bar.bobilabs.dev`**, swap for `cocktails.bobilabs.dev` if preferred).
 
 **The artifact:** one fully self-contained HTML file. No build step, no framework, no
 dependencies to install. The *only* external request is the Google Fonts `<link>` in
@@ -21,7 +21,7 @@ it degrades gracefully if storage is unavailable.
 
 ---
 
-## Step 1 — Detect where bobilabs.dev is hosted
+## Step 1: Detect where bobilabs.dev is hosted
 
 Run these and infer the host before choosing a path:
 
@@ -37,14 +37,14 @@ curl -sI https://bobilabs.dev | grep -iE 'server|x-vercel|x-served-by|cf-ray|net
 - a raw IP + `nginx`/`apache` → **VPS** (Path D)
 
 Also check for an existing repo/project for the apex site (likely under `C:\dev\` and the
-`Bobi-Labs` GitHub org) — the subdomain can be a **separate small project** pointed at the
+`Bobi-Labs` GitHub org). The subdomain can be a **separate small project** pointed at the
 same account, which is the cleanest approach.
 
 ---
 
-## Step 2 — Deploy (follow the one that matches)
+## Step 2: Deploy (follow the one that matches)
 
-### Path A — Vercel
+### Path A: Vercel
 ```bash
 mkdir bobi-bar && cd bobi-bar
 cp /path/to/bar-do-bobi.html ./index.html
@@ -53,7 +53,7 @@ vercel domains add bar.bobilabs.dev # attach the subdomain to THIS project
 ```
 Vercel prints the exact DNS record to add (usually a CNAME → `cname.vercel-dns.com`).
 
-### Path B — Cloudflare Pages
+### Path B: Cloudflare Pages
 ```bash
 mkdir bobi-bar && cd bobi-bar
 cp /path/to/bar-do-bobi.html ./index.html
@@ -62,7 +62,7 @@ npx wrangler pages deploy . --project-name bobi-bar
 Then in the Pages project → **Custom domains** → add `bar.bobilabs.dev`. If the zone is on
 Cloudflare, the CNAME is created automatically.
 
-### Path C — Netlify
+### Path C: Netlify
 ```bash
 mkdir bobi-bar && cd bobi-bar
 cp /path/to/bar-do-bobi.html ./index.html
@@ -71,7 +71,7 @@ netlify deploy --prod --dir .
 Netlify dashboard → **Domain settings** → add domain alias `bar.bobilabs.dev`, then add the
 shown CNAME at your DNS provider.
 
-### Path D — VPS (nginx)
+### Path D: VPS (nginx)
 ```bash
 sudo mkdir -p /var/www/bar.bobilabs.dev
 sudo cp /path/to/bar-do-bobi.html /var/www/bar.bobilabs.dev/index.html
@@ -93,23 +93,23 @@ sudo certbot --nginx -d bar.bobilabs.dev   # HTTPS
 
 ---
 
-## Step 3 — DNS
+## Step 3: DNS
 
 Add a record for the subdomain at whoever controls the `bobilabs.dev` zone:
 
 | Type  | Name  | Value                                   |
 |-------|-------|-----------------------------------------|
-| CNAME | `bar` | (host target from Step 2 — e.g. `cname.vercel-dns.com`) |
+| CNAME | `bar` | (host target from Step 2, e.g. `cname.vercel-dns.com`) |
 | A     | `bar` | (VPS IP, **only** for Path D)           |
 
 Propagation is usually minutes. Verify: `dig +short bar.bobilabs.dev`.
 
 ---
 
-## Step 4 — Verify
+## Step 4: Verify
 
 - [ ] `https://bar.bobilabs.dev` loads with a valid TLS cert
-- [ ] Fonts render (Fraunces title, Spectral body) — if blocked, see Notes → CSP
+- [ ] Fonts render (Fraunces title, Spectral body). If blocked, see Notes → CSP
 - [ ] **EN / PT toggle** flips all text
 - [ ] Filter chips work (All / Ready now / Tried / Not yet / spirits / How-to / Shopping)
 - [ ] Tap **"Tried it?"** on a card, reload → the ✓ persists (localStorage)
@@ -122,7 +122,7 @@ Propagation is usually minutes. Verify: `dig +short bar.bobilabs.dev`.
 - **CSP:** if bobilabs.dev enforces a Content-Security-Policy, allow
   `https://fonts.googleapis.com` (style-src) and `https://fonts.gstatic.com` (font-src),
   or self-host the two fonts and swap the `<link>` for local `@font-face`.
-- **Cache:** static file — safe to cache aggressively, but set HTML to
+- **Cache:** it's a static file, so cache aggressively, but set HTML to
   `Cache-Control: no-cache` (or short max-age) so future edits show up immediately.
 - **Favicon (optional):** drop a `favicon.ico` beside `index.html` and add
   `<link rel="icon" href="/favicon.ico">` to `<head>`.

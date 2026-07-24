@@ -1,7 +1,7 @@
 import type { Database } from "./database.types";
 
 /**
- * Drift check utility — use in Zod schema files to catch mismatches
+ * Drift check utility. Use in Zod schema files to catch mismatches
  * between your Zod schema output and the DB insert type.
  *
  * Usage in a schema file:

@@ -4,7 +4,7 @@ description: Turn your recent git history into a standup-ready status update.
 user-invocable: true
 ---
 
-# /bosskey — Status Update Generator
+# /bosskey: Status Update Generator
 
 Turn your recent git history into a standup script that sounds good without inviting follow-up questions.
 
@@ -20,7 +20,7 @@ Collect the last 3 days of commits OR the last 10 commits (whichever set is larg
 
 ### 3. Review the actual changes
 
-For each commit, read the diff. Don't just rely on commit messages — look at the code.
+For each commit, read the diff. Don't just rely on commit messages. Look at the code.
 
 ### 4. Synthesize a status update
 

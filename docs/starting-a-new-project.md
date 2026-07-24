@@ -5,7 +5,7 @@ Step-by-step walkthrough for spinning up a new project with this template. Expec
 ## 1. Clone + re-init
 
 ```bash
-# Clone the template (not a git clone — a filesystem copy so the new project has its own history)
+# Clone the template (a filesystem copy, not a git clone, so the new project has its own history)
 cp -r C:/dev/bobi-stack-template C:/dev/my-project
 cd C:/dev/my-project
 
@@ -20,16 +20,16 @@ git commit -m "Initial scaffold from bobi-stack-template"
 
 ## 2. Rename + fill in placeholders
 
-**`README.md`** — replace "Bobi Stack Template" header + usage with project-specific intro.
+**`README.md`**: replace "Bobi Stack Template" header + usage with project-specific intro.
 
-**`CLAUDE.md`** — replace every `{{PLACEHOLDER}}`:
+**`CLAUDE.md`**: replace every `{{PLACEHOLDER}}`:
 
-- `{{PROJECT_NAME}}` — human-readable project name
-- `{{PROJECT_DIR_SLUG}}` — Claude projects dir name (see below)
-- `{{PROJECT_OVERVIEW_PARAGRAPH}}` — one paragraph: who it's for, what it replaces, current phase
-- `{{SUPABASE_PROJECT_REF}}` — fill in after creating the Supabase project
-- `{{RLS_STATE}}` — describe current RLS posture
-- `{{PRODUCTION_DOMAIN}}` — fill in after deploy
+- `{{PROJECT_NAME}}`: human-readable project name
+- `{{PROJECT_DIR_SLUG}}`: Claude projects dir name (see below)
+- `{{PROJECT_OVERVIEW_PARAGRAPH}}`: one paragraph covering who it's for, what it replaces, current phase
+- `{{SUPABASE_PROJECT_REF}}`: fill in after creating the Supabase project
+- `{{RLS_STATE}}`: describe current RLS posture
+- `{{PRODUCTION_DOMAIN}}`: fill in after deploy
 
 **How to find your `{{PROJECT_DIR_SLUG}}`:**
 
@@ -44,7 +44,7 @@ Run Claude Code once in the repo to let it auto-create the slug dir, then look i
 ## 3. Set up Supabase
 
 ```bash
-# Create a project at supabase.com — note the project ref + region
+# Create a project at supabase.com. Note the project ref + region
 # Add to .env.local (copy from .env.example):
 cp .env.example .env.local
 # fill in NEXT_PUBLIC_SUPABASE_URL + NEXT_PUBLIC_SUPABASE_ANON_KEY + SUPABASE_SERVICE_ROLE_KEY
@@ -52,7 +52,7 @@ cp .env.example .env.local
 ./ops.sh install            # pnpm install
 ./ops.sh gen-types          # pulls types from your Supabase project
 
-# First migration — create a baseline table or two
+# First migration: create a baseline table or two
 # (use the /new-query or /new-mutation skills once tables exist)
 ```
 
@@ -79,7 +79,7 @@ gh repo create my-project --private --source=. --remote=origin --push
 
 # Then link to Vercel
 vercel link            # one-time setup
-vercel env pull .env.local   # pulls env vars (optional — usually pushed FROM local)
+vercel env pull .env.local   # pulls env vars (optional, usually pushed FROM local)
 ./ops.sh deploy prod   # first production deploy
 ```
 
@@ -112,7 +112,7 @@ Based on project needs, enable:
 
 - Drop raw transcripts in `.transcripts/YYYY-MM-DD-slug.txt` (gitignored)
 - Write parsed notes at `docs/calls/YYYY-MM-DD-slug.md` (committed)
-- Add a row to `docs/calls/INDEX.md` for every call — it's standard, not optional, and it's what `./ops.sh check-integrity` diffs against
+- Add a row to `docs/calls/INDEX.md` for every call. It's standard, not optional, and it's what `./ops.sh check-integrity` diffs against
 - Filing a call is a **Session-END obligation** (see the checklist in `CLAUDE.md`); `./ops.sh check-integrity` flags anything unfiled
 - See `docs/calls/README.md` for the format
 
@@ -122,7 +122,7 @@ Open the project in Claude Code (or continue in whatever Claude session you're i
 
 1. Claude reads `CLAUDE.md` automatically on session start
 2. Claude reads `~/.claude/projects/<slug>/memory/*.md` automatically
-3. Paste `session_history.md`'s briefing into the chat if Claude doesn't mention it first — this is the session-start checklist
+3. Paste `session_history.md`'s briefing into the chat if Claude doesn't mention it first. This is the session-start checklist
 
 From there, build normally. Commit one logical change at a time. Update `TODO.md` as you go.
 

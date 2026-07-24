@@ -1,5 +1,5 @@
 /**
- * Mutation registry — pairs each mutation function with its invalidation keys.
+ * Mutation registry: pairs each mutation function with its invalidation keys.
  *
  * useClientMutation enforces this pairing: you pick a name from this registry
  * and the hook calls the right fn + invalidates the right queries on success.

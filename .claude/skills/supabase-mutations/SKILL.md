@@ -4,7 +4,7 @@ description: Convention for writing data to Supabase/PostgreSQL safely using Zod
 user-invocable: false
 ---
 
-# Supabase Mutations — Write Path
+# Supabase Mutations: Write Path
 
 A type-safe, validated data writing pattern for Next.js + Supabase. Mutation functions are registered in `lib/mutations/index.ts` with their invalidation keys from the shared `lib/query-keys.ts` factory. The hook enforces this pairing. Zod validates on the client before submitting. RLS enforces authorization.
 
@@ -45,9 +45,9 @@ Use `/new-mutation` to scaffold all files automatically:
 
 ## Key rules
 
-- **Registry pairs mutations with invalidation keys** — `useClientMutation` only accepts registered names
-- **Query keys come from `lib/query-keys.ts`** — shared with the query system
+- **Registry pairs mutations with invalidation keys**: `useClientMutation` only accepts registered names
+- **Query keys come from `lib/query-keys.ts`**: shared with the query system
 - **Validate with Zod** before calling Supabase
-- **Return structured results**: `{ success: true, data }` or `{ success: false, error }` — don't throw
+- **Return structured results**: `{ success: true, data }` or `{ success: false, error }`. Don't throw.
 - **Handle Supabase errors**: 23505 (unique violation), PGRST116 (not found)
 - Run `./ops.sh test` after changes to validate registry wiring

@@ -30,7 +30,7 @@ Never hardcode credentials. Use `./ops.sh env-pull` to sync from Vercel.
 2. Read `.env*` files for credentials and project IDs
 3. Confirm authentication (`vercel whoami`, `supabase status`, etc.)
 4. Execute the operation via CLI
-5. If the tool isn't installed, suggest installation — don't use workarounds
+5. If the tool isn't installed, suggest installation rather than working around it
 
 ## Common CLI Tools
 

@@ -21,23 +21,23 @@ Before changing anything:
 
 1. Audit the current state of this project. For each category below,
    report what exists and what's missing:
-   - CLAUDE.md — does it exist? Does it have a session-start checklist?
-   - Memory folder — is there a ~/.claude/projects/<this-slug>/memory/?
+   - CLAUDE.md: does it exist? Does it have a session-start checklist?
+   - Memory folder: is there a ~/.claude/projects/<this-slug>/memory/?
      What files are in it? Does it have the 4 universal feedback
      principles (error-handling / mutual-check-in / client-facing-quality
      / invoice-language)?
-   - docs/calls/ — is there a call-notes convention?
-   - .screenshots/ + .transcripts/ — are they set up + gitignored?
-   - Drive tooling — does the project need it? If yes, is it present?
-   - Test suite — does the project have /api/tests/run + lib/tests/?
+   - docs/calls/: is there a call-notes convention?
+   - .screenshots/ + .transcripts/: are they set up + gitignored?
+   - Drive tooling: does the project need it? If yes, is it present?
+   - Test suite: does the project have /api/tests/run + lib/tests/?
      Is it wired to a daily cron?
-   - Error handling in client-facing flows — is the "fail loudly" pattern
+   - Error handling in client-facing flows: is the "fail loudly" pattern
      applied? Are there silent-failure surfaces?
-   - ops.sh — present?
-   - .gitignore — does it include .screenshots/, .transcripts/, .tmp/,
+   - ops.sh: present?
+   - .gitignore: does it include .screenshots/, .transcripts/, .tmp/,
      .claude/*.lock, .claude/worktrees/?
-   - TODO.md — present? Up to date?
-   - Commit hygiene — scan recent commit history. One logical change
+   - TODO.md: present? Up to date?
+   - Commit hygiene: scan recent commit history. One logical change
      per commit, or bundled?
 
 2. For each gap, propose whether it's worth adopting. Weigh:
@@ -50,7 +50,7 @@ Before changing anything:
 3. Return a proposal list with per-item "adopt / skip / adapt" and a
    one-line rationale for each. Don't touch code yet.
 
-4. I'll review the proposals. After I approve, implement gradually —
+4. I'll review the proposals. After I approve, implement gradually,
    one commit per logical adoption. Each commit message should describe
    the pattern + why it was adopted (not just "added X").
 
@@ -77,7 +77,7 @@ touching code.
 - Is there a `MEMORY.md` index?
 - Is there a `session_history.md`?
 - Are the 4 universal feedback principles present?
-- Are there project-specific memory files that capture lessons learned? (Not just state dumps — actual lessons.)
+- Are there project-specific memory files that capture lessons learned? (Actual lessons, not just state dumps.)
 
 ### `.screenshots/` + image sharing
 
@@ -107,10 +107,10 @@ touching code.
 
 ## What usually isn't worth porting
 
-- **Deliverables panel** — unless the project has a client paying per-item and you want to show the work. Overkill for internal tools.
-- **Test suite daily cron** — unless the project is production + has real users. Local tests are enough for side projects.
-- **Drive CLI** — unless the project actually uses Google Drive. Don't import if not needed.
-- **Call notes convention** — unless the project involves recurring calls with stakeholders.
+- **Deliverables panel**, unless the project has a client paying per-item and you want to show the work. Overkill for internal tools.
+- **Test suite daily cron**, unless the project is production + has real users. Local tests are enough for side projects.
+- **Drive CLI**, unless the project actually uses Google Drive. Don't import if not needed.
+- **Call notes convention**, unless the project involves recurring calls with stakeholders.
 
 ## What's always worth porting
 

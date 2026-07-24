@@ -4,9 +4,9 @@ description: Convention for reading data from Supabase/PostgreSQL using a query 
 user-invocable: false
 ---
 
-# Supabase Query System — Read Path
+# Supabase Query System: Read Path
 
-A type-safe, cached data fetching pattern for Next.js + Supabase. Query keys live in a centralized factory (`lib/query-keys.ts`) shared by both reads and mutations. A registry pairs each key with its query function — the hook enforces this pairing so you can't mismatch keys and functions or typo a key. RLS auto-filters results.
+A type-safe, cached data fetching pattern for Next.js + Supabase. Query keys live in a centralized factory (`lib/query-keys.ts`) shared by both reads and mutations. A registry pairs each key with its query function. The hook enforces this pairing so you can't mismatch keys and functions or typo a key. RLS auto-filters results.
 
 ## Architecture
 
@@ -23,7 +23,7 @@ React Component
 
 ## Core files
 
-### Query key factories — `lib/query-keys.ts`
+### Query key factories: `lib/query-keys.ts`
 
 Single source of truth for all cache keys. Shared by queries (pairing) and mutations (invalidation). Keys are functions so they can accept params.
 
@@ -34,9 +34,9 @@ export const queryKeys = {
 } as const;
 ```
 
-### Query registry — `lib/queries/index.ts`
+### Query registry: `lib/queries/index.ts`
 
-Pairs each key factory with its query function. The hook enforces this — you can only call `useClientQuery` with a registered name.
+Pairs each key factory with its query function. The hook enforces this: you can only call `useClientQuery` with a registered name.
 
 ```ts
 import { queryKeys } from "@/lib/query-keys";
@@ -52,7 +52,7 @@ export const queries = {
 export type QueryName = keyof typeof queries;
 ```
 
-### Client hook — `hooks/use-client-query.ts`
+### Client hook: `hooks/use-client-query.ts`
 
 Type-safe hook that enforces registry pairing. Params are type-checked against the key factory.
 
@@ -87,11 +87,11 @@ Use `/new-query` to scaffold all files automatically:
 
 ## Key rules
 
-- **All query keys live in `lib/query-keys.ts`** — shared by queries and mutations
-- **Registry pairs keys with functions** — `useClientQuery` only accepts registered names
+- **All query keys live in `lib/query-keys.ts`**, shared by queries and mutations
+- **Registry pairs keys with functions**: `useClientQuery` only accepts registered names
 - **Params must match** between the key factory and query function
-- **Queries run client-side** — RLS auto-filters results
-- **No raw SQL** — use the Supabase SDK fluent API
-- Throw on Supabase errors — let TanStack Query handle error state
+- **Queries run client-side**, so RLS auto-filters results
+- **No raw SQL**: use the Supabase SDK fluent API
+- Throw on Supabase errors and let TanStack Query handle error state
 - Run `./ops.sh gen-types` after schema changes
 - Run `./ops.sh test` after adding/changing queries

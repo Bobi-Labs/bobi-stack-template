@@ -4,9 +4,9 @@ Welcome to the project docs. This is the landing page.
 
 ## Quick Links
 
-- [CLAUDE.md](../CLAUDE.md) — Project overview, tech stack, commands, architecture
-- [TODO.md](../TODO.md) — Active backlog and task tracking
-- [ops.sh](../ops.sh) — Project CLI reference
+- [CLAUDE.md](../CLAUDE.md): Project overview, tech stack, commands, architecture
+- [TODO.md](../TODO.md): Active backlog and task tracking
+- [ops.sh](../ops.sh): Project CLI reference
 
 ## Getting Started
 
