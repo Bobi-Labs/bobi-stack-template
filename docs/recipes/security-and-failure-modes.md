@@ -1,8 +1,8 @@
 # Recipe: security and failure modes
 
-**Not situational. Read this one.** Everything here comes from a single day in 2026 when two independent classes of failure surfaced in a live client system: a full authentication bypass reachable with one curl command, and an app that had been quietly dying in users' browsers for months. Neither was caused by bad code. Both were caused by habits that felt reasonable at the time.
+**Not situational. Read this one.** Everything here comes from a single day when two independent classes of failure surfaced in one production system: a full authentication bypass reachable with one curl command, and an app that had been quietly dying in users' browsers for months. Neither was caused by bad code. Both were caused by habits that felt reasonable at the time.
 
-The full incident record lives in the keeper repo (held privately). This is the transferable part.
+The incident record itself is held privately, because it belongs to the system's owner rather than to this scaffold. What follows is the transferable part, and it is deliberately written without the identifying specifics: a recipe that names a real deployment's route map is a targeting guide, not a lesson.
 
 Run `./ops.sh audit-security` to check the mechanical subset. The rest needs eyes.
 
@@ -10,7 +10,7 @@ Run `./ops.sh audit-security` to check the mechanical subset. The rest needs eye
 
 ### 1. An exemption list that grew by convenience
 
-Every security hole traced to one list of path prefixes that skip the session check. It started legitimately (a webhook and a cron job genuinely cannot present a session cookie) and grew: one reasonable-looking prefix at a time. Each addition was locally reasonable and globally catastrophic, because the exemption was justified by a comment rather than a compensating control:
+Every security hole traced to one list of path prefixes that skip the session check. It started legitimately (a webhook and a cron job genuinely cannot present a session cookie) and grew one reasonable-looking entry at a time, until four separate route trees were exempt. Each addition was locally reasonable and globally catastrophic, because the exemption was justified by a comment rather than a compensating control. The comment amounted to:
 
 > "These routes handle their own auth via the client-side auth provider."
 

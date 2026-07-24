@@ -1,6 +1,6 @@
 # Back-port candidates
 
-Patterns proven in downstream Bobi Labs projects (the mastjoba.dev / bobilabs.dev / worktracker / freelance / call-bobi ecosystem) that *might* be worth generalizing into the template. Per `CONTRIBUTING.md`, a pattern earns its place by working in a real project first, then being generalized.
+Patterns proven in downstream Bobi Labs projects that *might* be worth generalizing into the template. Per `CONTRIBUTING.md`, a pattern earns its place by working in a real project first, then being generalized.
 
 **This file is a suggestion queue, not a commitment.** Each entry is graded by a single lens: **would a generic new project (single repo, one or two devs, no studio context) actually care?** A template session evaluating these should weight that lens heavily. The studio ecosystem these came from is unusual; most are not universal. The final generalize-or-skip call belongs to whoever evolves the template, not to the downstream session that filed the candidate.
 
