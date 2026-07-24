@@ -15,6 +15,7 @@ The template improves by back-porting patterns proven in real downstream project
 - **Back-port, do not invent.** A pattern earns its place in the template by working in a real project first. Generalize it (strip project-specific names, derive from cwd, etc.), then bring it here.
 - **Conventional, atomic commits.** `type(scope): imperative summary`. One logical change per commit. The log is the changelog's raw material. See the Commits convention in `CLAUDE.md`.
 - **CI must pass.** `.github/workflows/ci.yml` runs `./ops.sh check` + `./ops.sh test` + `./ops.sh build` on every PR and push to `main`. Green before merge.
+  **Know what that means here, though.** Those steps are gated on a `pnpm-lock.yaml` existing, which is deliberate: a freshly generated repo has no lockfile and should not spam failure emails before anyone has filled it in. The consequence is that in *this* repo, which is the bare template and has never had a lockfile, CI reports green without having run anything. So a green tick on a bobi-stack PR means "nothing to check", not "checks passed". Verify template changes locally, and do not read the badge as coverage.
 - **Update `CHANGELOG.md`.** One human-written entry per meaningful change, keyed by date. This is what a downstream project reads to decide whether to re-pull a pattern.
 - **Run `./ops.sh check-integrity`** before wrapping. It is the mechanical guard against the exact failure mode this template now defends against: a permanent obligation with no lifecycle trigger.
 
