@@ -172,8 +172,7 @@ if (!routeFiles.length) skipped.push("no API routes found, skipped route checks"
    The quiet variant of the same habit. Four routes in a live system
    verified that a caller was signed in and then did nothing with the
    answer, so any role could write records meant to be restricted and spend
-   money on
-   a paid AI endpoint. getUser() answers "is this someone?"; the question
+   money on a paid AI endpoint. getUser() answers "is this someone?"; the question
    is "is this someone who may do THIS?" */
 const ROLE_CHECK =
   /requireRole|app_metadata|\brole\b\s*(===|!==|==|!=)|\.includes\(\s*role|allowedRoles|hasRole|is_operator|isOperator|\brole\s*(!==|===)/;
