@@ -12,6 +12,20 @@ Follow `docs/starting-a-new-project.md` end to end. Do not improvise the setup, 
 
 The template improves by back-porting patterns proven in real downstream projects (this is exactly how the session-integrity scaffolding landed: it was learned the hard way in a client project, then generalized back here). When you change the template:
 
+## What may live in this repo
+
+**This repo is the scaffold and nothing else.** It is copied into every new project, so anything parked here propagates outward into codebases that have no use for it.
+
+Do not commit here:
+
+- Another project. A site, a menu, a landing page, a demo. If it deploys somewhere, it wants its own repo.
+- Anything naming a client, an engagement, a contract value, a real route map, or a person.
+- Notes, plans or handoffs belonging to a specific piece of work rather than to the scaffold.
+
+**Only the keeper changes this repo**, and only when a pattern has been proven in a real project and is worth generalising. A project that discovers something good does not push it here. It files the candidate in `docs/backport-candidates.md` or in the umbrella log, and the keeper decides.
+
+*Why this is written down:* by 2026-07-24 the scaffold had accumulated a cocktail-bar website, a portfolio planning doc carrying a client contract value, and a security recipe reproducing a client production route map. None of it was committed carelessly. Each arrived because the scaffold was the repo someone happened to be in. The rule is not about intent, it is about gravity.
+
 - **Back-port, do not invent.** A pattern earns its place in the template by working in a real project first. Generalize it (strip project-specific names, derive from cwd, etc.), then bring it here.
 - **Conventional, atomic commits.** `type(scope): imperative summary`. One logical change per commit. The log is the changelog's raw material. See the Commits convention in `CLAUDE.md`.
 - **CI must pass.** `.github/workflows/ci.yml` runs `./ops.sh check` + `./ops.sh test` + `./ops.sh build` on every PR and push to `main`. Green before merge.
