@@ -16,11 +16,17 @@ import { queryKeys } from "@/lib/query-keys";
 import * as fs from "fs";
 import * as path from "path";
 
+// Explicit entry types keep these tests compiling while the registries are
+// empty (Object.entries of {} yields unknown values) and stay correct once
+// /new-query and /new-mutation populate them.
+type QueryEntry = { key: (...args: unknown[]) => readonly unknown[]; fn: (...args: unknown[]) => Promise<unknown> };
+type MutationEntry = { fn: (...args: unknown[]) => Promise<unknown>; invalidates: () => readonly (readonly unknown[])[] };
+
 describe("Query Registry", () => {
-  const queryEntries = Object.entries(queries);
+  const queryEntries = Object.entries(queries) as [string, QueryEntry][];
 
   it("should have paired key and fn for every query", () => {
-    for (const [name, entry] of queryEntries) {
+    for (const [, entry] of queryEntries) {
       expect(entry).toHaveProperty("key");
       expect(entry).toHaveProperty("fn");
       expect(typeof entry.key).toBe("function");
@@ -30,10 +36,10 @@ describe("Query Registry", () => {
 });
 
 describe("Mutation Registry", () => {
-  const mutationEntries = Object.entries(mutations);
+  const mutationEntries = Object.entries(mutations) as [string, MutationEntry][];
 
   it("should have paired fn and invalidates for every mutation", () => {
-    for (const [name, entry] of mutationEntries) {
+    for (const [, entry] of mutationEntries) {
       expect(entry).toHaveProperty("fn");
       expect(entry).toHaveProperty("invalidates");
       expect(typeof entry.fn).toBe("function");
@@ -42,7 +48,7 @@ describe("Mutation Registry", () => {
   });
 
   it("should return arrays from invalidates()", () => {
-    for (const [name, entry] of mutationEntries) {
+    for (const [, entry] of mutationEntries) {
       const keys = entry.invalidates();
       expect(Array.isArray(keys)).toBe(true);
       for (const key of keys) {
@@ -55,7 +61,7 @@ describe("Mutation Registry", () => {
 describe("Query Keys", () => {
   it("should have unique keys for zero-arg factories", () => {
     const zeroArgKeys: string[] = [];
-    for (const [name, factory] of Object.entries(queryKeys)) {
+    for (const [, factory] of Object.entries(queryKeys) as [string, (...args: unknown[]) => readonly unknown[]][]) {
       if (factory.length === 0) {
         const key = JSON.stringify((factory as () => readonly unknown[])());
         expect(zeroArgKeys).not.toContain(key);

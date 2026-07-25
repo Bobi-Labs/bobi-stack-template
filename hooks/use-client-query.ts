@@ -19,8 +19,8 @@ export default function useClientQuery<K extends QueryName>(
   const { key, fn } = queries[name];
 
   return useQuery<QueryResult<K>>({
-    queryKey: [...(key as (...a: any[]) => readonly unknown[])(...args)],
-    queryFn: () => (fn as (...a: any[]) => Promise<QueryResult<K>>)(...args),
+    queryKey: [...(key as (...a: unknown[]) => readonly unknown[])(...args)],
+    queryFn: () => (fn as (...a: unknown[]) => Promise<QueryResult<K>>)(...args),
     staleTime: 2 * 60 * 1000, // 2 minutes
     gcTime: 10 * 60 * 1000,   // 10 minutes
   });

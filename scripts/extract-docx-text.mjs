@@ -2,10 +2,9 @@
  * Quick .docx → plain text extractor. Unzips, reads word/document.xml,
  * strips tags. Usage: node scripts/extract-docx-text.mjs <path-to-docx>
  */
-import { readFileSync, writeFileSync, copyFileSync, mkdirSync, rmSync } from "fs";
+import { readFileSync, copyFileSync, mkdirSync, rmSync } from "fs";
 import { execSync } from "child_process";
-import { resolve, dirname, basename } from "path";
-import { fileURLToPath } from "url";
+import { resolve } from "path";
 
 const src = process.argv[2];
 if (!src) { console.error("usage: node scripts/extract-docx-text.mjs <path-to-docx>"); process.exit(1); }

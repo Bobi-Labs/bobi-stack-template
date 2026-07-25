@@ -37,7 +37,7 @@ const cmd = args[0];
 
 function flag(name) { const i = args.indexOf(name); return i >= 0 ? args[i + 1] : null; }
 function hasFlag(name) { return args.includes(name); }
-function emit(obj) { JSON_MODE ? console.log(JSON.stringify(obj, null, 2)) : null; }
+function emit(obj) { if (JSON_MODE) console.log(JSON.stringify(obj, null, 2)); }
 function line(s) { if (!JSON_MODE) console.log(s); }
 function icon(m) { return m === FOLDER_MIME ? "📁" : "📄"; }
 

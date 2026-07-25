@@ -7,6 +7,7 @@
  *
  * Use /new-mutation to scaffold new entries automatically.
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars -- referenced by scaffolded entries (see example below)
 import { queryKeys } from "@/lib/query-keys";
 
 export const mutations = {

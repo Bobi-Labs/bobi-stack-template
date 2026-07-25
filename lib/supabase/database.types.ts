@@ -16,10 +16,11 @@ export type Database = {
   public: {
     Tables: {
       // Your tables will appear here after running ./ops.sh gen-types
+      [_ in never]: never
     }
-    Views: {}
-    Functions: {}
-    Enums: {}
-    CompositeTypes: {}
+    Views: { [_ in never]: never }
+    Functions: { [_ in never]: never }
+    Enums: { [_ in never]: never }
+    CompositeTypes: { [_ in never]: never }
   }
 }

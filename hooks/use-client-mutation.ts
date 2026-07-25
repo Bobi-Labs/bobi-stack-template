@@ -25,7 +25,8 @@ export default function useClientMutation<K extends MutationName>(
   return useMutation({
     mutationFn: fn as MutationFn<K>,
     onSuccess: (data) => {
-      for (const key of invalidates()) {
+      // Cast keeps this compiling while the registry is empty (MutationName = never)
+      for (const key of (invalidates as () => readonly (readonly unknown[])[])()) {
         queryClient.invalidateQueries({ queryKey: [...key] });
       }
       options?.onSuccess?.(data as Awaited<ReturnType<MutationFn<K>>>);
