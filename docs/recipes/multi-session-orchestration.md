@@ -1,68 +1,190 @@
-# Recipe: multi-session orchestration (the umbrella pattern)
+# Recipe: multi-session orchestration (the chat tree)
 
-**Situational, opt-in.** A single-repo project does not need any of this; the session-START/END checklists and `check-integrity` already cover the single-repo case. Reach for this recipe when one operator runs **multiple coordinated repos through multiple Claude sessions** and cross-session knowledge loss starts costing real rework. Proven across six repos and a three-month marketing build-out in the Bobi Labs ecosystem.
+**Situational, opt-in.** A single-repo project does not need any of this; the
+session-START/END checklists and `check-integrity` already cover the single-repo case.
+Reach for this recipe when one operator runs **multiple coordinated repos through multiple
+Claude sessions** and cross-session knowledge loss starts costing real rework. Field-tested
+across a fifteen-box tree spanning products, a client engagement, and personal projects.
 
 ## The shape
 
-Three layers, top down:
+Storage first. Three layers, top down:
 
-1. **One keeper.** Exactly one repo (usually the oldest or most central) is the umbrella keeper. Its Claude sessions carry the coordination duty: they read all logs at session start, resolve stale items, and promote durable decisions.
-2. **Per-project comms logs.** The keeper repo holds `docs/umbrella/<project>.log.md`, one per participating repo. Append-only, dated entries, each ending in a status marker: `[open]` `[needs-response]` `[resolved]` `[stable]`. Both sides write to the same file; the log IS the conversation.
-3. **A curated changelog.** `docs/umbrella/_changelog.md` holds only promoted, durable decisions (brand rules, architecture calls, process lessons). Every participating repo's CLAUDE.md instructs its sessions to read the last ~10 entries at session start.
+1. **One keeper.** Exactly one repo (usually the oldest or most central) is the umbrella
+   keeper. Its sessions carry the coordination duty: read all logs at session start,
+   resolve stale items, arbitrate, and promote durable decisions.
+2. **Per-project comms logs.** The keeper holds `docs/umbrella/<project>.log.md`, one per
+   participant. Append-only, dated entries, each ending in a status marker: `[open]`
+   `[needs-response]` `[resolved]` `[stable]`. Both sides write to the same file; the log
+   IS the conversation.
+3. **A curated changelog.** `docs/umbrella/_changelog.md` holds only promoted, durable
+   decisions. Every participant's `CLAUDE.md` tells its sessions to read the last ten
+   entries at session start.
 
-Each participating repo's CLAUDE.md gets a short block: which logs to read at session start, when to file an entry (cross-cutting changes and state shifts, not routine internal work), and where the keeper lives.
+Add a fourth file the day the tree has more than three participants: **the constitution**
+(`docs/umbrella/CHAT-TREE.md`), which names every box, who owns what, and the rules below.
+Write the reasoning inline. A rule whose reason is lost gets dropped by the first session
+that finds it inconvenient.
 
-## The session hierarchy
+## The tree
 
-The repo layer above is storage. The working layer is **one master chat + pointed worker chats**:
+Boxes, not conversations. A **box** is a directory plus a log file, and it outlives any
+individual chat: close a chat, open a new one against the same log, and the work continues
+exactly where it stopped. One session per box at a time. A box may be idle; it may not be
+shared.
 
-- The **master chat** lives in the keeper repo. It plans, files work orders, does small cross-repo work directly, and synthesizes state for the operator.
-- **Worker chats** are opened per repo (or per task within a repo), pointed at a specific work order, and end when it lands.
-- Chats never coordinate live; they coordinate through the logs. That is what makes the system survive context resets, machine changes, and weeks of idle time.
+Three tiers:
 
-Two field-tested reasons this beats one giant chat:
+```
+                        OPERATOR
+                           |
+                    KEEPER (one repo)
+                    owns: arbitration, security, paths,
+                    the scaffold, the umbrella logs
+                     |                    |
+            PRODUCTS |                    | CLIENTS
+            report direct                 behind a confidentiality wall
+```
 
-- **Context-window hygiene.** Pointed chats on one task exhaust context far slower and stay more accurate, because the window holds one problem's files instead of five problems' worth of drift. Multiple pointed chats in the *same* tree work well for the same reason.
-- **No overwrite collisions.** Each worker owns its repo's working tree; the master only touches shared docs and the keeper repo. Nobody stomps anybody.
+**The wall is the load-bearing part.** Nothing from a client branch flows into a product,
+into the scaffold, or into another client: not a route map, not a name, not a lesson with
+their specifics still in it. Lessons cross only after the keeper strips them to mechanism.
+This exists because client detail that drifted upward into shared scaffolding eventually
+reached a public repo, and the fix propagated to the scaffold but not to the repos that had
+already copied from it.
+
+**Sub-keepers are earned, not default.** A client or product gets one only when it runs two
+or more concurrent chats; it then files ONE consolidated entry upward instead of one per
+chat. Below that bar, a box is a leaf reporting straight to the keeper. Do not build
+coordination machinery before the work demands it.
+
+**Disk layout stays flat.** Repos live side by side, and the hierarchy lives in the
+constitution, not in directories. The mechanical reason: Claude's per-repo memory is keyed
+to a path-derived slug, so moving a repo silently orphans its entire session history. The
+reporting structure is a document; the filesystem is an address book.
+
+## The rules
+
+Six, each earned by something going wrong.
+
+1. **One repo, one owner.** A session writes only to the repo it owns, so `git log` stays
+   an honest record. The keeper is the exception, because cross-repo work is its job, and
+   when it writes into a sub-project it MUST file an entry naming the commits.
+   *Two carve-outs:* a sub-project commits its own log entries into the keeper repo, and,
+   for shared-database projects, its own claimed migration files. Nothing else.
+2. **Triage before escalating.** Every finding is tagged before it reaches the operator:
+   `needs-operator` (money, risk appetite, a click in someone else's dashboard),
+   `needs-keeper` (cross-repo or changes a shared assumption), or `self-serve`. A session
+   that cannot pick a tag has a `needs-keeper` question, not an operator question.
+3. **The scaffold is upstream of everything, so it gets stricter rules.** It is copied into
+   every new project, so anything in it propagates silently. Never client-identifying
+   content. Write the lesson, never the specifics. A recipe naming a real deployment is a
+   targeting guide, not a lesson.
+4. **Public repos are a one-way door.** Publishing exposes every commit, message, and file
+   version ever committed; deleting a file does not remove it from history. So publish by
+   pushing a verified-clean tree to a NEW repo, never by flipping an existing one. Verify
+   on both axes: grep trees AND commit messages, separately.
+5. **Sessions end on a boundary, not on exhaustion.** Before ending, a session owes an
+   updated briefing, a reconciled TODO, and any open items stated plainly. The inverse also
+   holds: a new work order does NOT require a new chat. The box's open session claims it.
+6. **The keeper arbitrates, and says so out loud.** When two sessions disagree or a decision
+   spans repos, the keeper decides and records it in the changelog. Sub-projects do not
+   negotiate bilaterally, because chats share no context and an agreement in one is
+   invisible in the other.
 
 ## The work order
 
-The highest-leverage artifact. When the master chat delegates, it appends a `WORK ORDER` entry to the target repo's log containing everything a fresh session needs to execute without archaeology:
+The highest-leverage artifact. When the keeper delegates, it appends everything a session
+needs to execute without archaeology:
 
 ```markdown
-## YYYY-MM-DD, WORK ORDER: <title>, from <keeper> (keeper)
+## YYYY-MM-DD: WORK ORDER, <title>, from <keeper> (keeper)
 
 <Decision context: what the operator approved, in one paragraph.>
 
 **What:** <the deliverable>
 **Spec:** <schema, routes, constraints, naming rules, out-of-scope>
 **Conventions:** <which repo patterns to follow>
+**Guardrails:** <what must not change, and what to check before starting>
 
 Reply here when landed with <the specific facts the keeper needs back>.
 
+**Waiting on Bees:** nothing.
 **Status:** [needs-response], awaiting a <project> session to claim.
 ```
 
-The operator then opens a chat in that repo and says little more than "check the umbrella log and pick up the work order."
+The operator then says little more than "check your log and claim it."
 
-## Failure modes (learned the hard way)
+## The Waiting on Bees line
 
-- **Sub-projects stop reporting.** A repo shipped ~25 commits over weeks with zero log entries; the keeper later reconstructed state from `git log`. Mitigations: the keeper's session-START checklist includes a reporting-gap sweep (any participating repo with commits newer than its last log entry gets flagged), and keeper sessions have **resolution rights**: after a reasonable gap, the keeper may resolve a dangling `[needs-response]` itself and record what it did, rather than letting asks rot.
-- **Stale status markers.** Append-only logs mean an old `[open]` can sit above its own resolution. Convention: the *newest* entry's status is authoritative; closing entries explicitly reference what they close.
-- **Decisions trapped in logs.** If a decision matters beyond one repo pair, promote it to `_changelog.md` (and the keeper's strategy doc) the same day, or future sessions will re-litigate it.
+Every entry ends with one, named for whoever the operator is:
+
+```markdown
+**Waiting on Bees:** rotate the database password in the dashboard.
+```
+
+Imperative one-liners, maximum three, or the literal word "nothing". It exists because
+thorough sessions write thorough conclusions, and a human reading six of them cannot tell
+what is a report from what is a request. The keeper aggregates every such line into one
+"who needs what" list on demand. Keeper-facing asks do not go here; they stay in the body.
+
+## Seams
+
+Rule 6 has a real cost when one box writes DAILY under conventions another box owns: every
+routine question becomes a keeper round trip on work needing no arbitration. A **seam** is
+the narrow fix. The keeper opens `docs/umbrella/seam-<topic>.md`, names the owner, the
+writers, and a strict subject boundary; inside it the parties talk directly and the keeper
+only watches.
+
+Two hard constraints. A seam covers **conventions, never cases**: the moment an exchange
+needs a specific engagement's facts, it leaves the seam. And a seam crossing the client wall
+carries **no client specifics**, tested by asking whether the question would read identically
+for any client. Seams are opened by the keeper, never assumed by a box.
+
+## Failure modes, learned the hard way
+
+- **Sub-projects stop reporting.** One repo shipped roughly 25 commits over weeks with zero
+  log entries. Mitigation: the keeper's session-start sweep flags any participant with
+  commits newer than its last log entry, and the keeper has resolution rights on asks that
+  have rotted.
+- **Stale status markers.** Append-only means an old `[open]` can sit above its own
+  resolution. Convention: the newest entry wins, and closing entries name what they close.
+- **Decisions trapped in logs.** If it matters beyond one pair, promote it to the changelog
+  the same day or it gets re-litigated.
+- **Committed is not shipped.** Fixes sat committed but undeployed for days while the logs
+  read as though they were live. Worse than the delay: work stacks in front of undeployed
+  code, each commit assuming code that is not live, so cost and surprise both grow with the
+  gap. Deploy by default, hold only deliberately, and make every hold visible. A
+  `check-integrity` counter that nags on unshipped commits older than three days is the
+  cheap mechanism.
+- **A credential in a private repo is exposed to every collaborator it ever had.** Private
+  feels safe and is not. Redaction at HEAD is cosmetic because history keeps it; only
+  rotation is a fix.
+- **Verification that cannot fail proves nothing.** Any check on security or access control
+  must be proven to discriminate: break the thing deliberately, confirm the check catches
+  it, then restore. Too-loose and too-tight both pass a green build.
 
 ## When not to use this
 
-One repo, or repos that never actually depend on each other: skip it all. The overhead is only worth it once cross-repo state genuinely exists (shared database, shared brand rules, one product embedding another). Start with just a keeper + one log the first time two repos need to agree on something, and let the rest grow as needed.
+One repo, or repos that never actually depend on each other: skip all of it. The overhead is
+real. Start with a keeper and one log the first time two repos need to agree on something,
+and let the rest grow.
 
 ## Adopting it
 
-Starter files live in [`umbrella-starter/`](umbrella-starter/). The mechanical steps:
+Starter files live in [`umbrella-starter/`](umbrella-starter/):
 
-1. **Pick the keeper** (the oldest or most central repo; it must also own the umbrella's strategy doc).
-2. Copy `umbrella-starter/README.template.md` and `umbrella-starter/_changelog.template.md` into the keeper repo as `docs/umbrella/README.md` and `docs/umbrella/_changelog.md`; fill placeholders.
-3. For each participating repo, copy `project.log.template.md` to `docs/umbrella/<project>.log.md` in the keeper repo.
-4. Paste the matching block from `claude-md-block.template.md` into each repo's CLAUDE.md session-start checklist (keeper block vs participant block).
-5. First real use: when the next cross-cutting decision happens, write it as a log entry instead of re-explaining it in the next chat. The system earns its keep from that moment.
+1. **Pick the keeper.** Oldest or most central; it must also own the strategy doc.
+2. Copy `README.template.md` and `_changelog.template.md` into the keeper as
+   `docs/umbrella/README.md` and `_changelog.md`; fill the placeholders.
+3. For each participant, copy `project.log.template.md` to `docs/umbrella/<project>.log.md`.
+4. Paste the matching block from `claude-md-block.template.md` into each repo's `CLAUDE.md`
+   session-start checklist (keeper block or participant block).
+5. **At three or more participants**, copy `CHAT-TREE.template.md` to
+   `docs/umbrella/CHAT-TREE.md` and fill in the boxes. Below three, the logs are enough.
+6. Keep the standup prompts. `chat-standup-prompts.template.md` holds one paste-ready
+   kickoff prompt per box, so opening a session is a copy and paste rather than a
+   re-explanation. This file becomes the single most-used artifact in the tree.
 
-Day to day, run it as described in "The session hierarchy" above: one master chat in the keeper, pointed worker chats picking up work orders from the logs.
+First real use: the next time a cross-cutting decision happens, write it as a log entry
+instead of re-explaining it in the next chat. The system earns its keep from that moment.

@@ -4,6 +4,19 @@ Date-keyed, hand-written, one entry per meaningful change. **Not semver.** bobi-
 
 A downstream project reads this to decide whether a pattern is worth re-pulling. Keep entries about *what changed and why it matters to a project built on this*, not commit-by-commit detail.
 
+## 2026-07-29
+
+Onboarding and orchestration overhaul, driven by a week of running a fifteen-box tree in anger. Two problems: a fresh machine discovered its missing tooling one failure at a time, and the orchestration recipe still taught the flat keeper-and-consumers model the tree had already outgrown.
+
+- **New: [`docs/prerequisites.md`](docs/prerequisites.md).** The complete toolchain in install order (Node, pnpm, Git, Claude Code, the `gh`, `vercel`, and `supabase` CLIs), what each unlocks, the accounts, a verification block, and four traps that read as broken code when they are actually setup: the ESLint 9 pin, `gen-types` overwriting hand-maintained types, CLI-created Vercel projects where a push does not deploy, and IPv6-only direct Postgres hosts. The setup docs previously mentioned each CLI inline, mid-procedure, which is how a prerequisite becomes a surprise.
+- **README gains a "Start here" section.** Five ordered steps, each assuming the one above it. Also corrected a stale claim: the scaffold ships Next 16 and React 19, not Next 14.
+- **[Multi-session orchestration](docs/recipes/multi-session-orchestration.md) rewritten to the chat tree.** Boxes rather than chats (a box is a directory plus a log, and outlives any conversation), three tiers with a confidentiality wall between client work and everything else, sub-keepers earned at two or more concurrent chats rather than granted by default, flat disk layout for a mechanical reason (per-repo memory is keyed to a path-derived slug, so moving a repo orphans its history), and the six rules with their reasoning inline.
+- **New starter templates.** `CHAT-TREE.template.md` (the constitution, adopt at three or more participants) and `chat-standup-prompts.template.md` (one paste-ready kickoff prompt per box, which turns out to be the most-used file in a live tree).
+- **The `Waiting on Bees:` line is now mandatory on every log entry.** Imperative one-liners for the operator, maximum three, or the word "nothing". Thorough sessions write thorough conclusions, and a human reading six of them cannot tell a report from a request; this line is the extract, and the keeper aggregates them into one "who needs what" on demand.
+- **Seams.** Where one box writes daily under conventions another box owns, routing every routine question through the keeper is pure latency. A seam is a keeper-opened file with a strict subject boundary where two boxes talk directly: conventions, never cases, and nothing crossing the client wall carries client specifics.
+- **Three failure modes added to the recipe**, each from a real incident: committed is not shipped (work stacks in front of undeployed code, so cost and surprise grow with the gap), a credential in a private repo is exposed to every collaborator it ever had and only rotation fixes it, and a verification that cannot fail proves nothing (break it deliberately, confirm it catches that, restore).
+
+
 ## 2026-07-23
 
 Security hardening, driven by a real incident: a production system turned out to have a full authentication bypass reachable with one curl command, alongside an app that had been quietly dying in users' browsers for months. Neither was bad code; both were habits. The incident record is held privately by the system owner; the transferable rules live in the recipe.

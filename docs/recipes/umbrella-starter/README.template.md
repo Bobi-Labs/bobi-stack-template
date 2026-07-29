@@ -23,6 +23,9 @@ This folder is the coordination layer between Claude Code sessions running in di
 | `README.md` (this) | Protocol explanation | keeper |
 | `_changelog.md` | High-impact umbrella decisions, dated. Curated; promoted from project logs when stable. | keeper writes; everyone reads |
 | `<project>.log.md` | Two-way comms between the keeper's Claude and that project's Claude, one file per project | both |
+| `CHAT-TREE.md` | The constitution: every box, who owns what, the rules and their reasoning. Adopt at three or more participants | keeper |
+| `chat-standup-prompts.md` | One paste-ready kickoff prompt per box, kept current | keeper |
+| `seam-<topic>.md` | A narrow direct channel between two boxes on ONE subject, opened by the keeper when routing every routine question through it becomes pure latency | the named parties |
 | `archive/` | Rotated logs (created lazily; see Keeper duties) | keeper |
 
 ## Why this exists
