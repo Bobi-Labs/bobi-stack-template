@@ -260,14 +260,19 @@ The git log is documentation. It should read as a narrative, not a pile of squas
 
 ### Skills
 
-`.claude/skills/`: auto-loaded reference skills + invocable task skills.
+`.claude/skills/`: reference skills (conventions) + task skills (generators).
 
-**Active reference skills (auto-load in Claude Code):**
+**Do not rely on a skill loading itself.** Claude Code moved to explicit invocation
+(changelog v2.1.215), so a convention that used to apply unprompted may simply not.
+Reference skills are therefore all `user-invocable: true`, and the rule is: **invoke the
+relevant convention by name before writing code in its area.**
+
+**Reference skills (invoke before working in their area):**
 
 - `cli-first`: CLI tools + env files for third-party services
 - `bobi-stack`: Docs, TODO, ops.sh workflow conventions
-- `supabase-query-system`: Read path
-- `supabase-mutations`: Write path
+- `supabase-query-system`: Read path. Invoke before adding a query
+- `supabase-mutations`: Write path. Invoke before adding a mutation or form
 
 **Invocable slash commands:**
 

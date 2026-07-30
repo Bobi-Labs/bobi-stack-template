@@ -1,7 +1,7 @@
 ---
 name: supabase-mutations
-description: Convention for writing data to Supabase/PostgreSQL safely using Zod validation, the Supabase browser client, a mutation registry, and React Hook Form. Auto-loads when working with forms, mutations, data writes, inserts, updates, or deletes.
-user-invocable: false
+description: Convention for writing data to Supabase/PostgreSQL safely using Zod validation, the Supabase browser client, a mutation registry, and React Hook Form. Read this when working on forms, mutations, data writes, inserts, updates, or deletes.
+user-invocable: true
 ---
 
 # Supabase Mutations: Write Path

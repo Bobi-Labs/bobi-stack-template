@@ -1,7 +1,7 @@
 ---
 name: supabase-query-system
-description: Convention for reading data from Supabase/PostgreSQL using a query registry with centralized key factories, the Supabase browser client, and TanStack React Query caching. Auto-loads when working with data fetching, queries, dashboards, or data display.
-user-invocable: false
+description: Convention for reading data from Supabase/PostgreSQL using a query registry with centralized key factories, the Supabase browser client, and TanStack React Query caching. Read this when working on data fetching, queries, dashboards, or data display.
+user-invocable: true
 ---
 
 # Supabase Query System: Read Path

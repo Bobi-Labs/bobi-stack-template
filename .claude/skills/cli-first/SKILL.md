@@ -1,7 +1,7 @@
 ---
 name: cli-first
-description: Convention for using CLI tools and environment variables when interacting with third-party services like AWS, Vercel, Supabase, Stripe, GitHub, and Google Cloud. Auto-loads when working with external services, deployments, infrastructure, or API integrations.
-user-invocable: false
+description: Convention for using CLI tools and environment variables when interacting with third-party services like AWS, Vercel, Supabase, Stripe, GitHub, and Google Cloud. Read this when working on external services, deployments, infrastructure, or API integrations.
+user-invocable: true
 ---
 
 # CLI-First Development Convention
