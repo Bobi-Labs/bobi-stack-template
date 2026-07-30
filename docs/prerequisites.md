@@ -36,6 +36,11 @@ Authenticate each once: `gh auth login`, `vercel login`, `supabase login`.
   your code is broken.
 - **An IDE with the Claude Code extension** (VS Code, JetBrains). Optional. The CLI is
   complete on its own.
+- **gitleaks**, for `./ops.sh secret-scan`. Strongly recommended on any PRIVATE repo,
+  because GitHub's own secret scanning is a paid add-on for private repositories, which
+  leaves them uncovered by default. Install with `winget install Gitleaks.Gitleaks` or
+  `brew install gitleaks`; a fresh install is only on the PATH of shells started after it.
+  The command exits with instructions rather than failing confusingly if it is absent.
 
 ## 4. Accounts
 

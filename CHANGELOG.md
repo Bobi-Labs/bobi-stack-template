@@ -4,6 +4,10 @@ Date-keyed, hand-written, one entry per meaningful change. **Not semver.** bobi-
 
 A downstream project reads this to decide whether a pattern is worth re-pulling. Keep entries about *what changed and why it matters to a project built on this*, not commit-by-commit detail.
 
+## 2026-07-30 (later)
+
+- **New: `./ops.sh secret-scan`** (`scripts/secret-scan.sh`), promoted from the tools box after passing an exercise gate: made to catch a deliberately planted secret, then shown to report clean once removed. It wraps gitleaks over a repo's FULL HISTORY, because redaction at HEAD is cosmetic and only rotation is a remedy. **Deliberately a command, not a pre-push hook**: a false positive during a live incident is how a check earns being ignored, and `--no-verify` teaches exactly the wrong reflex. Exits 127 with install instructions when gitleaks is absent rather than failing confusingly. Why it matters for private projects: GitHub's secret scanning is a paid add-on for private repos (verified, API 422), so a private repo has no scanner by default. On its first fleet run across 24 repos it found secrets in history in 4 of them, including a private key in a real-money trading script. **A gitleaks quirk worth knowing before trusting your own wrapper:** on 8.30.1 the process exit code does not signal leaks (a leaky scan exits 0, with or without `--exit-code`), so the verdict must be judged from the JSON report, and `NUL` or `/dev/null` as a report path turns every run into an error.
+
 ## 2026-07-29
 
 Onboarding and orchestration overhaul, driven by a week of running a fifteen-box tree in anger. Two problems: a fresh machine discovered its missing tooling one failure at a time, and the orchestration recipe still taught the flat keeper-and-consumers model the tree had already outgrown.

@@ -183,6 +183,18 @@ elif [[ "$cmd" == "audit-security" ]]; then
     cd "$PROJECT_DIR"
     node scripts/audit-security.mjs "$@"
 
+# ─── secret-scan ──────────────────────────────────────
+#
+# Full-history secret scan. Deliberately a command rather than a pre-push hook:
+# a false positive during a live incident is how a check earns being ignored,
+# and --no-verify teaches exactly the wrong reflex. Needs gitleaks installed
+# (winget install Gitleaks.Gitleaks); exits 127 with instructions if absent.
+
+elif [[ "$cmd" == "secret-scan" ]]; then
+
+    cd "$PROJECT_DIR"
+    bash scripts/secret-scan.sh "$@"
+
 # ─── check-integrity ──────────────────────────────────
 
 elif [[ "$cmd" == "check-integrity" ]]; then
@@ -232,6 +244,7 @@ Supabase:
   gen-types              Regenerate DB types (lib/supabase/database.types.ts)
 
 Utilities:
+  secret-scan            Full-history secret scan (needs gitleaks)
   check-integrity        Drift scan: unfiled transcripts, stale handoff/history
   audit-security         Security + failure-mode scan (docs/recipes/security-and-failure-modes.md)
   clean [--all]          Remove .next/ and out/ (--all: also node_modules/)
