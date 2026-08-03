@@ -5,10 +5,11 @@
  * Run at session START (is the scaffolding consistent?) and session END
  * (did I file/update everything before the chat closes?).
  *
- * v1 scope (intentionally narrow, grows as real gaps surface):
+ * Scope (intentionally narrow, grows as real gaps surface):
  *   1. Unfiled raw call transcripts sitting in .tmp/
  *   2. Raw transcripts in .transcripts/ with no docs/calls/INDEX.md row
  *   3. handoff_note.md / session_history.md stale vs last git commit
+ *   4. Unshipped work: commits not pushed, no upstream, or no remote at all
  *
  * No dependencies: pure Node builtins so it's a clean template back-port.
  * Always exits 0 (advisory, never breaks a workflow). Pass --strict to
@@ -116,6 +117,60 @@ function docEpoch(file) {
     return statSync(file).mtimeMs;
   } catch {
     return null;
+  }
+}
+
+/* ───────── Unshipped work ─────────
+ *
+ * Added 2026-08-03. This gate is the last step of the Session-END checklist, and
+ * until now it could pass while a session's commits sat only on the author's disk.
+ * That is exactly how work strands: the ritual completes, the check says clean,
+ * and nobody learns otherwise until someone thinks to look. A fleet sweep found
+ * 24 commits stranded in one repo and three repos with no remote at all.
+ *
+ * "Committed is not shipped" is a recorded lesson; this is where it gets enforced,
+ * because a lesson with no gate is a lesson that gets relearned.
+ */
+const git = (cmd) => {
+  try {
+    return execSync(`git ${cmd}`, {
+      cwd: repoRoot,
+      encoding: "utf8",
+      stdio: ["ignore", "pipe", "ignore"],
+    }).trim();
+  } catch {
+    return null;
+  }
+};
+
+if (git("rev-parse --is-inside-work-tree") === "true") {
+  const remotes = git("remote");
+  if (!remotes) {
+    issues.push(
+      "This repo has NO git remote: its entire history exists only on this disk\n" +
+        "   → create a remote and push, or record in the project log that local-only is deliberate",
+    );
+  } else {
+    const upstream = git("rev-parse --abbrev-ref --symbolic-full-name @{u}");
+    if (!upstream) {
+      issues.push(
+        "Current branch tracks no upstream, so nothing you commit is being backed up\n" +
+          "   → git push -u origin " + (git("rev-parse --abbrev-ref HEAD") || "main"),
+      );
+    } else {
+      const ahead = git("rev-list --count @{u}..HEAD");
+      const n = Number(ahead);
+      if (Number.isFinite(n) && n > 0) {
+        const oldest = git('log @{u}..HEAD --reverse --format=%cr -1') || "unknown age";
+        issues.push(
+          `${n} commit(s) not pushed, oldest authored ${oldest}\n` +
+            "   → git push. Committed is not shipped: work stacks in front of code that\n" +
+            "     never left the machine, and the cost grows with the gap",
+        );
+      } else {
+        passes.push(`Everything committed is pushed (${upstream})`);
+      }
+    }
   }
 }
 

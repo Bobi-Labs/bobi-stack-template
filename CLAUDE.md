@@ -27,7 +27,13 @@ The #1 cause of cross-chat knowledge loss is a permanent obligation with no end-
 3. **Update `session_history.md`** if a meaningful arc completed (shipped feature, scope change, new lesson).
 4. **Update `TODO.md`**: mark done `[x]`, add anything discovered.
 5. **Capture new lessons into memory** (`feedback_*` / `project_*` / `user_*`): anything learned the hard way this session that a future chat must not relearn.
-6. **Re-run `./ops.sh check-integrity`.** It should come back clean. If it doesn't, you're not done.
+6. **Push.** `git push`. Committed is not shipped: work stacks in front of code that never
+   left the machine, other sessions read a repo that disagrees with your reality, and a
+   disk failure costs everything since the last push. A session that ends with unpushed
+   commits has not ended, it has stopped.
+7. **Re-run `./ops.sh check-integrity`.** It should come back clean, and it now fails on
+   unpushed commits, a missing upstream, or no remote. If it doesn't come back clean,
+   you're not done.
 
 ## Project Overview
 
