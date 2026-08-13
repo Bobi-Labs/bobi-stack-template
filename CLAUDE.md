@@ -34,6 +34,13 @@ The #1 cause of cross-chat knowledge loss is a permanent obligation with no end-
 7. **Re-run `./ops.sh check-integrity`.** It should come back clean, and it now fails on
    unpushed commits, a missing upstream, or no remote. If it doesn't come back clean,
    you're not done.
+8. **Sweep the project's recurring obligations.** Anything this project owes on a cadence or at a
+   boundary — a shared log that needs a reply or status flip, a demo that trails the product, a
+   published surface that must move to past tense because something retired today, a decision made
+   this session that a standing doc should now carry. Relevance-gated loading cannot catch an
+   obligation that was irrelevant to today's task; this step exists precisely for those. If the
+   project keeps a list of its recurring obligations, walk it; if it doesn't and this step keeps
+   finding things, start the list.
 
 ## Project Overview
 
@@ -411,6 +418,32 @@ files under its noisiest rule.
 2. **Scanning history answers per-repo, not per-branch.** A fix on one branch makes every branch look
    fixed. Two branches read the password from the environment while a third still hardcoded it in
    fifteen files, and the repo scanned clean.
+
+## Claims and public surfaces
+
+Anything a client, employer, or prospect can read is a claims surface, and **the dangerous ones are
+the ones that do not look like documents**: page copy, seed data, a dashboard's headline, a knowledge
+folder an AI reads answers from, a metric in a marketing post. Fabrications land there precisely
+because nobody treats them as claims while writing them.
+
+- **Every figure on a public surface must be verifiable on request.** Dates from the repo, counts
+  from the database, outcomes from the record. A build date off by a year reads as padding, not a
+  typo, to the one reader who checks — and the reader who checks is the one you wanted.
+- **Retired things speak in past tense, everywhere, the day they retire.** A dashboard that says
+  "live" over a dead backend is a false claim with a URL. Check every copy field, not just the
+  obvious one — long-form copy lives in different columns than summaries, and a half-corrected page
+  is worse than an uncorrected one because it looks reviewed.
+- **A public refusal is a constraint on what you may later build.** "We don't do X" in public copy
+  binds the roadmap or costs credibility when X ships. Route refusals through the operator.
+- **Announce when it goes public, or decide on the record not to.** A launch nobody announced and
+  nobody decided to skip is a silent failure that looks like a plan.
+- **Built-but-unexercised proves nothing.** Nothing gets promoted, listed, or claimed as working
+  until it has been made to succeed on a real case and shown clean on a negative one — the exercise
+  gate. "The scanner is installed" and "the scanner catches a planted secret" are different claims;
+  only the second one is evidence.
+- **The kill is a better story than the limp-along.** When something is retired on evidence, say so
+  with the numbers: a pre-committed gate, the measurement, the verdict. It demonstrates judgement,
+  which is rarer than construction.
 
 ## Current Phase
 

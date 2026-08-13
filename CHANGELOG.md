@@ -4,6 +4,31 @@ Date-keyed, hand-written, one entry per meaningful change. **Not semver.** bobi-
 
 A downstream project reads this to decide whether a pattern is worth re-pulling. Keep entries about *what changed and why it matters to a project built on this*, not commit-by-commit detail.
 
+## 2026-08-13 (later)
+
+Completes the August back-port begun this morning: multi-agent coordination, claims discipline, and
+a session-end step for recurring obligations.
+
+- **New: `docs/multi-agent.md`** — the first scaffold content for estates where several agent seats
+  work many repos. **Explicitly skippable for single-box projects**, and says so in its first line.
+  Six load-bearing rules (one repo one owner with carve-outs *named*; walls ship with a sanctioned
+  channel or get breached by necessity; seams where the file is a channel and not an owner; one
+  operator board written directly by every box; aggregators read the newest entry and both marker
+  forms; two boxes in one repo need a seat qualifier on every shared instruction). Ends with the
+  failure catalogue it was built from, one line per incident, so the rules read as earned.
+
+- **New: "Claims and public surfaces" in CLAUDE.md.** The dangerous claims surfaces are the ones that
+  do not look like documents: seed data, dashboard headlines, knowledge folders, page copy. Every
+  public figure verifiable on request; retired things speak in past tense everywhere the day they
+  retire; a public refusal constrains the roadmap; announce or decide on the record not to;
+  built-but-unexercised proves nothing; and the kill told with numbers is a better story than the
+  limp-along.
+
+- **Session-END gains step 8: sweep recurring obligations.** Relevance-gated context loading
+  structurally cannot catch an obligation that was irrelevant to today's task — a demo trailing the
+  product, a shared log owed a reply, a surface that must flip to past tense. The boundary is the
+  only place those get caught, so the boundary now owns them.
+
 ## 2026-08-13
 
 Three sections added to `CLAUDE.md` plus a new `docs/SECURITY-DECISIONS.md` template. All of it is
