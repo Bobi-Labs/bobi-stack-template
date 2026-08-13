@@ -235,6 +235,10 @@ The git log is documentation. It should read as a narrative, not a pile of squas
 - **Conventional prefix.** `type(scope): imperative summary`. Types: `feat`, `fix`, `docs`, `refactor`, `chore`, `ci`, `test`, `scaffolding`. Scope optional.
 - **Subject says what, body says why.** The body is for the reasoning a future reader needs, not a restatement of the diff.
 - **No em dashes in messages** (the `/prose` skill binds commit text too). Use commas, colons, periods.
+- **Commit with `git -C <this repo>` and stage by explicit path.** A compound command that `cd`s into
+  a repo and later runs `git add -A` sweeps whatever else is dirty there, including another
+  session's mid-flight work. This rule was promoted after a self-reported ownership breach caused
+  exactly that way.
 - A reader skimming `git log --oneline` should understand the project's evolution without opening a single diff.
 
 ## Working with the operator
@@ -353,6 +357,14 @@ not a verdict.
 - **An aggregator that reads one field loses everything filed in the other.** If a sweep reads only
   one marker, everything using the other marker is invisible, and the sweep reports clean.
 
+### Dependency audits have their own instrument traps
+
+- **Read the security-advisories page, not the releases page.** Two consecutive scans missed nine
+  advisories, three of them High, because release notes do not list what the advisories database
+  does.
+- **Read lockfiles, not manifests.** A manifest-only bump reports "patched" while the lockfile still
+  resolves the affected version, so the project runs vulnerable code while its audit says clean.
+
 ### Report faithfully
 
 If a check was skipped, say so. If output was ambiguous, say that instead of resolving it in your own
@@ -408,7 +420,12 @@ files under its noisiest rule.
 - **Identify which token leaked by fingerprint, not by age.** Dashboards show *last used*, not
   *created*, so "revoke anything older than the commit" silently fails.
 - **A public artifact derived from client work is GENERATED, never anonymised.** Renaming real records
-  leaves real structure, real amounts and real dates.
+  leaves real structure, real amounts and real dates. **Enforcement is a build-failing grep of
+  production terms, never a review pass**: substitution has demonstrably failed open (a find-replace
+  mangled one term and left a real person's name in a shipped demo), and a reviewer skims what a
+  grep does not.
+- **Batch findings into one assembled list before escalating.** N findings arriving separately are N
+  interruptions, and the recipient stops reading them. One list, triaged, with the ask stated once.
 
 ### Two scanner defects worth knowing before you trust a sweep
 
@@ -425,6 +442,20 @@ Anything a client, employer, or prospect can read is a claims surface, and **the
 the ones that do not look like documents**: page copy, seed data, a dashboard's headline, a knowledge
 folder an AI reads answers from, a metric in a marketing post. Fabrications land there precisely
 because nobody treats them as claims while writing them.
+
+**Internal surfaces count too.** A shared library doc describing a capability nobody re-verified
+claimed a feature that did not exist; a module named `scrapers/` that actually held API clients
+nearly put a false "we scrape" claim in front of a hiring manager. If another session or another
+person will read it as fact, it is a claims surface — name modules for what they do, and never
+describe a capability you have not exercised.
+
+**The mechanism, not just the principle — figures carry provenance.** Every number on a
+claim-producing surface is marked at the source: `[measured YYYY-MM-DD]`, `[estimated]`, or
+`[from <source>]`. One canonical inventory holds the verified figures, and **the canonical source
+wins over every downstream copy** — when a page, a prompt, or a post disagrees with it, the
+downstream surface is the one that is wrong. Without this mechanism the principle is decoration:
+the estate that wrote this rule watched wrong figures survive for months in job applications, a
+public portfolio, and a live call-assistant prompt, because every copy looked equally authoritative.
 
 - **Every figure on a public surface must be verifiable on request.** Dates from the repo, counts
   from the database, outcomes from the record. A build date off by a year reads as padding, not a
@@ -444,6 +475,10 @@ because nobody treats them as claims while writing them.
 - **The kill is a better story than the limp-along.** When something is retired on evidence, say so
   with the numbers: a pre-committed gate, the measurement, the verdict. It demonstrates judgement,
   which is rarer than construction.
+- **The demo IS the onboarding.** A public repo leads with the cheapest path to seeing the thing
+  work; any platform limitation is stated *after* that path and scoped to the subsystem it actually
+  limits, not stamped over the whole project. Hosting an existing demo beats writing better prose
+  about it.
 
 ## Current Phase
 

@@ -54,6 +54,13 @@ gone unanswered long enough to block, at which point it becomes one.
 
 **Wrong board is a drag; a missing card is the failure.**
 
+**The read half matters as much as the write half.** Boxes read the board at session start and stop
+re-asking for work that is already done — a list that reports finished work as pending gets ignored
+exactly as fast as one that misses open work. Completion is a row state **only the operator sets**;
+nobody deletes rows, nothing resurrects Done, and dedup is by normalised title so the same ask never
+accumulates as three cards. Any older per-log "waiting on the operator" line is a courtesy pointer,
+not a tracking system; the board is the queue.
+
 ### 5. The aggregator reads the newest entry, and both marker forms
 
 Whatever mechanical sweep the keeper runs over box logs must read each log's **newest entry** (not
@@ -87,6 +94,17 @@ every sibling log in the estate.
   log, it arrives with the evidence already gathered, the settled parts marked settled, and only
   your half of the work left open. A relay that forwards raw findings just moves the triage cost to
   the seat least equipped to do it.
+
+## What the keeper must NOT own: recurring security work
+
+**A recurring security watch must not live with the coordinating seat.** The coordinating seat
+triages by loudness — correctly, by its own logic, since it relays for everyone — and security is
+never the loudest thing in the room until it is catastrophic. In the estate this file comes from,
+the keeper held the security watch informally and let a scan sit untriaged for twelve days while
+escalating lesser findings twice in one day. The failure is structural, so the fix is structural: a
+dedicated seat with a mechanical trigger (a scheduled run that fires whether or not anyone
+remembers), a verdict store it owns, and an escalation contract hard-capped at "N checked, X need
+rotation, one line each, with steps."
 
 ## What the keeper owes the estate
 

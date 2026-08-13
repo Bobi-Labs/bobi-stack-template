@@ -125,8 +125,13 @@ Every entry ends with one, named for whoever the operator is:
 
 Imperative one-liners, maximum three, or the literal word "nothing". It exists because
 thorough sessions write thorough conclusions, and a human reading six of them cannot tell
-what is a report from what is a request. The keeper aggregates every such line into one
-"who needs what" list on demand. Keeper-facing asks do not go here; they stay in the body.
+what is a report from what is a request. Keeper-facing asks do not go here; they stay in the body.
+
+**Scope demotion (2026-08-10): this line is a courtesy pointer, not a tracking system.** Once the
+estate runs a shared operator board (see `docs/multi-agent.md`, rule 4), anything that genuinely
+needs the operator goes on the board as a card with steps-to-execute, and this line at most points
+at it. The board is the queue; a "waiting" line that only lives in a log is where asks go to be
+forgotten.
 
 ## Seams
 
