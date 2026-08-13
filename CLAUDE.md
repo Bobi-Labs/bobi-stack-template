@@ -271,9 +271,9 @@ look bigger than it is.
 
 ### Name the question, never the owner
 
-An open item says what to decide. **"Matthew owes a decision on the schema" is a phantom** that will
-still be sitting there in nine days looking legitimate. "Choose the private board's database home" is
-a real item.
+An open item says what to decide. **"The operator owes a decision on the schema" is a phantom** that
+will still be sitting there in nine days looking legitimate. "Choose the private board's database
+home" is a real item.
 
 If the title does not say what to do, it is not an item, it is a note to yourself.
 
