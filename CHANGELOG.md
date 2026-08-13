@@ -4,6 +4,52 @@ Date-keyed, hand-written, one entry per meaningful change. **Not semver.** bobi-
 
 A downstream project reads this to decide whether a pattern is worth re-pulling. Keep entries about *what changed and why it matters to a project built on this*, not commit-by-commit detail.
 
+## 2026-08-13
+
+Three sections added to `CLAUDE.md` plus a new `docs/SECURITY-DECISIONS.md` template. All of it is
+back-ported from a two-week window on a live estate where each lesson cost something specific. The
+scaffold's previous entry was 2026-07-30, so everything below was being re-learned by hand in every
+project built on it.
+
+- **New: "Working with the operator".** Answer first and put detail in a file, because a reply that
+  buries its conclusion in paragraph four costs the reader the time it took to find it. Anything the
+  operator must do himself carries **numbered steps to execute** with exact paths and commands, a
+  statement of what you verified safe, and an observable finished-when: a handoff explaining *why* but
+  not *how* hands him the research on top of the work, when you already did that research. Open items
+  **name the question, never the owner**, because "X owes a decision" is a phantom that still looks
+  legitimate nine days later.
+
+- **New: "Verification: check the instrument, not just the result".** The largest single source of
+  wasted work in the source estate was not bad code, it was trusting a tool that was lying. Nine
+  incidents, one shape. A malformed grep nearly produced a false all-clear on a live CVSS 8.2. `curl`
+  and `WebFetch` both cleared a page that was serving a real client's name in rendered text, because
+  a fetch only sees the shell of a client-rendered page. One project card needed two migrations
+  because the long-form copy lived in a second column and only the render showed it. **A negative
+  result from a tool is a claim about the tool as much as about the world**, so a reassuring surprise
+  earns the same suspicion as an alarming one. Also covers gates: one that tests the wrong hurdle
+  stays undecidable forever, one whose closing check cannot see the failure it prevents certifies that
+  failure, and an aggregator reading one field loses everything filed in the other.
+
+- **New: "Security"**, with `docs/SECURITY-DECISIONS.md` as its companion. **Triage by role, not by
+  count** - skipping that step does not create noise, it *inverts priority*, proven when thirty
+  harmless findings reached the operator as an emergency while a credential reaching client personal
+  data sat twelve days. **Probe, do not classify**: rule class decides how hard you look, never
+  whether a finding is real, since the most serious credential in that estate was a plaintext password
+  filed under the scanner's noisiest rule. Never infer liveness from a token's own `exp` (two
+  confirmed-dead keys claimed a decade out). Plus **no credential before its consumer exists**, since
+  an unused key cannot do anything useful, can leak, and starts a rotation clock.
+
+- **Two scanner defects shipped as warnings**, both of which made a sweep report false confidence:
+  `[ -d .git ]` skips git worktrees where `.git` is a file, silently excluding working trees from a
+  scan that claimed full coverage; and scanning history answers per-repo rather than per-branch, so a
+  fix on one branch makes every branch look fixed. In the source estate two branches read a password
+  from the environment while a third hardcoded it in fifteen files, and the repo scanned clean.
+
+- **Why `SECURITY-DECISIONS.md` is a template and not a doc:** a finding with no recorded verdict is a
+  novel finding every single time. Git history keeps a credential forever, context does not carry
+  between sessions, and with no decision to consult, escalating a plaintext credential is
+  textbook-correct behaviour. The loop is structural and it re-fires forever without this file.
+
 ## 2026-07-30 (later)
 
 - **New: `./ops.sh secret-scan`** (`scripts/secret-scan.sh`), promoted from the tools box after passing an exercise gate: made to catch a deliberately planted secret, then shown to report clean once removed. It wraps gitleaks over a repo's FULL HISTORY, because redaction at HEAD is cosmetic and only rotation is a remedy. **Deliberately a command, not a pre-push hook**: a false positive during a live incident is how a check earns being ignored, and `--no-verify` teaches exactly the wrong reflex. Exits 127 with install instructions when gitleaks is absent rather than failing confusingly. Why it matters for private projects: GitHub's secret scanning is a paid add-on for private repos (verified, API 422), so a private repo has no scanner by default. On its first fleet run across 24 repos it found secrets in history in 4 of them, including a private key in a real-money trading script. **A gitleaks quirk worth knowing before trusting your own wrapper:** on 8.30.1 the process exit code does not signal leaks (a leaky scan exits 0, with or without `--exit-code`), so the verdict must be judged from the JSON report, and `NUL` or `/dev/null` as a report path turns every run into an error.

@@ -230,6 +230,188 @@ The git log is documentation. It should read as a narrative, not a pile of squas
 - **No em dashes in messages** (the `/prose` skill binds commit text too). Use commas, colons, periods.
 - A reader skimming `git log --oneline` should understand the project's evolution without opening a single diff.
 
+## Working with the operator
+
+His time is the scarcest thing in the project. These rules exist because each one was asked for
+after it cost him something.
+
+### Answer first
+
+**Lead with the answer, then the reasoning, and put the detail in a file.** His words:
+
+> if every prompt I give returns a novel for me to read through to find the real meat and potatoes
+> we're working against the real ethos
+
+A response that buries its conclusion in paragraph four costs him the time it took to find it, every
+time. Long is fine **in a file he can choose to open**. It is not fine in a reply.
+
+Process narration is the worst offender: what you were about to do, what you considered, which tool
+you reached for. Report the outcome and what it means.
+
+### Anything he must do himself needs STEPS TO EXECUTE
+
+A handoff that explains *why* but not *how* hands him the research on top of the work. You already
+did the investigation, so withholding the path makes him repeat it.
+
+Every ask carries:
+
+1. **Why**, one short paragraph.
+2. **What you verified safe**, whenever the action could plausibly break something. A rotation
+   request that does not say whether the live site goes down is one he is right to stall on.
+3. **Numbered steps** with the exact dashboard path, exact file paths, exact command. Not "update the
+   env var" but the full path and the variable name.
+4. **Finished when**, as something he can observe himself.
+5. **Cautions**, where a neighbouring action would be wrong. "Roll the service-role key, do not touch
+   the anon key."
+
+Anything that is your job rather than his goes at the bottom, labelled as not his, so the ask does not
+look bigger than it is.
+
+**The test:** could he complete it from your message alone, without asking what you meant?
+
+### Name the question, never the owner
+
+An open item says what to decide. **"Matthew owes a decision on the schema" is a phantom** that will
+still be sitting there in nine days looking legitimate. "Choose the private board's database home" is
+a real item.
+
+If the title does not say what to do, it is not an item, it is a note to yourself.
+
+### Do not ask for a decision you can make
+
+Routine judgement calls are yours. Reserve questions for cases where two readings lead to materially
+different work, and when you do ask, **recommend one** rather than presenting a menu.
+
+---
+
+## Verification: check the instrument, not just the result
+
+**The largest single source of wasted work in this project has not been bad code. It has been
+trusting a tool that was lying.** Nine separate incidents, one shape. Read this before reporting any
+result you did not watch happen.
+
+### The rule
+
+> **For anything the operator must reproduce on screen, open it. For anything a tool reports, ask
+> what would make that tool wrong.**
+
+### A surprising result is a reason to re-check the tool, not to report
+
+A malformed `grep` returned no matches and nearly produced a false all-clear on a live CVSS 8.2
+vulnerability. The dedicated search tool found all three affected files immediately.
+
+**A negative result from a tool is a claim about the tool as much as about the world.** Alarm and
+all-clear fail in exactly the same way, so a *reassuring* surprise deserves the same suspicion as an
+alarming one. When verification contradicts a grounded finding, **re-check the instrument first.**
+
+### `curl` and `WebFetch` see only the shell on a client-rendered page
+
+Both cleared a page that was, at that moment, serving a real client's name in rendered text. If the
+data arrives in the browser, **a fetch proves nothing.** Use a real browser and read the rendered
+text.
+
+Corollary: a page that renders content client-side will look empty to every command-line check you
+run against it. That is not evidence of absence.
+
+### A row changed is not a page corrected
+
+One project card needed **two** migrations, because the long-form copy lived in a second column and
+only the render revealed it. `UPDATE ... 1 row affected` tells you the write succeeded, not that the
+page is right.
+
+**Load the page. Read it.**
+
+### Reading source tells you what exists, not what a user sees
+
+A 1,556-line component held every tab's markup. Attributing a table to the wrong tab sent the
+operator hunting for a screen that does not exist, and cost a whole exchange to unpick.
+
+If he has to click it, open it first.
+
+### A grep hit is not a finding
+
+- "secret" on a scheduling page was that vendor's shipped i18n dictionary.
+- Sixteen `generic-api-key` hits in one file were prose.
+- A "duplicate" address count was the same href appearing in both the HTML and the RSC payload.
+
+**Read the surrounding context before you report a match.** A count is not a severity and a match is
+not a verdict.
+
+### A gate must test the hurdle it claims to test
+
+- **A gate that tests the wrong hurdle stays undecidable forever.** If the threshold cannot be
+  reached by the thing being measured, the gate never fires and the decision never gets made.
+- **A ritual whose closing gate cannot see the failure it prevents certifies that failure.** A
+  session-end check that cannot detect unpushed work will happily close a session with unpushed work.
+- **An aggregator that reads one field loses everything filed in the other.** If a sweep reads only
+  one marker, everything using the other marker is invisible, and the sweep reports clean.
+
+### Report faithfully
+
+If a check was skipped, say so. If output was ambiguous, say that instead of resolving it in your own
+favour. **"I verified X" must mean you watched X happen**, not that you ran something that would
+probably have caught it.
+
+---
+
+## Security
+
+**Read `docs/SECURITY-DECISIONS.md` at the moment you find a credential, not at session start.**
+
+### Triage before you escalate: sort by role, not by count
+
+Skipping this step does not merely create noise. **It inverts priority**: on one occasion thirty
+harmless findings reached the operator as an emergency while a credential that reached client
+personal data sat untriaged for twelve days.
+
+| Kind | Severity | Action |
+|---|---|---|
+| Supabase **anon** JWT | **Low, public by design** | None, ever. It ships in every browser bundle; RLS is the guard. |
+| Supabase **service-role** JWT | **Critical** | Rotate. Escalate with the project named. |
+| Private key (signing, SSH, platform) | **Critical** | Rotate. Escalate. |
+| Account-scoped token or PAT | **High** | Rotate. Note that it reaches every project on the account. |
+| Project-scoped password | **Medium** | Rotate at a convenient window. |
+| Credential whose platform or project **no longer exists** | **None** | Dead. Record it, do not escalate. |
+
+### Probe, do not classify
+
+**Rule class decides how hard you look. It never decides whether a finding is real.** The most
+serious credential ever found in this estate was a plaintext database password, which the scanner
+files under its noisiest rule.
+
+- **Anything with an endpoint gets a read-only probe before you report it.** A Supabase key against
+  `/rest/v1/` answers `200` (live, rotate), `401`/`403` (already dead), or fails DNS (project gone,
+  nothing to rotate). That is a verdict in one second with no judgement involved.
+- **Never infer liveness from a token's own `exp` claim.** Two confirmed-dead keys both claimed
+  expiry a decade out. The token cannot tell you whether the thing it opens still exists.
+- **Decode and deduplicate first.** Thirty-five findings in one repo were one token.
+
+### Standing rules
+
+- **Redaction at HEAD is cosmetic. Rotation is the only remedy**, and only the operator can perform
+  it, because only the platform owner can invalidate a value.
+- **A credential in a private repo is exposed to every collaborator that repo has ever had.** Private
+  is not a mitigation.
+- **No credential before its consumer exists.** An unused key cannot do anything useful, can leak,
+  and starts a rotation clock. Create it when the thing that reads it exists.
+- **Storage scope must not exceed blast radius.** An account-scoped token never lives in a
+  per-project `.env.local`.
+- **Tokens carry an expiry and are named by purpose and date**, never by tool. `cli-2026-08`, not
+  `Claude`.
+- **Identify which token leaked by fingerprint, not by age.** Dashboards show *last used*, not
+  *created*, so "revoke anything older than the commit" silently fails.
+- **A public artifact derived from client work is GENERATED, never anonymised.** Renaming real records
+  leaves real structure, real amounts and real dates.
+
+### Two scanner defects worth knowing before you trust a sweep
+
+1. **`[ -d .git ]` skips git worktrees**, where `.git` is a *file*. A sweep reporting "20 repos
+   scanned" silently excluded two working trees, one of which held a plaintext production password.
+   Test `-e`.
+2. **Scanning history answers per-repo, not per-branch.** A fix on one branch makes every branch look
+   fixed. Two branches read the password from the environment while a third still hardcoded it in
+   fifteen files, and the repo scanned clean.
+
 ## Current Phase
 
 <!-- Running checklist of what's shipped + what's in flight. Keep refreshed. -->
