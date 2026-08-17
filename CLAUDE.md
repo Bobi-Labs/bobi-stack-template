@@ -405,6 +405,40 @@ files under its noisiest rule.
   expiry a decade out. The token cannot tell you whether the thing it opens still exists.
 - **Decode and deduplicate first.** Thirty-five findings in one repo were one token.
 
+### NEVER PRINT A CREDENTIAL VALUE. Fingerprint it instead.
+
+**This is the rule that would have prevented more incidents than any other in this file, and it was
+written after being broken by the agent that wrote the rest of the section.**
+
+Printing a credential into your output writes it into the session transcript, permanently. Transcripts
+persist on disk, are searchable, sit outside every `.gitignore`, and are far too large for anyone to
+review. **A credential printed into a session is exposed, and no later cleanup reaches every copy.**
+
+What it cost in the estate this came from: one agent printed a service-role key into a session and the
+operator had to migrate a whole project's key system. Then the coordinating agent printed two account
+tokens sixteen times while "fingerprinting them by eye", one of which reached a client's production
+database. A scan of two weeks of transcripts then found **16 distinct credentials across 314 sessions**,
+including service-role keys for five different projects and two private-key blocks. Git was watched;
+this surface was not, so the leak simply moved and the metric said things were improving.
+
+**Every question you actually want to answer about a credential can be answered from a hash:**
+
+- *Is the value in this file the same as in that one?* Compare hashes.
+- *Is this hardcoded literal the live password or the rotated one?* Compare hashes.
+- *Which dashboard row is this token?* Match a hash prefix, or the provider's masked digits.
+- *Did this credential leak?* Its hash appearing where it should not is the finding.
+
+So: **hash, length, shape, and location are reportable. The value never is.** Not the whole value, not
+the first eight characters, not "just this once to compare". If you need to identify a credential,
+write the comparison in code and print the verdict, not the input.
+
+**Two corollaries that are easy to miss:**
+
+- **A tool's output is your output.** Piping a file that contains a credential through `cat`, `grep`,
+  or a search tool prints it just as surely as echoing it. Filter before you print, not after.
+- **Your own scan reports are a claims surface.** A security report that quotes the credential it
+  found has created a second exposure in the act of documenting the first.
+
 ### Standing rules
 
 - **Redaction at HEAD is cosmetic. Rotation is the only remedy**, and only the operator can perform
