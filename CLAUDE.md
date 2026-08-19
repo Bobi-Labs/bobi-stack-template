@@ -470,6 +470,78 @@ write the comparison in code and print the verdict, not the input.
    fixed. Two branches read the password from the environment while a third still hardcoded it in
    fifteen files, and the repo scanned clean.
 
+
+## Row-level security: the three ways it silently fails
+
+Every RLS failure found across this estate came from one of three causes, and **none of them looks like
+a failure from inside the code.** All three passed casual review; two of them passed an automated scan.
+
+### 1. A view without `security_invoker` reads straight past RLS
+
+**This was the cause of every single leak found**, across three separate products. A Postgres view
+defaults to executing with its OWNER's privileges, so RLS on the underlying table does not apply. The
+table is locked correctly, the view ignores it, and the view is what the API exposes.
+
+```sql
+ALTER VIEW my_view SET (security_invoker = true);
+```
+
+**Audit it mechanically rather than by reading code**, because the defect is an absent option and absence
+is invisible:
+
+```sql
+SELECT c.relname, c.reloptions
+FROM pg_class c JOIN pg_namespace n ON n.oid = c.relnamespace
+WHERE c.relkind = 'v' AND n.nspname = 'public'
+  AND (c.reloptions IS NULL OR NOT ('security_invoker=true' = ANY(c.reloptions)));
+```
+
+Real cost: four views served 61 named employees, their hours, pay rates and gross wages to anonymous
+callers for weeks, while the `employees` and `timesheets` tables beneath them were correctly locked.
+
+### 2. RLS enabled with a permissive policy passes every "is RLS on?" check
+
+A table with `rowsecurity = true` and a policy of `USING (true)` is world-readable. **Every audit that
+asks whether RLS is enabled reports it as protected.** Read the policy predicate, never the flag:
+
+```sql
+SELECT tablename, policyname, cmd, qual, with_check FROM pg_policies WHERE schemaname = 'public';
+```
+
+Treat `qual = 'true'` on a SELECT policy as a finding unless the table is deliberately public content.
+
+### 3. Enabling RLS with no policies at all denies everything, which looks like working code
+
+The mirror image, and it fails closed rather than open, so it surfaces as a mysterious empty list rather
+than a breach. Worth knowing so nobody "fixes" it by adding `USING (true)` and creating defect 2.
+
+### Verifying RLS: a zero is ambiguous, and a 204 means nothing
+
+Two probe traps that produced a false all-clear and a false alarm in the same hour:
+
+- **A zero-row anonymous response does not mean protected.** Re-probe with a privileged key. Anon 0 with
+  privileged 445 means locked; **anon 0 with privileged 0 means the table is merely EMPTY and will leak
+  the day it has data.** Report that state as unprotected, not safe.
+- **Identical row counts across an unprivileged and a privileged read is the signature of RLS never
+  running.** `276 = 276` filtered nothing. This equality is a faster and more reliable tell than reading
+  policies.
+- **A `DELETE` or `UPDATE` whose `WHERE` matches no rows returns success even when RLS forbids it**,
+  because RLS filters rows rather than rejecting statements. **Never conclude "permitted" from that.**
+
+**The only valid destructive-permission test is a canary:** insert a throwaway row with a privileged
+connection, attempt the action as the unprivileged role **targeting that row by id**, check whether the
+row still exists, then remove it yourself. Survival is proof of denial. Use
+`Prefer: return=representation` so an empty array tells you zero rows matched the policy.
+
+### RLS is not your authorization boundary if the server bypasses it
+
+If server code connects with a direct Postgres pool (`new Pool({ connectionString: POSTGRES_URL })`)
+rather than through the Supabase client, **those queries bypass RLS entirely.** The real boundary is then
+the hand-written `WHERE user_id = $1` in every query, and **one omitted clause is a cross-tenant leak
+that no database control will catch.** RLS remains worth having as defence in depth for the REST surface,
+but know which one you are relying on. Where a server pool is the read path, treat every new query
+touching user data as a security-relevant change rather than a feature change.
+
 ## Claims and public surfaces
 
 Anything a client, employer, or prospect can read is a claims surface, and **the dangerous ones are
