@@ -4,15 +4,13 @@
     {
       "name": "nextjs-dev",
       "runtimeExecutable": "cmd",
-      "runtimeArgs": ["/c", "npx", "next", "dev"],
+      "runtimeArgs": [
+        "/c",
+        "npx",
+        "next",
+        "dev"
+      ],
       "port": 3000,
-      "autoPort": true
-    },
-    {
-      "name": "bar",
-      "runtimeExecutable": "cmd",
-      "runtimeArgs": ["/c", "npx", "-y", "serve", "bar", "-l", "5050"],
-      "port": 5050,
       "autoPort": true
     }
   ]
