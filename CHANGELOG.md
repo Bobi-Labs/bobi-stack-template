@@ -27,6 +27,10 @@ Agents that agree too easily, and builds nobody stress-tested before starting.
   security advisories; `eslint-config-next` is now pinned to the same minor (`~16.3.8`) because a
   caret let it run ahead to 16.4. Projects on 16.2 or earlier should take this bump.
 
+- **pnpm overrides for `nanoid` (>=3.3.18) and `source-map-js` (>=1.2.2).** Both arrive through
+  Next's pinned postcss, so no Next bump fixes them; the override does. Drop it when Next's postcss
+  moves past them.
+
 ## 2026-08-13 (later)
 
 Completes the August back-port begun this morning: multi-agent coordination, claims discipline, and
