@@ -83,9 +83,9 @@ function lastCommitEpoch() {
 }
 
 function deriveSlug(p) {
-  // Convention: absolute path, slashes → dashes, drive colon removed.
-  // C:\dev\x → C:/dev/x → C:-dev-x → C--dev-x
-  return p.replace(/\\/g, "/").replace(/\//g, "-").replace(/:/g, "");
+  // Claude Code's rule: every character that is not a letter, digit or dash
+  // becomes a dash. C:\dev\x → C--dev-x; "C:\dev\My App" → C--dev-My-App.
+  return p.replace(/[^A-Za-z0-9-]/g, "-");
 }
 
 function findMemoryDir() {

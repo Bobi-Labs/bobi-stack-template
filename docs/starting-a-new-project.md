@@ -33,10 +33,11 @@ git commit -m "Initial scaffold from bobi-stack-template"
 
 **How to find your `{{PROJECT_DIR_SLUG}}`:**
 
-Claude Code stores memory per project at `~/.claude/projects/<slug>/`. The slug is the absolute path to your repo with slashes replaced by dashes and the drive-letter colon removed.
+Claude Code stores memory per project at `~/.claude/projects/<slug>/`. The slug is the absolute path to your repo with **every character that is not a letter, digit or dash replaced by a dash**: slashes, backslashes, the drive colon, spaces and dots all become `-`.
 
 Examples:
 - `C:/dev/my-project` → `C--dev-my-project`
+- `C:/dev/My App` → `C--dev-My-App`
 - `/Users/me/projects/thing` → `-Users-me-projects-thing`
 
 Run Claude Code once in the repo to let it auto-create the slug dir, then look in `~/.claude/projects/` for the matching folder.
