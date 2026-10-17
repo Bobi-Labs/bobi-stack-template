@@ -95,9 +95,9 @@
       <div class="num">2</div>
       <div style="min-width:0; flex:1">
         <h2>Paste this, and press enter</h2>
-        <p>It points Claude at one fixed, reviewed version of the setup, so you can see exactly what it will follow. <strong>Copy it fresh each time:</strong> Claude's welcome tells you its version, and it should match this one: <code id="ver">17e3fed</code>.</p>
+        <p>It points Claude at the current reviewed version of the setup (the <code>kickoff</code> tag), so even an old copy of this prompt runs the latest one. Claude's welcome shows its version; today that is <code id="ver">e8473be</code>.</p>
         <div class="prompt">
-          <pre id="kickoff">Set me up with bobi-stack. If git isn't installed, help me install it first. Then, in my home directory, clone https://github.com/Bobi-Labs/bobi-stack-template.git into a folder named bobi-stack-kickoff (if that folder already exists, use it instead), fetch, and check out commit 17e3fedfeca41f12888abe0e29f50d6a0428da50. Read KICKOFF.md in that folder and walk me through it.</pre>
+          <pre id="kickoff">Set me up with bobi-stack. If git isn't installed, help me install it first. Then, in my home directory, clone https://github.com/Bobi-Labs/bobi-stack-template.git into a folder named bobi-stack-kickoff (if that folder already exists, use it instead), run git fetch --tags --force, and check out the tag kickoff. Read KICKOFF.md in that folder and walk me through it, starting with its Welcome card.</pre>
           <button class="copy" id="copy" type="button">Copy</button>
         </div>
       </div>
