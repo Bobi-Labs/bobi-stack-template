@@ -31,6 +31,11 @@ Agents that agree too easily, and builds nobody stress-tested before starting.
   Next's pinned postcss, so no Next bump fixes them; the override does. Drop it when Next's postcss
   moves past them.
 
+- **Dev tooling cleared of advisories but one.** vitest 4.1.12; overrides lift eslint's
+  `brace-expansion` (1.x and 5.x lines) and `js-yaml` (4.x only, so any 3.x consumer is untouched).
+  Left open on purpose: `braces` under `@next/eslint-plugin-next`, which has no patched release and
+  only runs at lint time.
+
 ## 2026-08-13 (later)
 
 Completes the August back-port begun this morning: multi-agent coordination, claims discipline, and
