@@ -13,7 +13,7 @@
 3. **Never ask for a password, key, or token in chat.** Signing in happens in their browser or their own Terminal window. Keys go into a `.env.local` file they fill in themselves. If they paste a secret into chat anyway, tell them plainly to change it, and do not repeat it.
 4. **Sign-ins, sign-ups and system passwords are theirs.** You cannot create accounts, type passwords, or answer a password prompt. Make each one a short checkpoint: what to open, what to click or paste, and "tell me when you're done".
 5. **Save progress after every step,** not just every phase, in `~/.bobi-stack/kickoff-progress.md`: the answers so far, each step done, and the next step. **At the very start, check that file.** If it exists, say "Looks like we started this before. Last time we got to <step>. Pick up from there?" When resuming, **look at what is actually on disk** (a half-created folder, a missing commit) before continuing, and finish or redo that step rather than assuming.
-6. **Commands must fit their machine.** Detect the OS first (Windows, macOS, Linux) and use that platform's commands throughout. On Windows, `ops.sh` runs in Git Bash, not PowerShell.
+6. **Commands must fit their machine.** Detect the OS first (Windows, macOS, Linux) and use that platform's commands throughout. On Windows, `ops.sh` runs in Git Bash, not PowerShell, and **paths are written with forward slashes** (`C:/dev/my-app`) in commands and in the progress file: Git Bash silently eats backslashes, so `C:\dev` becomes `C:dev`. Show them the usual Windows form (`C:\dev\my-app`) when you talk to them.
 7. **A tool installed a moment ago may not be found yet.** New installs often only reach terminals opened afterwards. If a check still says "not found" right after a successful install, save progress and tell them: "Close Claude and open it again, then paste the same prompt. We'll pick up right here."
 8. **Some output looks alarming and is not.** pnpm's "Ignored build scripts... run pnpm approve-builds" and Git's "LF will be replaced by CRLF" are normal. Do not raise them unless asked.
 9. **Show, don't lecture.** Explanations are two or three sentences, tied to something you are doing right then.
@@ -28,7 +28,11 @@ Each card is short Markdown: a bold title, then a few bullets. Show it, then car
 
 ### Welcome (start of phase 0)
 
-Show this first, exactly, as a code block, then the text under it:
+Show this first, exactly, as a code block, then this image line (apps that show images render it as a picture; elsewhere it appears as a link, which is fine), then the text under it:
+
+```
+![bobi-stack](https://bobistack.bobilabs.dev/social-preview.png)
+```
 
 ```
   _           _     _          _             _
