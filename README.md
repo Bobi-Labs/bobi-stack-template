@@ -100,7 +100,8 @@ Everything goes through `ops.sh`:
 
 ## Conventions
 
-- **Push back honestly.** If Claude (or you) sees a better path, say it. A solid product beats being agreeable. See `.claude/memory-templates/feedback_mutual_check_in.md`.
+- **Push back honestly, and hold the position.** If Claude (or you) sees a better path, say it, and don't fold on the second exchange: change your view when the evidence changes, not when someone repeats themselves. A solid product beats being agreeable. See `.claude/memory-templates/feedback_mutual_check_in.md`.
+- **Pre-mortem the big builds.** Before a build of real size, assume it shipped and failed, ask why, and fix the cheap causes first.
 - **Fail loudly in client-facing steps.** Silent failures erode trust fastest. Every user-triggered action that can fail must surface a plain-English reason and a path forward. See `.claude/memory-templates/feedback_error_handling.md`.
 - **One commit per logical change.** No while-I-am-at-it bundling.
 - **Memory files are lessons learned, not summaries.** The memory folder captures what was hard-won. `CLAUDE.md` captures current project state.
@@ -114,10 +115,11 @@ The short version: one repo becomes the **keeper**, holding append-only comms lo
 
 Why bother: pointed single-purpose chats exhaust context windows far slower and stay more accurate than one sprawling chat, a written chain of command means no session overwrites another's work, and no decision has to be re-explained. The operator stops being the courier between chats.
 
-Four pieces that turned out to matter more than expected, each learned by being burned:
+Five pieces that turned out to matter more than expected, each learned by being burned:
 
 - **A confidentiality wall between client work and product work.** Client specifics drifting upward into shared scaffolding is the failure that started all of this. Lessons cross the wall only after the keeper strips them to mechanism.
 - **A `Waiting on Bees:` line ending every log entry.** The operator-action extract, imperative and capped at three items, or the word "nothing". Boxes write thorough conclusions; humans need the asks in one line. The keeper aggregates them into a single "who needs what" on demand.
+- **Argue, then settle.** Boxes that disagree make their case with evidence for two rounds, then it settles: the keeper rules on structure, the operator on plans, and a fresh one-off session when the keeper is itself a party. See `docs/multi-agent.md`.
 - **Seams for the daily case.** When one box writes every day under conventions another box owns, routing each question through the keeper is pure latency. A seam is a keeper-opened file with a strict subject boundary where two boxes talk directly. Conventions, never cases.
 - **Boxes outlive their chats.** A box is a directory plus a log, not a conversation. Close a chat, open a new one against the same log, and the work continues. Work orders go to a box's open session; they do not require a fresh chat.
 

@@ -4,6 +4,25 @@ Date-keyed, hand-written, one entry per meaningful change. **Not semver.** bobi-
 
 A downstream project reads this to decide whether a pattern is worth re-pulling. Keep entries about *what changed and why it matters to a project built on this*, not commit-by-commit detail.
 
+## 2026-10-17
+
+Agents that agree too easily, and builds nobody stress-tested before starting.
+
+- **New in CLAUDE.md: "Hold your position."** Pushing back once and folding on the second exchange is
+  the same failure as never pushing back. Make the case with evidence and the cost of being wrong;
+  change your view when the evidence changes, not when the operator repeats himself; when persuaded,
+  say what persuaded you; tell the operator when he is wrong. The decision stays his.
+
+- **New in CLAUDE.md: "Run a pre-mortem before a big build."** Assume it shipped and failed, list
+  why, fix the causes that are cheap to prevent now.
+
+- **New in `docs/multi-agent.md`: every box names the keeper and its one channel, and disagreement
+  between boxes has a settlement path.** Boxes defer to each other the way a model defers to its
+  user, so agreement looks settled when nobody checked. A disagreeing box makes its case; a proposal
+  is answered with what was checked, never "taken" alone; two rounds, then structure goes to the
+  keeper, plans go to the operator, and when the keeper is a party a fresh one-off session rules on
+  the two written cases.
+
 ## 2026-08-13 (later)
 
 Completes the August back-port begun this morning: multi-agent coordination, claims discipline, and

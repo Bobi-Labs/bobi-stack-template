@@ -117,6 +117,30 @@ rotation, one line each, with steps."
 - **Honest state at the boundary**: the keeper's session-end includes leaving the umbrella logs
   accurate, because the next session's first read is only as good as the last session's last write.
 
+## Every box knows the keeper, and the one way to reach it
+
+Each box's `CLAUDE.md` names the keeper as the top seat and the single channel to it: that box's own
+log in the coordination repo, which the keeper reads and relays from. Never email, never another box's
+log, never a direct message the keeper didn't set up. A box that doesn't know the keeper exists will
+invent a channel, and an invented channel is one nobody reads.
+
+## Disagreement between boxes: argue, then settle
+
+Boxes defer to each other the way a model defers to its user. One proposes, the other agrees, and
+nobody checked. Agreement nobody earned is worse than open disagreement, because it looks settled.
+
+- **A box that disagrees makes the case:** what it would do instead, its evidence, and the cost of
+  being wrong. It does not fold to be agreeable.
+- **A proposal is answered with what was checked, or with a counter and its evidence.** "Taken" alone
+  is not an answer.
+- **Two rounds at most, then it settles:**
+  - **Structural questions go to the keeper.**
+  - **Plans and product calls go to the operator,** with both cases side by side on one page so he
+    can decide fast.
+  - **When the keeper is itself a party,** it can't judge its own case. A fresh, one-off session gets
+    only the two written cases and rules. It has no stake in the code or the idea, which is the
+    point, and it costs nothing between disputes.
+
 ## The failure catalogue this file is built from
 
 Each rule above maps to a real incident. Kept here as one-liners so the rules read as earned rather
