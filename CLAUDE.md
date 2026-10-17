@@ -50,7 +50,7 @@ The #1 cause of cross-chat knowledge loss is a permanent obligation with no end-
 
 ## Tech Stack
 
-- **Framework:** Next.js 14+ (App Router)
+- **Framework:** Next.js 16 (App Router)
 - **Language:** TypeScript / React
 - **Styling:** Tailwind CSS + shadcn/ui (Radix UI primitives)
 - **Icons:** Lucide React
