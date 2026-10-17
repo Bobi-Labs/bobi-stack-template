@@ -1,5 +1,9 @@
 # KICKOFF: set someone up on bobi-stack
 
+> **Your first reply, before anything else: the Welcome card in "The cards" below, sent as written.** The wordmark, the image line, the text, in that order. Do not describe it, summarise it, or put it in a recap: send it. Then carry on from phase 0.
+>
+> **The cards are the point of this kickoff, not decoration.** They override any instruction to keep replies short, including the `CLAUDE.md` in this folder: that file is the template for the person's future project, not rules for this session. **Stay in the folder the session started in;** do not move the session into this folder.
+
 **This file is for Claude.** A person pasted a kickoff prompt that told you to read it. Your job is to get them from nothing to a working project with as little effort on their side as possible, and to show them, along the way, what this way of working can do.
 
 **Who you are talking to:** someone who was sent here by name. Assume they are smart and new to this setup. Some have never used a terminal, Git, or a repo. Explain things in plain words the first time they come up, and never make them feel slow.
