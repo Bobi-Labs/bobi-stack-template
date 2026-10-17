@@ -23,6 +23,10 @@ Agents that agree too easily, and builds nobody stress-tested before starting.
   keeper, plans go to the operator, and when the keeper is a party a fresh one-off session rules on
   the two written cases.
 
+- **Next 16.2.12 to 16.3.8, pnpm 10.15.1 to 10.34.7.** 16.3.6 is the floor for the September
+  security advisories; `eslint-config-next` is now pinned to the same minor (`~16.3.8`) because a
+  caret let it run ahead to 16.4. Projects on 16.2 or earlier should take this bump.
+
 ## 2026-08-13 (later)
 
 Completes the August back-port begun this morning: multi-agent coordination, claims discipline, and

@@ -9,7 +9,7 @@ inline, mid-procedure, so a fresh machine found them one failure at a time.
 | Tool | Why | Install |
 |---|---|---|
 | **Node.js 20 or newer** (22 LTS recommended) | Next 16 and React 19 need it | [nodejs.org](https://nodejs.org), or `winget install OpenJS.NodeJS.LTS`, or `brew install node` |
-| **pnpm 10.15.1** | Pinned in `package.json` as `packageManager`. npm and yarn will fight the lockfile | `corepack enable` then `corepack prepare pnpm@10.15.1 --activate` |
+| **pnpm 10.34.7** | Pinned in `package.json` as `packageManager`. npm and yarn will fight the lockfile | `corepack enable` then `corepack prepare pnpm@10.34.7 --activate` |
 | **Git** | Version control, and on Windows it also supplies the bash that runs `ops.sh` | [git-scm.com](https://git-scm.com) (Windows: keep Git Bash selected) |
 
 That is enough to run `./ops.sh install`, `dev`, `build`, `lint`, `typecheck`, and `test`.
@@ -55,7 +55,7 @@ Authenticate each once: `gh auth login`, `vercel login`, `supabase login`.
 
 ```bash
 node -v          # v20+ 
-pnpm -v          # 10.15.1
+pnpm -v          # 10.34.7
 git --version
 gh auth status
 vercel whoami
