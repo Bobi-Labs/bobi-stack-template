@@ -29,19 +29,25 @@ Each card is short Markdown: a bold title, then a few bullets. Show it, then car
 
 ### Welcome (start of phase 0)
 
-Show this first, exactly, as a code block, then this image line (apps that show images render it as a picture; elsewhere it appears as a link, which is fine), then the text under it:
+**The welcome is your first message, on its own, before anything else you say:** before any summary of the commands you ran on the way in, before the progress check's result, before asking their name. (Run `git rev-parse --short HEAD` in this folder quietly first, for the version line.) If they are resuming, the welcome still comes first, and "Looks like we started this before..." comes right after it.
 
-```
-![bobi-stack](https://bobistack.bobilabs.dev/social-preview.png)
-```
+The message has exactly three parts, in this order:
 
-```
-  _           _     _          _             _
- | |__   ___ | |__ (_)     ___| |_ __ _  ___| | __
- | '_ \ / _ \| '_ \| |____/ __| __/ _` |/ __| |/ /
- | |_) | (_) | |_) | |____\__ \ || (_| | (__|   <
- |_.__/ \___/|_.__/|_|    |___/\__\__,_|\___|_|\_\
-```
+1. **The wordmark,** as a fenced code block:
+
+   ```
+     _           _     _          _             _
+    | |__   ___ | |__ (_)     ___| |_ __ _  ___| | __
+    | '_ \ / _ \| '_ \| |____/ __| __/ _` |/ __| |/ /
+    | |_) | (_) | |_) | |____\__ \ || (_| | (__|   <
+    |_.__/ \___/|_.__/|_|    |___/\__\__,_|\___|_|\_\
+   ```
+
+2. **The image, as a plain Markdown line, NOT inside a code block** (in a code block it shows as text instead of a picture). Apps that show images render it; elsewhere it appears as a link, which is fine:
+
+   `![bobi-stack](https://bobistack.bobilabs.dev/social-preview.png)`
+
+3. **This text, as a quote block,** with the version filled in:
 
 > **Welcome to bobi-stack.** It's two things at once:
 > - **A head start on a real app.** A ready-made web project, with the database, sign-in and screens already wired together, so you start on your idea instead of the plumbing.
@@ -51,9 +57,9 @@ Show this first, exactly, as a code block, then this image line (apps that show 
 >
 > I'll do almost all of the setup. You'll answer a few questions, approve anything I install, and sign in to a service or two.
 >
-> _Kickoff version [the short commit of this folder, from `git rev-parse --short HEAD`]. It should match the version on the page you copied the prompt from._
+> _Kickoff version [the short commit]. It should match the version on the page you copied the prompt from._
 
-Show the Welcome card **before anything else you say to them,** including the results of any setup commands you ran on the way in, and before asking their name.
+**Your second message** is phase 0's short "what happens next" and the question for their first name, in plain text.
 
 ### The three paths (phase 2)
 
@@ -128,7 +134,7 @@ Lead the summary with this, filled in:
 
 ## Phase 0: say hello and set expectations
 
-Show the **Welcome** card first. Then tell them, briefly, in your own words:
+The **Welcome** card is your first message (see its section for the exact order). Then, in a second message, tell them briefly, in your own words:
 
 - what is about to happen: check their machine, set up the project, explain how the pieces fit, and leave them ready to work;
 - that it takes about 20 to 40 minutes, mostly waiting on installs;
@@ -170,7 +176,7 @@ Install pnpm with npm, after Node: newer Node no longer ships corepack. Inside t
 
 **Their editor.** If `code` was not found, ask: "Do you use a code editor?" If they have one, use it. If they have never used one, explain in a line ("it's where you look at and edit the project's files"), and suggest VS Code: free, and Claude works inside it. Install it only on a yes (`winget install Microsoft.VisualStudioCode`, `brew install --cask visual-studio-code`). Record the answer; phase 6 uses it.
 
-**Their Git identity.** Run `git config --global user.name` and `git config --global user.email`. If either is empty, show the **name on your work** card, then ask for both. Mention they can use GitHub's private "noreply" address (GitHub, Settings, Emails) if they'd rather not publish their own. Set them with `git config --global`.
+**Their Git identity.** Run `git config --global user.name` and `git config --global user.email`. If either is empty, show the **name on your work** card, then ask for their name, and after that their email (one question at a time). Mention they can use GitHub's private "noreply" address (GitHub, Settings, Emails) if they'd rather not publish their own. Set them with `git config --global`.
 
 **Checkpoint, GitHub:** run `gh auth status`. If not logged in, show the **GitHub** card, then have them run `gh auth login` (GitHub.com, HTTPS, log in with a browser) and tell you when done. No GitHub account: send them to github.com/signup and wait.
 
