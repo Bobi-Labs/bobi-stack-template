@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Get started with bobi-stack</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230a0c10'/%3E%3Crect x='9' y='7' width='5' height='18' fill='%232dd4bf'/%3E%3C/svg%3E">
+<style>
+  :root{
+    --bg:#0a0c10; --panel:#10151c; --panel2:#0d1117; --border:#30363d;
+    --text:#e6edf3; --muted:#8b949e; --accent:#2dd4bf;
+    --mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0; background:var(--bg); color:var(--text); font-family:var(--sans);
+    line-height:1.6; -webkit-font-smoothing:antialiased; overflow-x:hidden}
+  a{color:var(--accent); text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:760px; margin:0 auto; padding:0 20px}
+  code,pre{font-family:var(--mono)}
+
+  header{border-bottom:1px solid var(--border)}
+  nav{display:flex; align-items:center; justify-content:space-between; height:60px}
+  nav .brand{font-family:var(--mono); font-weight:700; font-size:18px}
+  nav .brand b{color:var(--accent)}
+
+  .hero{position:relative; border-bottom:1px solid var(--border)}
+  .hero::before{content:""; position:absolute; inset:0; pointer-events:none;
+    background:radial-gradient(60% 70% at 16% 28%, rgba(45,212,191,.12), rgba(45,212,191,0) 70%)}
+  .hero .wrap{position:relative; padding:64px 20px 52px}
+  .eyebrow{font-family:var(--mono); letter-spacing:5px; font-size:12px; color:var(--muted); margin:0 0 18px}
+  h1{font-family:var(--mono); font-weight:700; font-size:clamp(36px,8vw,64px); margin:0; letter-spacing:-1px; line-height:1.05}
+  h1 .a{color:var(--accent)}
+  .tagline{font-size:clamp(17px,2.4vw,20px); margin:22px 0 0; max-width:640px}
+
+  section{padding:44px 0; border-bottom:1px solid var(--border)}
+  .step{display:flex; gap:16px; align-items:flex-start}
+  .num{flex:none; width:34px; height:34px; border-radius:50%; border:1px solid var(--accent); color:var(--accent);
+    font-family:var(--mono); font-weight:700; display:flex; align-items:center; justify-content:center; margin-top:2px}
+  .step h2{font-size:20px; margin:0 0 8px}
+  .step p{margin:0 0 10px; color:var(--muted)}
+  .step p strong{color:var(--text)}
+
+  .prompt{position:relative; background:var(--panel2); border:1px solid var(--border); border-radius:12px;
+    padding:18px 20px 64px; margin-top:14px}
+  .prompt pre{margin:0; white-space:pre-wrap; word-break:break-word; font-size:14px; line-height:1.65; color:#c9d1d9}
+  .copy{position:absolute; right:14px; bottom:14px; min-height:44px; padding:10px 18px; border-radius:8px;
+    font-family:var(--mono); font-size:14px; font-weight:600; cursor:pointer;
+    background:var(--accent); color:#04201c; border:1px solid var(--accent)}
+  .copy:hover{filter:brightness(1.08)}
+
+  ul.does{margin:6px 0 0; padding-left:20px; color:var(--muted)}
+  ul.does li{margin:4px 0}
+  .note{background:var(--panel); border:1px solid var(--border); border-radius:12px; padding:18px 20px; margin-top:14px}
+  .note h3{font-family:var(--mono); font-size:13px; letter-spacing:3px; text-transform:uppercase; color:var(--muted); margin:0 0 8px}
+  .note p{margin:0; color:var(--muted)}
+
+  footer{padding:36px 0 52px; color:var(--muted); font-size:14px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav><span class="brand">bobi<b>-stack</b></span></nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <p class="eyebrow">BOBI LABS &middot; GET STARTED</p>
+    <h1>Let Claude<br>set you <span class="a">up.</span></h1>
+    <p class="tagline">Someone at Bobi Labs sent you this page. It gets you working on bobi-stack: a project scaffold, plus a way of working with Claude that keeps long projects on track. Claude does almost all of it. You answer a few questions.</p>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="step">
+      <div class="num">1</div>
+      <div>
+        <h2>Get Claude Code</h2>
+        <p>Install the <a href="https://claude.com/download">Claude desktop app</a> and open its <strong>Code</strong> tab, or use Claude Code in VS Code or a terminal if you already have it. It needs a paid Claude plan.</p>
+        <p>Open it in your <strong>home folder</strong> (or any folder; it will ask where your project should go).</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="step">
+      <div class="num">2</div>
+      <div style="min-width:0; flex:1">
+        <h2>Paste this, and press enter</h2>
+        <p>It points Claude at one fixed, reviewed version of the setup, so you can see exactly what it will follow.</p>
+        <div class="prompt">
+          <pre id="kickoff">Set me up with bobi-stack. If git isn't installed, help me install it first. Then, in my home directory, clone https://github.com/Bobi-Labs/bobi-stack-template.git into a folder named bobi-stack-kickoff (if that folder already exists, use it instead), fetch, and check out commit ac57151bb5cdc44d57d8449fad0f6ced43a73681. Read KICKOFF.md in that folder and walk me through it.</pre>
+          <button class="copy" id="copy" type="button">Copy</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="step">
+      <div class="num">3</div>
+      <div>
+        <h2>Answer its questions</h2>
+        <p>Claude will:</p>
+        <ul class="does">
+          <li>check your machine and offer to install what is missing (it asks first);</li>
+          <li>ask whether you are joining someone's project, bringing your own, or starting something new;</li>
+          <li>set the project up, and explain in plain terms how it organises work across chats;</li>
+          <li>run a quick pre-mortem with you: imagine it failed, and ask why, before you build;</li>
+          <li>leave you with a working project and the exact words to pick up next time.</li>
+        </ul>
+        <div class="note">
+          <h3>What you do yourself</h3>
+          <p>Approve installs, and sign in to GitHub (and, if your project needs them, Supabase or Vercel) in your browser. <strong style="color:var(--text)">Never paste a password or key into the chat;</strong> Claude will tell you where those go.</p>
+        </div>
+        <div class="note">
+          <h3>If you stop halfway</h3>
+          <p>Open Claude again and paste the same prompt. It picks up where you left off.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">bobi-stack &middot; &copy; 2026 Bobi Labs &middot; <a href="https://bobistack.bobilabs.dev">about the stack</a></div>
+</footer>
+
+<script>
+  (function () {
+    var btn = document.getElementById("copy");
+    var text = document.getElementById("kickoff").textContent;
+    btn.addEventListener("click", function () {
+      function done(ok) {
+        if (!ok) {
+          // Clipboard blocked: select the prompt so a manual copy is one keystroke.
+          var r = document.createRange();
+          r.selectNodeContents(document.getElementById("kickoff"));
+          var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+        }
+        btn.textContent = ok ? "Copied" : "Selected: now copy";
+        setTimeout(function () { btn.textContent = "Copy"; }, 2500);
+      }
+      try {
+        navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(false); });
+      } catch (e) {
+        done(false);
+      }
+    });
+  })();
+</script>
+</body>
+</html>
