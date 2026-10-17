@@ -4,11 +4,9 @@ name: CI
 # so CI and local never disagree. Generated to the /cicd skill spec,
 # adapted for this template's pnpm + ops.sh setup.
 #
-# The bare template has no pnpm-lock.yaml. Until a project is filled
-# in and dependencies are installed, the guard step skips the real
-# work and the job passes, so an unfilled template (or a freshly
-# generated repo) does not spam failure emails. Once pnpm-lock.yaml
-# exists, the full gate runs.
+# The guard skips the real work when there is no pnpm-lock.yaml, so a
+# repo generated without its lockfile does not spam failure emails.
+# The template itself ships a lockfile, so the full gate runs here too.
 
 on:
   pull_request:
@@ -32,15 +30,16 @@ jobs:
             echo "::notice::No pnpm-lock.yaml found. This looks like the unfilled bobi-stack template, so CI is skipped. It runs in full once the project is filled in and dependencies are installed."
           fi
 
+      # No version here on purpose: action-setup reads package.json's
+      # packageManager, so bumping pnpm is a one-file change. A second pin
+      # here fails the job with "Multiple versions of pnpm specified".
       - uses: pnpm/action-setup@v4.1.0
         if: steps.guard.outputs.proceed == 'true'
-        with:
-          version: 10.15.1
 
       - uses: actions/setup-node@v5
         if: steps.guard.outputs.proceed == 'true'
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'pnpm'
 
       - name: Install
