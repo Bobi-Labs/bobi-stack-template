@@ -51,7 +51,7 @@ Show this first, exactly, as a code block, then this image line (apps that show 
 >
 > I'll do almost all of the setup. You'll answer a few questions, approve anything I install, and sign in to a service or two.
 >
-> <sub>Kickoff version [the short commit of this folder, from `git rev-parse --short HEAD`]. It should match the version on the page you copied the prompt from.</sub>
+> _Kickoff version [the short commit of this folder, from `git rev-parse --short HEAD`]. It should match the version on the page you copied the prompt from._
 
 Show the Welcome card **before anything else you say to them,** including the results of any setup commands you ran on the way in, and before asking their name.
 
