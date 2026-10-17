@@ -9,7 +9,7 @@
 ## Rules for the whole kickoff
 
 1. **One question at a time.** Ask, wait, act. Never a wall of questions.
-2. **Ask before you install anything or touch an existing folder.** Say what it is, why, and roughly how long it takes, then wait for yes. Install only from the sources named below (winget, Homebrew, apt, npm, the vendor's own site). Creating the folders this kickoff needs (`~/.bobi-stack`, their projects folder, the new project) needs no separate yes once they have told you where projects go.
+2. **Ask before you install anything or touch an existing folder.** Say what it is, why, and roughly how long it takes, then wait for yes. Install only from the sources named below (winget, Homebrew, apt, npm, the vendor's own site). The kickoff's own notes folder, `~/.bobi-stack`, needs no yes. Their projects folder and the new project need none either, once they have told you where projects go.
 3. **Never ask for a password, key, or token in chat.** Signing in happens in their browser or their own Terminal window. Keys go into a `.env.local` file they fill in themselves. If they paste a secret into chat anyway, tell them plainly to change it, and do not repeat it.
 4. **Sign-ins, sign-ups and system passwords are theirs.** You cannot create accounts, type passwords, or answer a password prompt. Make each one a short checkpoint: what to open, what to click or paste, and "tell me when you're done".
 5. **Save progress after every step,** not just every phase, in `~/.bobi-stack/kickoff-progress.md`: the answers so far, each step done, and the next step. **At the very start, check that file.** If it exists, say "Looks like we started this before. Last time we got to <step>. Pick up from there?" When resuming, **look at what is actually on disk** (a half-created folder, a missing commit) before continuing, and finish or redo that step rather than assuming.
@@ -43,6 +43,7 @@ pnpm -v
 gh --version
 code --version
 docker --version
+brew --version     # macOS only
 ```
 
 **On a fresh Mac, `git --version` opens a pop-up** offering to install "command line developer tools". Tell them before you run it: "A window may pop up asking to install developer tools. Click Install and wait for it to finish (a few minutes), then tell me." Re-run the check after.
@@ -58,11 +59,11 @@ docker --version
 
 Install pnpm with npm, after Node: newer Node no longer ships corepack. Inside the project, pnpm switches itself to the version pinned in `package.json`.
 
-**macOS without Homebrew** (`brew --version` fails): Homebrew's installer asks for their Mac password, so they run it themselves. Checkpoint: "Open the Terminal app, paste this line, press enter, and type your Mac password when asked (nothing shows while you type, that's normal):" then the install command from brew.sh. When it finishes it prints **"Next steps"** with one or two lines to paste; have them paste those too, then tell you. Then continue with the table.
+**macOS without Homebrew,** only when the batch needs `brew` (Node, the GitHub CLI, or VS Code is missing). If nothing is missing, leave Homebrew alone. Homebrew's installer asks for their Mac password, so they run it themselves. Checkpoint: "Open the Terminal app, paste this line, press enter, and type your Mac password when asked (nothing shows while you type, that's normal):" then the install command from brew.sh. When it finishes it prints **"Next steps"** with one or two lines to paste; have them paste those too, then tell you. Then continue with the table.
 
 **Not now:** the Supabase and Vercel CLIs (installed later, when the project first needs a database or a website), and Docker (only once they write database security rules; say so in one line).
 
-**Their editor.** If `code` was not found, ask: "Do you use a code editor? If not, I'd suggest VS Code: free, and Claude works inside it." Install it only on a yes (`winget install Microsoft.VisualStudioCode`, `brew install --cask visual-studio-code`). Record the answer; phase 6 uses it.
+**Their editor.** If `code` was not found, ask: "Do you use a code editor?" If they have one, use it. If they have never used one, explain in a line ("it's where you look at and edit the project's files"), and suggest VS Code: free, and Claude works inside it. Install it only on a yes (`winget install Microsoft.VisualStudioCode`, `brew install --cask visual-studio-code`). Record the answer; phase 6 uses it.
 
 **Their Git identity.** Run `git config --global user.name` and `git config --global user.email`. If either is empty, explain in one line that every saved change is labelled with a name and email, then ask for both. Mention they can use GitHub's private "noreply" address (GitHub, Settings, Emails) if they'd rather not publish their own. Set them with `git config --global`.
 
@@ -85,8 +86,9 @@ Then ask where they keep projects. If they have no habit, suggest `~/dev` and cr
 2. `cd` into their projects folder, then `gh repo clone <owner>/<name>`, then `pnpm install` inside it.
 3. **Hand over.** Read the project's `README.md` and `CLAUDE.md`, then do their first-run steps from inside the project folder (a shared project may, for example, ask the person to identify themselves for a briefing script). Tell the person:
    > From here, your project's own instructions are in charge. Today I'm following them by reading them, because we started in the setup folder. From now on, open Claude **in the project folder** and it loads them automatically.
-4. **Write nothing into their project** during the kickoff: no commits, no log entries. Anything the project's rules ask a session to write happens in their first real session there.
-5. If the project's README says what "set up" looks like ("finished when..."), check it. Then go to phase 6. The keeper and pre-mortem phases belong to whoever runs that project.
+4. **Change nothing tracked in their project** during the kickoff: no commits, no edits to its files, no log entries. Local files its first-run steps create on purpose (gitignored ones) are fine. Anything the project's rules ask a session to write happens in their first real session there.
+5. **Seed their personal Claude memory** for the project (path 3, step 8). It lives in their home folder, not in the project, so it changes nothing the others see.
+6. If the project's README says what "set up" looks like ("finished when..."), check it. If it gives its own words for starting a session, use those in phase 6. Then go to phase 6. The keeper and pre-mortem phases belong to whoever runs that project.
 
 ### Path 2: an existing project of theirs
 
@@ -110,13 +112,14 @@ Save progress after each numbered step.
 5. **Install and check.** `git init -b main`, `pnpm install`, `./ops.sh check`. It should pass. If it does not, fix it before going on; do not hand over a broken project.
 6. **Make `CLAUDE.md` theirs.** It is the briefing every future session reads first, so it should describe their project, not the template:
    - replace every `{{PLACEHOLDER}}` (meanings in `docs/starting-a-new-project.md`, step 2). Database and domain ones become "Not yet" plus one line on when they will be filled in;
-   - **delete the opt-in sections this project does not use:** "Drive CLI", "Test suite", "Role System", "Two-tenant". A new project usually uses none of them;
-   - the text refers to "the operator" as he and him; change those to their name or "they";
+   - **delete the opt-in parts this project does not use:** the "Drive CLI", "Test suite", "Role System" and "Two-tenant" sections, "Option B" under "Sharing images", and the `(opt-in)` lines in "Project Structure". A new project usually uses none of them;
+   - the text calls "the operator" he, him, his and himself; change every one to their name or "they". **Never guess a gender**, even from their name;
+   - "His words:" in "Answer first" introduces the template author's quote: make it "In the template author's words:", so it is not read as theirs;
    - delete the template blockquote at the top.
-7. **Replace `README.md` entirely** with a short one: the project name, their one or two sentences, `./ops.sh dev` to run it, and "Built on bobi-stack." The template's README describes the template, so none of it belongs here. **Replace `TODO.md`** with their real first steps, including the "soon" items from step 2.
-8. **Memory.** Work out their Claude memory folder for this project: `~/.claude/projects/<slug>/memory/`, where the slug is the project's absolute path with **every character that is not a letter, digit or dash turned into a dash** (`C:\dev\bakery` becomes `C--dev-bakery`). Copy in the `feedback_*.md` files and `MEMORY.md` from `.claude/memory-templates/` (leave out `feedback_invoice_language.md` unless they bill clients). Then **write, don't copy,** two files from what you know: `session_history.md` (today's date, what was set up, what is next) and a `user_profile.md` (their name, the project, how technical they are). Fill `MEMORY.md` to list what is actually there. No file in the folder should still contain `{{`. Tell them: "This is where Claude keeps lessons about you and this project between chats."
+7. **Replace `README.md` entirely** with a short one: the project name, their one or two sentences, `./ops.sh dev` to run it, and "Built on bobi-stack." The template's README describes the template, so none of it belongs here. **Replace `TODO.md`** with a "Now" list of their real first steps, including the "soon" items from step 2. (The pre-mortem, in phase 4, goes above it.)
+8. **Memory.** Work out their Claude memory folder for this project: `~/.claude/projects/<slug>/memory/`, where the slug is the project's absolute path with **every character that is not a letter, digit or dash turned into a dash** (`C:\dev\bakery` becomes `C--dev-bakery`). Copy in the `feedback_*.md` files and `MEMORY.md` from `.claude/memory-templates/`. Then **write, don't copy,** three files from what you know: `session_history.md` (today's date, what was set up, what is next), `handoff_note.md` (starting with `lastWritten: <today>`, then where things stand and the next step; the session-end check looks for it), and `user_profile.md` (their name, the project, how technical they are). Fill `MEMORY.md` to list what is actually there. No file in the folder should still contain `{{`. Tell them: "This is where Claude keeps lessons about you and this project between chats."
 9. **First commit.** Commit with a clear message.
-10. **GitHub.** Recommend a private GitHub repo now, in one line: "It's your backup. Right now this project exists only on this computer." On yes: `gh repo create <name> --private --source=. --push`. **On no:** say plainly that nothing is backed up off this machine yet, add "Put this project on GitHub (it is the only backup)" to the top of `TODO.md`, and tell them the session-end check will remind them about the missing remote until then. That reminder is expected.
+10. **GitHub.** Recommend a private GitHub repo now, in one line: "It's your backup. Right now this project exists only on this computer." On yes: `gh repo create <name> --private --source=. --push`. **On no:** say plainly that nothing is backed up off this machine yet, make "Put this project on GitHub (it is the only backup)" the first item under "Now" in `TODO.md`, and tell them the session-end check will remind them about the missing remote until then. That reminder is expected.
 
 ## Phase 3: the keeper question (paths 2 and 3)
 
@@ -154,9 +157,9 @@ Then recommend, based on their answer:
    **Session end:** reply in any log you acted on, commit, and push.
    ```
 3. Write `docs/STRATEGY.md`: three to five lines on what they are building across projects and why, in their words.
-4. From `docs/recipes/umbrella-starter/` in this kickoff folder, create `docs/umbrella/README.md` and `docs/umbrella/_changelog.md`, plus one `docs/umbrella/<project>.log.md` for each project. Fill the placeholders (`{{OPERATOR}}` is their name) and delete rows that do not apply. Skip `CHAT-TREE.md` and the standup prompts until there are three or more projects.
+4. From `docs/recipes/umbrella-starter/` in this kickoff folder, create `docs/umbrella/README.md` and `docs/umbrella/_changelog.md`, plus one `docs/umbrella/<project>.log.md` for each project **that exists today** (a planned project gets its log the day it is created). Fill the placeholders (`{{OPERATOR}}` is their name) and delete rows that do not apply. Skip `CHAT-TREE.md` and the standup prompts until there are three or more projects.
 5. Paste the **participant** block from `claude-md-block.template.md` into the project's `CLAUDE.md` session-start checklist, with the keeper's real path.
-6. Seed the keeper's memory folder the same way as path 3, step 8. Commit. Offer GitHub the same way as path 3, step 10.
+6. Give the keeper a short `TODO.md` (its "Now" list: add each planned project when it starts). Seed its memory folder the same way as path 3, step 8. Commit. Offer GitHub in the same breath as the project's, as one question: "Put both on GitHub now?" A no goes into both `TODO.md` files the same way.
 
 Tell them how to use it: "When something affects more than one project, open Claude in the keeper folder and tell it there."
 
@@ -168,7 +171,7 @@ Teach the habit by doing it once. Say:
 
 > One thing that saves a lot of pain: before building, imagine it's three months from now and this project failed. Why did it fail?
 
-Ask for their guesses, then add yours from what you know of the project (scope too big, nobody would pay for it, a technical risk, time). Agree on the **top three**, and for each, one cheap thing to do now that makes it less likely. Write them at the top of `TODO.md` under **Pre-mortem**, dated, and commit. Tell them: "Claude will suggest this again before any big build. It's in `CLAUDE.md`."
+Ask for their guesses, then add yours from what you know of the project (scope too big, nobody would pay for it, a technical risk, time). Agree on the **top three**, and for each, one cheap thing to do now that makes it less likely. Write them at the top of `TODO.md`, above "Now", under **Pre-mortem**, dated, and commit. Tell them: "Claude will suggest this again before any big build. It's in `CLAUDE.md`."
 
 ## Phase 5: how this setup works with you (paths 2 and 3)
 
@@ -180,13 +183,14 @@ Point out three things, one line each, with where they live in `CLAUDE.md`:
 
 ## Phase 6: hand off
 
-1. Paths 2 and 3: commit anything uncommitted, and push if the project has a GitHub remote.
-2. If they use VS Code, open the project in it (`code <path>`).
-3. Give them a short summary:
+1. **Bring memory up to date.** `session_history.md` and `handoff_note.md` were written before the keeper and the pre-mortem; add both, and bump `lastWritten`.
+2. Paths 2 and 3: commit anything uncommitted, and push if the project has a GitHub remote.
+3. If they use VS Code, open the project in it (`code <path>`).
+4. Give them a short summary:
    - where the project is (and the keeper, if one was set up);
    - what was installed;
    - what is left for them, if anything (a skipped sign-in, GitHub if they said no);
-   - **exactly what to say next time**: "Open Claude in `<path>` and say: let's pick up where we left off."
-4. Mark the progress file complete. Tell them `~/bobi-stack-kickoff` and `~/.bobi-stack` can both be deleted now, or kept for reference.
+   - **exactly what to say next time**: the project's own words if it has them (path 1), otherwise "Open Claude in `<path>` and say: let's pick up where we left off."
+5. Mark the progress file complete. Tell them `~/bobi-stack-kickoff` and `~/.bobi-stack` can both be deleted now, or kept for reference.
 
 **Finished when:** path 3, the project passes `./ops.sh check` and has at least one commit; path 2, every change they agreed to is committed; path 1, the project is cloned, installed, and its own first-run steps are done. In every case, they know what to say to Claude next time.

@@ -137,7 +137,7 @@ From there, build normally. Commit one logical change at a time. Update `TODO.md
 
 ## Troubleshooting
 
-**Claude doesn't seem to see memory files.** Check that the project slug dir exists at `~/.claude/projects/<slug>/memory/`. The slug must match the absolute path of the repo with slashes replaced by dashes (colon removed on Windows).
+**Claude doesn't seem to see memory files.** Check that the project slug dir exists at `~/.claude/projects/<slug>/memory/`. The slug is the absolute path of the repo with every character that is not a letter, digit or dash turned into a dash (see step 2).
 
 **Drive CLI fails with "Missing GOOGLE_CREDENTIALS_BASE64".** Make sure `.env.local` has the var with no quotes around the base64 string, no trailing newline. Check length: should be hundreds of characters on one line.
 
