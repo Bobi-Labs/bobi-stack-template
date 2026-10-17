@@ -4,6 +4,27 @@ Date-keyed, hand-written, one entry per meaningful change. **Not semver.** bobi-
 
 A downstream project reads this to decide whether a pattern is worth re-pulling. Keep entries about *what changed and why it matters to a project built on this*, not commit-by-commit detail.
 
+## 2026-10-17 (later)
+
+**New: `KICKOFF.md`, a setup Claude runs for you.** A person pastes one prompt (from an unlisted page,
+`site/start/`) that pins this template to one commit, and Claude walks them through: machine check
+and one install batch, then joining a project, bringing an existing one over, or starting new. New
+projects get a `CLAUDE.md` and README made their own, written memory, a keeper explained and set up
+only if they will run several projects, and a pre-mortem. Tested by two rounds of dry runs (new
+project, joining a shared repo) before shipping.
+
+Fixes the dry runs surfaced in the template itself:
+
+- **CI was failing on every push** since the pnpm bump: it pinned pnpm a second time. It now reads
+  `packageManager`, and Node is 22.
+- **The memory-folder slug rule was wrong** in the docs and in `check-integrity` (every character that
+  is not a letter, digit or dash becomes a dash; the drive colon is not removed).
+- **pnpm installs with npm,** since newer Node no longer ships corepack; Homebrew's `node@22` is avoided
+  because it is not put on the PATH.
+- **`.gitattributes`** keeps shell scripts LF in every checkout.
+- **The recipes name the operator with a placeholder,** not one operator's handle.
+- `CLAUDE.md` says Next 16, not 14+.
+
 ## 2026-10-17
 
 Agents that agree too easily, and builds nobody stress-tested before starting.

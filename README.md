@@ -24,7 +24,9 @@ Internally, a new engagement starts from this scaffold: copy it, point it at a f
 
 ## Start here
 
-Do these in order. Each step assumes the one above it is done.
+**The easy way: let Claude do it.** If someone sent you a setup link, use it: you paste one prompt into Claude Code, and Claude follows [`KICKOFF.md`](KICKOFF.md). It checks your machine, installs what is missing (asking first), and either joins you to an existing project or sets up a new one, keeper and all. You answer questions and sign in to a couple of services; that is about it.
+
+**By hand,** do these in order. Each step assumes the one above it is done.
 
 1. **Install the toolchain.** [`docs/prerequisites.md`](docs/prerequisites.md) is the
    complete list: Node, pnpm, Git, Claude Code, and the `gh`, `vercel`, and `supabase`
