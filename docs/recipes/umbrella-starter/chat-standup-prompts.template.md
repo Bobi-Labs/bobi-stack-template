@@ -67,7 +67,7 @@ recently and anything blocking}}
 TRAPS: {{repo-specific gotchas that have burned a session before}}
 
 BOUNDARIES: you write only to this repo, plus your own umbrella log file (append your
-entry, commit scoped to that file alone). Every log entry ends with a "Waiting on Bees:"
+entry, commit scoped to that file alone). Every log entry ends with a "Waiting on {{OPERATOR}}:"
 line: imperative one-liners for the operator, maximum three, or the word "nothing".
 
 Start by reading the above, then file a short claim entry in your log and give me a

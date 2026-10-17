@@ -13,7 +13,7 @@ Status markers: `[open]` `[needs-response]` `[resolved]` `[stable]`
 
 Log file initialized. No open items. When {{PROJECT}}'s Claude makes a cross-cutting change (architecture, schema, brand, sub-product status), append an entry below in the standard format.
 
-**Waiting on Bees:** nothing.
+**Waiting on {{OPERATOR}}:** nothing.
 **Status:** [resolved]
 
 <!--
@@ -24,10 +24,10 @@ Entry format:
 **What changed:** ...
 **Why:** ...
 **Asks of <other project>:** concrete asks, or "none, FYI".
-**Waiting on Bees:** imperative one-liners for the operator, max three, or "nothing".
+**Waiting on {{OPERATOR}}:** imperative one-liners for the operator, max three, or "nothing".
 **Status:** [open] | [needs-response] | [resolved] | [stable]
 
-The Waiting on Bees line is mandatory on every entry. It is the operator-action extract:
+The Waiting on {{OPERATOR}} line is mandatory on every entry. It is the operator-action extract:
 what THIS entry needs from the human, stated as things they can do, capped at three. It
 exists because thorough sessions write thorough conclusions and a human reading six of
 them cannot tell a report from a request. Keeper-facing asks do not go here; they stay in

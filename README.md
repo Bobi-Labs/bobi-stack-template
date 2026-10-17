@@ -118,7 +118,7 @@ Why bother: pointed single-purpose chats exhaust context windows far slower and 
 Five pieces that turned out to matter more than expected, each learned by being burned:
 
 - **A confidentiality wall between client work and product work.** Client specifics drifting upward into shared scaffolding is the failure that started all of this. Lessons cross the wall only after the keeper strips them to mechanism.
-- **A `Waiting on Bees:` line ending every log entry.** The operator-action extract, imperative and capped at three items, or the word "nothing". Boxes write thorough conclusions; humans need the asks in one line. The keeper aggregates them into a single "who needs what" on demand.
+- **A `Waiting on <operator>:` line ending every log entry.** The operator-action extract, imperative and capped at three items, or the word "nothing". Boxes write thorough conclusions; humans need the asks in one line. The keeper aggregates them into a single "who needs what" on demand.
 - **Argue, then settle.** Boxes that disagree make their case with evidence for two rounds, then it settles: the keeper rules on structure, the operator on plans, and a fresh one-off session when the keeper is itself a party. See `docs/multi-agent.md`.
 - **Seams for the daily case.** When one box writes every day under conventions another box owns, routing each question through the keeper is pure latency. A seam is a keeper-opened file with a strict subject boundary where two boxes talk directly. Conventions, never cases.
 - **Boxes outlive their chats.** A box is a directory plus a log, not a conversation. Close a chat, open a new one against the same log, and the work continues. Work orders go to a box's open session; they do not require a fresh chat.

@@ -109,18 +109,18 @@ needs to execute without archaeology:
 
 Reply here when landed with <the specific facts the keeper needs back>.
 
-**Waiting on Bees:** nothing.
+**Waiting on <operator>:** nothing.
 **Status:** [needs-response], awaiting a <project> session to claim.
 ```
 
 The operator then says little more than "check your log and claim it."
 
-## The Waiting on Bees line
+## The "Waiting on <operator>" line
 
 Every entry ends with one, named for whoever the operator is:
 
 ```markdown
-**Waiting on Bees:** rotate the database password in the dashboard.
+**Waiting on <operator>:** rotate the database password in the dashboard.
 ```
 
 Imperative one-liners, maximum three, or the literal word "nothing". It exists because

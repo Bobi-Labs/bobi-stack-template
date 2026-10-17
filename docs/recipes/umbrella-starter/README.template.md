@@ -5,7 +5,8 @@
 > `{{UMBRELLA_NAME}}` the umbrella's name; `{{KEEPER_REPO}}` the keeper's repo name;
 > `{{KEEPER_PATH}}` the keeper repo's filesystem path as seen from a participant's machine;
 > `{{STRATEGY_DOC}}` the keeper-repo-relative path of the strategy doc (e.g. `docs/STRATEGY.md`);
-> `{{PROJECT}}` a participating repo's name. Fill them, delete rows/files you don't need,
+> `{{PROJECT}}` a participating repo's name; `{{OPERATOR}}` the human's name or handle, as used in
+> each log entry's "Waiting on" line. Fill them, delete rows/files you don't need,
 > then delete this blockquote.
 
 This folder is the coordination layer between Claude Code sessions running in different repos under the **{{UMBRELLA_NAME}}** umbrella:
