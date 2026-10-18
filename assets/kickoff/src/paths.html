@@ -1,0 +1,30 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="base.css">
+<style>
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:26px 24px 24px}
+  .tag{display:inline-block;font-family:var(--mono);font-size:13px;letter-spacing:2px;color:var(--accent);
+    border:1px solid var(--border);border-radius:7px;padding:4px 10px;margin-bottom:16px}
+  .card h3{font-size:23px;margin:0 0 10px}
+  .card p{margin:0 0 14px;color:var(--muted);font-size:16.5px;line-height:1.5}
+  .card .then{font-family:var(--mono);font-size:14px;color:var(--text)}
+</style></head>
+<body><div class="frame">
+  <p class="eyebrow">bobi-stack &middot; step 2</p>
+  <h1>Where are you <span class="a">starting</span> from?</h1>
+  <p class="lede">Pick the one that fits. Every path ends with a working project and Claude ready to pick up next time.</p>
+  <div class="cards">
+    <div class="card"><span class="tag">1 &middot; JOIN</span>
+      <h3>Someone invited me</h3>
+      <p>They've already started the project. Claude gets you a copy, and from then on their project's own rules guide every chat.</p>
+      <p class="then">&rarr; ready in minutes</p></div>
+    <div class="card"><span class="tag">2 &middot; BRING</span>
+      <h3>I have a project</h3>
+      <p>Claude looks at it first, then suggests changes one at a time. Nothing changes without your yes.</p>
+      <p class="then">&rarr; your project, upgraded</p></div>
+    <div class="card"><span class="tag">3 &middot; START</span>
+      <h3>Something new</h3>
+      <p>Describe the idea in a sentence or two. Claude sets up the whole project around it, ready to build.</p>
+      <p class="then">&rarr; a new project, wired</p></div>
+  </div>
+</div></body></html>

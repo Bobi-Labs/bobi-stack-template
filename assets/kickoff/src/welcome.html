@@ -1,0 +1,41 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="base.css">
+<style>
+  .rows{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .row{display:flex;gap:18px;align-items:flex-start;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:20px 22px}
+  .row.wide{grid-column:1 / -1}
+  .num{flex:none;width:40px;height:40px;border-radius:50%;border:1.5px solid var(--accent);color:var(--accent);
+    font-family:var(--mono);font-weight:700;font-size:17px;display:flex;align-items:center;justify-content:center;margin-top:2px}
+  .row h3{margin:0 0 6px;font-size:20px}
+  .row p{margin:0;color:var(--muted);font-size:16.5px;line-height:1.5}
+  .chain{font-family:var(--mono);color:var(--text);font-size:15px}
+  .chain .k{color:var(--accent)}
+</style></head>
+<body><div class="frame">
+  <p class="eyebrow">bobi-stack &middot; welcome</p>
+  <h1>Welcome to bobi<span class="a">-stack</span></h1>
+  <p class="lede">A head start on a real app, and a way of working with Claude that keeps long projects on track.</p>
+  <div class="rows">
+    <div class="row"><div class="num">1</div><div>
+      <h3>What it is</h3>
+      <p>A ready-made web project, with the database, sign-in and screens already wired, plus a briefing, memory and checklists for Claude.</p>
+    </div></div>
+    <div class="row"><div class="num">2</div><div>
+      <h3>How it helps your work</h3>
+      <p>Claude picks up where you left off, pushes back when something's a bad idea, and checks its own work before it says "done".</p>
+    </div></div>
+    <div class="row wide"><div class="num">3</div><div>
+      <h3>How the work is organised</h3>
+      <p>Each project gets its own chat, a <b>box</b>. Running several? One <b>keeper</b> sits above them and keeps them in step, so you're never the messenger.</p>
+      <p class="chain" style="margin-top:10px">You &rarr; <span class="k">keeper</span> &rarr; box &middot; box &middot; box</p>
+    </div></div>
+    <div class="row"><div class="num">4</div><div>
+      <h3>What happens now</h3>
+      <p>A short setup: check your machine, pick a path, set up the project. About 20 to 40 minutes. You answer, Claude does the rest.</p>
+    </div></div>
+    <div class="row"><div class="num">5</div><div>
+      <h3>Questions?</h3>
+      <p>Your FAQ comes with this setup: boxes, keepers, sub-keepers, and when you need each. Ask Claude anything, any time.</p>
+    </div></div>
+  </div>
+</div></body></html>

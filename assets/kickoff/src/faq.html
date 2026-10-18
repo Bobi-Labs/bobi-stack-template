@@ -1,0 +1,54 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<title>bobi-stack FAQ</title>
+<style>
+  @page{size:A4;margin:16mm 15mm}
+  :root{--ink:#0f172a;--muted:#475569;--accent:#0f766e;--rule:#e2e8f0;
+    --mono:"Cascadia Code","SF Mono",Consolas,monospace;--sans:"Segoe UI",system-ui,-apple-system,Helvetica,Arial,sans-serif}
+  body{font-family:var(--sans);color:var(--ink);font-size:10.5pt;line-height:1.5;margin:0}
+  header{border-bottom:2px solid var(--accent);padding-bottom:10px;margin-bottom:14px}
+  .brand{font-family:var(--mono);font-weight:700;font-size:22pt;letter-spacing:-.5px}
+  .brand span{color:var(--accent)}
+  .sub{color:var(--muted);margin-top:2px}
+  h2{font-family:var(--mono);font-size:11pt;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin:18px 0 6px}
+  .q{break-inside:avoid;margin:0 0 9px}
+  .q b{display:block}
+  .q p{margin:2px 0 0;color:#1e293b}
+  ul{margin:4px 0 0 18px;padding:0}
+  li{margin:1px 0}
+  code{font-family:var(--mono);font-size:9.5pt;background:#f1f5f9;padding:0 3px;border-radius:3px}
+  footer{margin-top:16px;color:var(--muted);font-size:9pt;border-top:1px solid var(--rule);padding-top:8px}
+</style></head>
+<body>
+<header><div class="brand">bobi<span>-stack</span> FAQ</div>
+<div class="sub">Short answers for your first weeks. Your Claude can answer any of these too; this is the version to keep.</div></header>
+
+<h2>The basics</h2>
+<div class="q"><b>What is bobi-stack?</b><p>A ready-made web project (Next.js, Supabase and TypeScript, already wired together), and a way of working with Claude that lasts: a briefing file, memory and checklists, so Claude picks up where you left off.</p></div>
+<div class="q"><b>What is a box?</b><p>A Claude chat that owns one job: one project, or one kind of work. It has a folder and a log, so it outlives any single conversation.</p></div>
+<div class="q"><b>What is <code>CLAUDE.md</code>?</b><p>The briefing every Claude session in your project reads first: what the project is, its rules, and how you like to work.</p></div>
+<div class="q"><b>What is Claude's memory here?</b><p>Private notes Claude keeps for each project on your computer, not in the project: decisions, preferences, what's next.</p></div>
+
+<h2>Organising your work</h2>
+<div class="q"><b>What is the keeper?</b><p>One chat above your boxes (some call theirs MK, the master keeper). It remembers decisions that cross projects, passes messages between boxes, settles disagreements, and owns the structure.</p></div>
+<div class="q"><b>Do I need a keeper?</b><p>Only once two or more projects need to share decisions. One project is its own box. Adding a keeper later takes about ten minutes.</p></div>
+<div class="q"><b>What is a sub-keeper?</b><p>A manager for one area that runs several chats at the same time. It owns the area's shared tools and platform; it does not re-make its boxes' decisions.</p></div>
+<div class="q"><b>When should I not open a sub-keeper?</b><p>When the area has only one or two boxes, when it would only pass messages along, or when it would re-check decisions its boxes already made. Start with boxes directly under the keeper.</p></div>
+<div class="q"><b>What lives under the keeper?</b><p>Each project as its own box; boxes for jobs that cut across projects, such as security or marketing; and, only when earned, a sub-keeper with its own boxes.</p></div>
+<div class="q"><b>How do boxes talk?</b><p>Through log files in the keeper's folder, not by chatting directly, so nothing depends on you carrying messages.</p></div>
+<div class="q"><b>Who decides what?</b><ul>
+<li>The box that holds the context decides and does its own job.</li>
+<li>The keeper decides structure. You decide plans, and anything involving money.</li>
+<li>One box brings you each decision, never two.</li>
+<li>A box never passes on your "yes" for another box to act on.</li></ul></div>
+
+<h2>Day to day</h2>
+<div class="q"><b>How do I pick up next time?</b><p>Open Claude in the project's folder and say: "let's pick up where we left off."</p></div>
+<div class="q"><b>Why does Claude disagree with me?</b><p>On purpose. It gives its reasons and doesn't fold just because you push back. You still decide.</p></div>
+<div class="q"><b>What is a pre-mortem?</b><p>Before a big build: imagine it failed three months from now, ask why, and fix the cheap causes first.</p></div>
+<div class="q"><b>Where do passwords and keys go?</b><p>In <code>.env.local</code>, which you fill in yourself and which is never uploaded. Never paste one into a chat; if you do, change it.</p></div>
+<div class="q"><b>Something looks broken?</b><p>Tell Claude what you saw. It checks before saying something is fixed, and says so plainly when it isn't sure.</p></div>
+<div class="q"><b>How do I change how all this works?</b><p>Ask. It's all plain files you can read: <code>CLAUDE.md</code>, the docs folder, and your keeper's logs.</p></div>
+
+<footer>bobi-stack &middot; Bobi Labs &middot; the same answers live in <code>docs/FAQ.md</code> in your project.</footer>
+</body></html>
