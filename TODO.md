@@ -13,4 +13,6 @@
 
 ## Backlog: Features
 
+- [ ] **Data-sync rule for the stack's conventions:** a field the upstream source may fill in or change later never belongs in a dedupe or identity key. A sync that skips rows "by key" will double-count when the source back-fills that field. Add this to the data-layer skill, with a test that replays a back-filled row.
+
 - [ ] Replace this with your first real task
