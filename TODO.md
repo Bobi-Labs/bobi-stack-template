@@ -23,4 +23,6 @@
   - A run from an account that already has `~/.bobi-stack/kickoff-progress.md` offers to resume. Fine for real users; say how to start fresh.
   - The invited path can't clone until the invite is accepted. Before cloning, check access and say "accept the invite first" instead of a raw clone error.
 
+- [ ] **Upkeep is never a question:** add to the scaffold's CLAUDE.md that a session updates the records it owns (docs, TODO, memory) in the same turn something changes, and asks only what is the owner's to answer, with each question standing on its own (the decision, the options, a recommendation, the default). Machines without a user-level CLAUDE.md get it only from here (2026-10-29).
+
 - [ ] Replace this with your first real task
