@@ -34,9 +34,9 @@ Parse `$ARGUMENTS` to extract:
 
 ### 2. Create Zod schema in `lib/schemas/{action}-{table}.ts`
 
-Map field types: `string` → `z.string().min(1)`, `number` → `z.coerce.number()`, `uuid` → `z.string().uuid()`, `boolean` → `z.boolean()`, `enum:a,b,c` → `z.enum(["a","b","c"])`. Add `?` suffix for optional.
+Map field types: `string` → `z.string().min(1)`, `number` → `z.coerce.number()`, `uuid` → `z.uuid()`, `boolean` → `z.boolean()`, `enum:a,b,c` → `z.enum(["a","b","c"])`. Add `?` suffix for optional.
 
-For `update-*`, add `id: z.string().uuid()` automatically.
+For `update-*`, add `id: z.uuid()` automatically.
 For `delete-*`, skip the schema and validate the id inline.
 
 ### 3. Create mutation function in `lib/mutations/{action}-{table}.ts`

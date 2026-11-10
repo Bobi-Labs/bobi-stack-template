@@ -4,6 +4,28 @@ Date-keyed, hand-written, one entry per meaningful change. **Not semver.** bobi-
 
 A downstream project reads this to decide whether a pattern is worth re-pulling. Keep entries about *what changed and why it matters to a project built on this*, not commit-by-commit detail.
 
+## 2026-11-10 (later)
+
+**Dependencies: the 13 open Dependabot alerts are cleared, including two unauthenticated RCEs in
+Next.js.** Every project starts from this lockfile, so each one used to inherit them.
+
+- **Next.js 16.3.8 to 16.4.6** (and `eslint-config-next` to match). Fixes two critical
+  unauthenticated remote code execution bugs (Image Optimization with SVGs, and `use cache`
+  functions returning typed arrays) plus a Server Actions denial of service. A project built on an
+  older copy should take this bump first: these hit a deployed site, not just the dev machine.
+- **Zod 3 to 4** (4.6.7). Every Zod below 4.6.6 can be made to exhaust memory with an oversized
+  array, and there is no patched 3.x, so the major is required. `@hookform/resolvers` moves 3 to 5
+  with it, because 3.x does not support Zod 4. The template had no schemas yet, so nothing in it
+  broke. In a project with schemas, read the Zod 4 migration guide: error customisation, `.uuid()`
+  strictness and `z.coerce` input types changed. The `/new-mutation` generator now emits `z.uuid()`.
+- **Vite 8.1.5 to 8.3.7**, pulled in by vitest (dev only). Fixes dev-server file exposure and
+  `launch-editor` command injection on Windows. A `vite@>=8 <8.1.6` override keeps an old lockfile
+  from holding it back.
+
+Still open: `pnpm audit` reports one moderate minimatch advisory (a glob denial of service) inside the
+ESLint toolchain. It is dev only, its fix needs minimatch 11 while the TypeScript ESLint parser asks for
+10, and Dependabot has not raised it yet.
+
 ## 2026-11-10
 
 **Kickoff, joining someone's project: it can no longer end in a repo of your own.** A real run of

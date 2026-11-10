@@ -11,7 +11,11 @@
 - [ ] Set up Vercel project and deploy preview
 - [ ] Configure RLS policies in Supabase
 
-- [ ] **Clear the Dependabot alerts:** 13 open on 2026-11-10 (4 critical, 5 high, 3 moderate, 1 low). Every new project copies them. Bump with pnpm, pass check, test and build, push to both remotes, read the CI, and leave the `kickoff` tag alone.
+- [x] **Clear the Dependabot alerts:** 13 open on 2026-11-10 (4 critical, 5 high, 3 moderate, 1 low). Every new project copies them. Bump with pnpm, pass check, test and build, push to both remotes, read the CI, and leave the `kickoff` tag alone. Done 2026-11-10: Next 16.4.6, Zod 4, resolvers 5, Vite 8.3.7 (see CHANGELOG).
+
+- [ ] **Decide whether to move the `kickoff` pin past the dependency fix.** It still points at 9d49f8a, which has Next 16.3.8 with two critical RCEs, so anyone who starts from the kickoff prompt gets the old lockfile until the pin and `site/start/` move.
+
+- [ ] **Clear the minimatch advisory once the TypeScript ESLint parser allows minimatch 11** (GHSA-g3hv-75wg-m249, moderate, dev only). `pnpm audit` reports it; Dependabot had not as of 2026-11-10. Retry `pnpm update` when `@typescript-eslint/typescript-estree` widens its range, rather than forcing an override across a major.
 
 ## Backlog: Features
 
