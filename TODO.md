@@ -11,6 +11,8 @@
 - [ ] Set up Vercel project and deploy preview
 - [ ] Configure RLS policies in Supabase
 
+- [ ] **Clear the Dependabot alerts:** 13 open on 2026-11-10 (4 critical, 5 high, 3 moderate, 1 low). Every new project copies them. Bump with pnpm, pass check, test and build, push to both remotes, read the CI, and leave the `kickoff` tag alone.
+
 ## Backlog: Features
 
 - [ ] **Data-sync rule for the stack's conventions:** a field the upstream source may fill in or change later never belongs in a dedupe or identity key. A sync that skips rows "by key" will double-count when the source back-fills that field. Add this to the data-layer skill, with a test that replays a back-filled row.
