@@ -15,7 +15,7 @@
 
 - [ ] **Decide whether to move the `kickoff` pin past the dependency fix.** It still points at 9d49f8a, which has Next 16.3.8 with two critical RCEs, so anyone who starts from the kickoff prompt gets the old lockfile until the pin and `site/start/` move.
 
-- [ ] **Clear the minimatch advisory once the TypeScript ESLint parser allows minimatch 11** (GHSA-g3hv-75wg-m249, moderate, dev only). `pnpm audit` reports it; Dependabot had not as of 2026-11-10. Retry `pnpm update` when `@typescript-eslint/typescript-estree` widens its range, rather than forcing an override across a major.
+- [ ] **Clear the minimatch advisory once the TypeScript ESLint parser allows minimatch 11** (GHSA-g3hv-75wg-m249, moderate, dev only). Open as Dependabot alert 95 since 2026-11-10. Retry `pnpm update` when `@typescript-eslint/typescript-estree` widens its range, rather than forcing an override across a major.
 
 ## Backlog: Features
 

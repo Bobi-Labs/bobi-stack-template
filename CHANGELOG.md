@@ -24,7 +24,7 @@ Next.js.** Every project starts from this lockfile, so each one used to inherit 
 
 Still open: `pnpm audit` reports one moderate minimatch advisory (a glob denial of service) inside the
 ESLint toolchain. It is dev only, its fix needs minimatch 11 while the TypeScript ESLint parser asks for
-10, and Dependabot has not raised it yet.
+10. Dependabot raised it as a new alert the same day.
 
 ## 2026-11-10
 
