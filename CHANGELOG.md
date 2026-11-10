@@ -4,6 +4,17 @@ Date-keyed, hand-written, one entry per meaningful change. **Not semver.** bobi-
 
 A downstream project reads this to decide whether a pattern is worth re-pulling. Keep entries about *what changed and why it matters to a project built on this*, not commit-by-commit detail.
 
+## 2026-11-10
+
+**Kickoff, joining someone's project: it can no longer end in a repo of your own.** A real run of
+the "someone invited me" path ended with the person working in a brand-new repo of their own,
+not the shared one. The cause is unconfirmed, but the likely one is that the clone failed on an
+expired invite and the session made a new project instead. The dry runs never hit this, because
+their accounts always had access. Path 1 now checks access with `gh repo view` before cloning,
+stops with "accept the invite, or ask for a new one" when it can't see the repo, never runs
+`git init` or `gh repo create`, and checks that `origin` names the invited repo before calling
+setup done.
+
 ## 2026-10-17 (later)
 
 **New: `KICKOFF.md`, a setup Claude runs for you.** A person pastes one prompt (from an unlisted page,

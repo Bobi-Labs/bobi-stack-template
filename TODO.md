@@ -21,7 +21,8 @@
   - On a Mac, `code --version` fails until "Install 'code' command in PATH" is run, so the kickoff offers to install VS Code again. Check for the app first and give the PATH step.
   - The memory-folder example is Windows-style (`C--...`). Add the Mac form (`-Users-<name>-dev-<project>`).
   - A run from an account that already has `~/.bobi-stack/kickoff-progress.md` offers to resume. Fine for real users; say how to start fresh.
-  - The invited path can't clone until the invite is accepted. Before cloning, check access and say "accept the invite first" instead of a raw clone error.
+  - [x] The invited path can't clone until the invite is accepted. Before cloning, check access and say "accept the invite first" instead of a raw clone error. (Done 2026-11-10, after a real run made a repo of its own.)
+  - Add a dry run of path 1 from an account with **no access** (invite expired or never accepted). Passing means it stops and asks for a new invite, and creates nothing.
 
 - [ ] **Upkeep is never a question:** add to the scaffold's CLAUDE.md that a session updates the records it owns (docs, TODO, memory) in the same turn something changes, and asks only what is the owner's to answer, with each question standing on its own (the decision, the options, a recommendation, the default). Machines without a user-level CLAUDE.md get it only from here (2026-10-29).
 

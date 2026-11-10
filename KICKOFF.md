@@ -216,12 +216,13 @@ Then ask where their projects live, with buttons (rule 11): a folder you can see
 ### Path 1: joining someone's project
 
 1. Ask which repo (their invite email or link names it, as `owner/name`). Make sure they accepted the invite: the email's button, or github.com/notifications.
-2. `cd` into their projects folder, then `gh repo clone <owner>/<name>`, then `pnpm install` inside it.
-3. **Hand over.** Read the project's `README.md` and `CLAUDE.md`, then do their first-run steps from inside the project folder (a shared project may, for example, ask the person to identify themselves for a briefing script). Tell the person:
+2. **Check access before cloning:** `gh repo view <owner>/<name> --json nameWithOwner`. If it fails, **stop here.** The usual reasons are an invite not accepted yet, or one that expired (GitHub invites lapse after 7 days). Tell them: "I can't see that project yet. Open github.com/notifications or the invite email and accept it. If it says the invite expired, ask the person who invited you to send it again." Wait, then check again. **Path 1 never makes a project of its own:** no `git init`, no `gh repo create`, no copy of this template, not even as a stopgap. A new repo looks like progress, but their work then lands where nobody they are joining can see it.
+3. `cd` into their projects folder. If a folder with that name is already there (an earlier attempt), check its `git remote get-url origin` first, and work in it only if it is `<owner>/<name>`. Otherwise leave it untouched and say so. Then `gh repo clone <owner>/<name>`, confirm `git remote get-url origin` names `<owner>/<name>`, and `pnpm install` inside it.
+4. **Hand over.** Read the project's `README.md` and `CLAUDE.md`, then do their first-run steps from inside the project folder (a shared project may, for example, ask the person to identify themselves for a briefing script). Tell the person:
    > From here, your project's own instructions are in charge. Today I'm following them by reading them, because we started in the setup folder. From now on, open Claude **in the project folder** and it loads them automatically.
-4. **Change nothing tracked in their project** during the kickoff: no commits, no edits to its files, no log entries. Local files its first-run steps create on purpose (gitignored ones) are fine. Anything the project's rules ask a session to write happens in their first real session there.
-5. **Seed their personal Claude memory** for the project (path 3, step 8). It lives in their home folder, not in the project, so it changes nothing the others see.
-6. If the project's README says what "set up" looks like ("finished when..."), check it. If it gives its own words for starting a session, use those in phase 6. Then go to phase 6. The keeper and pre-mortem phases belong to whoever runs that project.
+5. **Change nothing tracked in their project** during the kickoff: no commits, no edits to its files, no log entries. Local files its first-run steps create on purpose (gitignored ones) are fine. Anything the project's rules ask a session to write happens in their first real session there.
+6. **Seed their personal Claude memory** for the project (path 3, step 8). It lives in their home folder, not in the project, so it changes nothing the others see.
+7. If the project's README says what "set up" looks like ("finished when..."), check it. If it gives its own words for starting a session, use those in phase 6. Then go to phase 6. The keeper and pre-mortem phases belong to whoever runs that project.
 
 ### Path 2: an existing project of theirs
 
@@ -328,4 +329,4 @@ Point out three things, one line each, with where they live in `CLAUDE.md`:
    - **exactly what to say next time**: the project's own words if it has them (path 1), otherwise "Open Claude in `<path>` and say: let's pick up where we left off."
 5. Mark the progress file complete. Tell them `~/bobi-stack-kickoff` and `~/.bobi-stack` can both be deleted now, or kept for reference.
 
-**Finished when:** path 3, the project passes `./ops.sh check` and has at least one commit; path 2, every change they agreed to is committed; path 1, the project is cloned, installed, and its own first-run steps are done. In every case, they know what to say to Claude next time.
+**Finished when:** path 3, the project passes `./ops.sh check` and has at least one commit; path 2, every change they agreed to is committed; path 1, the project is cloned from the invited repo (its `origin` is that `owner/name`), installed, and its own first-run steps are done. In every case, they know what to say to Claude next time.
